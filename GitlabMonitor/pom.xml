@@ -1,12 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.gitmining</groupId>
-  <artifactId>GitlabMonitor</artifactId>
-  <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>GitlabMonitor Maven Webapp</name>
-  <url>http://maven.apache.org</url>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.gitmining</groupId>
+	<artifactId>GitlabMonitor</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>GitlabMonitor Maven Webapp</name>
+	<url>http://maven.apache.org</url>
 	<properties>
 		<springversion>4.1.0.RELEASE</springversion>
 		<mybatisversion>3.2.8</mybatisversion>
@@ -59,6 +59,12 @@
 			<artifactId>spring-beans</artifactId>
 			<version>${springversion}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${springversion}</version>
+		</dependency>
 		<!-- spring core dependency -->
 
 		<!-- spring mvc -->
@@ -79,7 +85,7 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>${springversion}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-messaging</artifactId>
@@ -208,30 +214,30 @@
 			<version>2.1.1</version>
 		</dependency>
 		<!-- log4j2 -->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-web</artifactId>
-            <version>2.1</version>
-        </dependency>
-        
-        <!-- activemq -->
-        <dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-web</artifactId>
+			<version>2.1</version>
+		</dependency>
+
+		<!-- activemq -->
+		<dependency>
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-all</artifactId>
 			<version>5.13.0</version>
 		</dependency>
-  </dependencies>
-  <build>
-    <finalName>GitlabMonitor</finalName>
-  </build>
+	</dependencies>
+	<build>
+		<finalName>GitlabMonitor</finalName>
+	</build>
 </project>
