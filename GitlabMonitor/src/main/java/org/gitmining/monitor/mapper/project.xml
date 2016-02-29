@@ -67,9 +67,9 @@
 	
 	<select id="selectAllProjectEventRange" parameterType="java.util.Map" resultMap="projectEvent">
 		SELECT 
-		sum(push) AS push, sum(issue) AS issue,sum(comment) AS comment,sum(`create`) AS `create`, sum(total) AS total
+		sum(push) AS push, sum(issue) AS issue,sum(comment) AS comment,sum(`create`) AS `create`, sum(total) AS total,team
 		FROM   
-		projectCommit   
+		projectEvent   
 		WHERE  `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} group by team 
 		<if test="order != null">
 		ORDER BY `${order}` ${method}

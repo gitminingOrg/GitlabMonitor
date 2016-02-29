@@ -28,7 +28,7 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Student <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Student Summary</a></li>
+            <li><a href="/GitlabMonitor/student/summary">Student Summary</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="/GitlabMonitor/student/commit">Student Commit</a></li>
             <li role="separator" class="divider"></li>
@@ -38,11 +38,11 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Team <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Team Summary</a></li>
+            <li><a href="/GitlabMonitor/project/summary">Team Summary</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">Team Commit</a></li>
+            <li><a href="/GitlabMonitor/project/commit">Team Commit</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">Team Event</a></li>
+            <li><a href="/GitlabMonitor/project/event">Team Event</a></li>
           </ul>
         </li>
       </ul>
@@ -50,15 +50,17 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+<div class="container">
 <h2>Student Event</h2>
-<form id="commitRange" >
-	<input type="text" id="student" placeholder="student name"/>
-	<input type="text" id="dayStart" placeholder="start day"/>
-	<input type="text" id="dayEnd" placeholder="end day"/>
-	<input type="button" value="search" onclick="studentEvent(document.getElementById('student').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value);">
-</form>
-
-<div id="user"></div>
+	<form id="commitRange" >
+		<input type="text" id="student" placeholder="student name"/>
+		<input type="text" id="dayStart" placeholder="start day"/>
+		<input type="text" id="dayEnd" placeholder="end day"/>
+		<input type="button" value="search" onclick="studentEvent(document.getElementById('student').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value);">
+	</form>
+	
+	<div id="team"></div>
+</div>
 </body>
  <script src="/GitlabMonitor/static/js/library/jquery-1.11.3.js"></script>
  <script src="/GitlabMonitor/static/js/library/highcharts.js"></script>

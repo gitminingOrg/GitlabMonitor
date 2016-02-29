@@ -28,7 +28,7 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Student <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Student Summary</a></li>
+            <li><a href="/GitlabMonitor/student/summary">Student Summary</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="/GitlabMonitor/student/commit">Student Commit</a></li>
             <li role="separator" class="divider"></li>
@@ -39,11 +39,11 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Team <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Team Summary</a></li>
+            <li><a href="/GitlabMonitor/project/summary">Team Summary</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">Team Commit</a></li>
+            <li><a href="/GitlabMonitor/project/commit">Team Commit</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">Team Event</a></li>
+            <li><a href="/GitlabMonitor/project/event">Team Event</a></li>
           </ul>
         </li>
       </ul>

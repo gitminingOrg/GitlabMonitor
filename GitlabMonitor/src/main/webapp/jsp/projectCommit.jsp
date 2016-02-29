@@ -35,7 +35,8 @@
             <li><a href="/GitlabMonitor/student/event">Student Event</a></li>
           </ul>
         </li>
-        <li class="dropdown">
+        
+		<li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Team <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="/GitlabMonitor/project/summary">Team Summary</a></li>
@@ -46,44 +47,27 @@
           </ul>
         </li>
       </ul>
+
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
 <div class="container">
-<h2>Student Summary</h2>
-<form id="commitRange" action="/GitlabMonitor/student/summary" method="POST" >
-	<input type="text" id="dayStart" name="dayStart" placeholder="start day"/>
-	<input type="text" id="dayEnd" name="dayEnd" placeholder="end day"/>
-	<input type="submit" value="filter">
+<h2>Project Commit</h2>
+<form id="commitRange" >
+	<input type="text" id="team" placeholder="team name"/>
+	<input type="text" id="dayStart" placeholder="start day"/>
+	<input type="text" id="dayEnd" placeholder="end day"/>
+	<input type="button" value="search" onclick="projectCommit(document.getElementById('team').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value);">
 </form>
-
-<h3>Student Commit</h3>
-<table class="table table-striped table-bordered">
-	<thead><tr><th>name</th> <th>commit_count</th> <th>add_line</th> <th>delete_line</th> <th>java_file</th> <th>total_add</th> <th>total_delete</th></tr></thead>
-	<tbody>
-	<c:forEach items="${commits}" var="commit">
-		<tr><th>${commit.student}</th><th>${commit.commit_count}</th><th>${commit.add_line}</th><th>${commit.delete_line}</th>
-		<th>${commit.java_file}</th><th>${commit.total_add}</th><th>${commit.total_delete}</th></tr>
-	</c:forEach>	
-	</tbody>
-</table>
-
-<h3>Student Event</h3>
-<table class="table table-striped table-bordered">
-	<thead><tr><th>name</th> <th>push</th> <th>issue</th> <th>comment</th> <th>create</th> <th>total</th></tr></thead>
-	<tbody>
-	<c:forEach items="${events}" var="event">
-		<tr><th>${event.student}</th><th>${event.push}</th><th>${event.issue}</th><th>${event.comment}</th>
-		<th>${event.create}</th><th>${event.total}</th></tr>
-	</c:forEach>	
-	</tbody>
-</table>
+<div id="user"></div>
 </div>
+
 </body>
  <script src="/GitlabMonitor/static/js/library/jquery-1.11.3.js"></script>
  <script src="/GitlabMonitor/static/js/library/highcharts.js"></script>
  <script src="/GitlabMonitor/static/js/library/highcharts-3d.js"></script>
  <script src="/GitlabMonitor/static/js/library/sand-signika.js"></script>
+ <script src="/GitlabMonitor/static/js/team.js"></script> 
  <script src="/GitlabMonitor/static/js/library/angular.min.js"></script>
  <script src="/GitlabMonitor/static/js/library/bootstrap.min.js"></script>
 </html>
