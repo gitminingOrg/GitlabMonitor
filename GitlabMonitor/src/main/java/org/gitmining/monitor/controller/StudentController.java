@@ -1,6 +1,8 @@
 package org.gitmining.monitor.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +55,13 @@ public class StudentController {
 		String dayEnd = request.getParameter("dayEnd");
 		String order = request.getParameter("order");
 		String method = request.getParameter("method");
+		if(dayStart == null){
+			dayStart = "20160101";
+		}
+		if(dayEnd == null){
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			dayEnd = sdf.format(Calendar.getInstance().getTime());
+		}
 		List<StudentCommit> commits = new ArrayList<StudentCommit>();
 		List<StudentEvent> events = new ArrayList<StudentEvent>();
 		if(order == null){

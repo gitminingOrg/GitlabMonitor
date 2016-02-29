@@ -67,9 +67,9 @@
 	
 	<select id="selectAllStudentEventRange" parameterType="java.util.Map" resultMap="studentEvent">
 		SELECT 
-		sum(push) AS push, sum(issue) AS issue,sum(comment) AS comment,sum(`create`) AS `create`, sum(total) AS total
+		sum(push) AS push, sum(issue) AS issue,sum(comment) AS comment,sum(`create`) AS `create`, sum(total) AS `total`,student
 		FROM   
-		studentCommit   
+		studentEvent  
 		WHERE  `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} group by student 
 		<if test="order != null">
 		ORDER BY `${order}` ${method}
@@ -93,7 +93,7 @@
 	</insert>
 	
 	<insert id="insertStudentEvent" parameterType="org.gitmining.monitor.bean.StudentEvent">
-		INSERT INTO studentEvent(id, student, `day`, push, issue, comment, `create`,total) 
+		INSERT INTO studentEvent(id, student, `day`, push, issue, comment, `create`,`total`) 
 		VALUES
 		(#{id},#{student},#{day},#{push},#{issue},#{comment},#{create},#{total});
 	</insert>

@@ -8,6 +8,7 @@ public class ProjectEvent {
 	private int issue;
 	private int comment;
 	private int create;
+	private int total;
 	public int getId() {
 		return id;
 	}
@@ -49,6 +50,12 @@ public class ProjectEvent {
 	}
 	public void setCreate(int create) {
 		this.create = create;
+	}
+	public int getTotal() {
+		return total;
+	}
+	public void setTotal(int total) {
+		this.total = total;
 	}
 	
 }

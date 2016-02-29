@@ -8,6 +8,7 @@ public class StudentEvent {
 	private int issue;
 	private int comment;
 	private int create;
+	private int total;
 	public int getId() {
 		return id;
 	}
@@ -49,6 +50,12 @@ public class StudentEvent {
 	}
 	public void setDay(String day) {
 		this.day = day;
+	}
+	public int getTotal() {
+		return total;
+	}
+	public void setTotal(int total) {
+		this.total = total;
 	}
 	
 	
