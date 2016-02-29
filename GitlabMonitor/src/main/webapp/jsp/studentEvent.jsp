@@ -35,7 +35,6 @@
             <li><a href="/GitlabMonitor/student/event">Student Event</a></li>
           </ul>
         </li>
-        
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Team <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -51,7 +50,21 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+<h2>Student Event</h2>
+<form id="commitRange" >
+	<input type="text" id="student" placeholder="student name"/>
+	<input type="text" id="dayStart" placeholder="start day"/>
+	<input type="text" id="dayEnd" placeholder="end day"/>
+	<input type="button" value="search" onclick="studentEvent(document.getElementById('student').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value);">
+</form>
+
+<div id="user"></div>
 </body>
-<script src="/GitlabMonitor/static/js/library/jquery-1.11.3.js"></script>
-<script src="/GitlabMonitor/static/js/library/bootstrap.min.js"></script>
+ <script src="/GitlabMonitor/static/js/library/jquery-1.11.3.js"></script>
+ <script src="/GitlabMonitor/static/js/library/highcharts.js"></script>
+ <script src="/GitlabMonitor/static/js/library/highcharts-3d.js"></script>
+ <script src="/GitlabMonitor/static/js/library/sand-signika.js"></script>
+ <script src="/GitlabMonitor/static/js/studentEvent.js"></script> 
+ <script src="/GitlabMonitor/static/js/library/angular.min.js"></script>
+ <script src="/GitlabMonitor/static/js/library/bootstrap.min.js"></script>
 </html>

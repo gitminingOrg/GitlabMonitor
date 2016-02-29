@@ -3,12 +3,12 @@ var startDay = $("#startDay").text();
 var endDay = $("#endDay").text();
 
 $(document).ready(function() {
-	studentCommit(student,startDay,endDay);
+	studentEvent(student,startDay,endDay);
 });
 
-function studentCommit(student,startDay,endDay){
+function studentEvent(student,startDay,endDay){
 	//repositories per user
-	var url = "/GitlabMonitor/student/commit/range"
+	var url = "/GitlabMonitor/student/event/range"
 		$.ajax(url, {
 			type : 'POST',
 			data : {
@@ -19,7 +19,7 @@ function studentCommit(student,startDay,endDay){
 			success : function(data, textStatus) {
 				$('#user').highcharts({
 			        title: {
-			            text: 'User Commit',
+			            text: 'User Event',
 			            x: -20 //center
 			        },
 			        xAxis: {
@@ -45,18 +45,21 @@ function studentCommit(student,startDay,endDay){
 			            borderWidth: 0
 			        },
 			        series: [{
-			            name: 'commit_count',
-			            data: data.commit_count
+			            name: 'push',
+			            data: data.push
 			        },{
-			            name: 'add_line',
-			            data: data.add_line
+			            name: 'issue',
+			            data: data.issue
 			        },{
-			            name: 'delete_line',
-			            data: data.delete_line
+			            name: 'comment',
+			            data: data.comment
 			        },{
-			            name: 'java_file',
-			            data: data.java_file
-			        },]
+			            name: 'create',
+			            data: data.create
+			        },{
+			            name: 'total',
+			            data: data.total
+			        }]
 			    });
 			}});	
 }
