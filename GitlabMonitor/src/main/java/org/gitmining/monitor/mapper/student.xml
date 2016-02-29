@@ -1,1 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="student">
+	<resultMap type="org.gitmining.monitor.bean.StudentCommit" id="studentCommit">
+		<result property="id" column="id" />
+		<result property="student" column="student" />
+		<result property="day" column="day" />
+		<result property="commit_count" column="commit_count" />
+		<result property="add_line" column="add_line" />
+		<result property="delete_line" column="delete_line" />
+		<result property="java_file" column="java_file" />
+		<result property="total_commit" column="total_commit" />
+		<result property="total_add" column="total_add" />
+		<result property="total_delete" column="total_delete" />		
+	</resultMap>
+	
+	<resultMap type="org.gitmining.monitor.bean.StudentEvent" id="studentEvent">
+		<result property="id" column="id" />
+		<result property="student" column="student" />
+		<result property="day" column="day" />
+		<result property="push" column="push" />
+		<result property="issue" column="issue" />
+		<result property="comment" column="comment" />
+		<result property="create" column="create" />	
+		<result property="total" column="total" />	
+	</resultMap>
+
+	<select id="selectStudentCommitRange" resultMap="studentCommit">
+		SELECT 
+		id, student, `day`, commit_count, add_line, delete_line,java_file,total_commit,total_add,total_delete
+		FROM
+		studentCommit
+		WHERE
+		student=#{student} AND `day` &gt;= #{startDay} AND `day` &lt;= #{endDay};
+	</select>
+	
+	<select id="selectStudentCommitItemRange" parameterType="java.util.Map"  resultType="Integer">
+		SELECT 
+		${item}
+		FROM
+		studentCommit
+		WHERE
+		student=#{student} AND `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} order by `day` asc;
+	</select>
+	
+	<select id="selectStudentEventRange" resultMap="studentEvent">
+		SELECT 
+		id, student, `day`, push, issue, comment, create,total
+		FROM
+		studentEvent
+		WHERE
+		student=#{student} AND `day` &gt;= #{startDay} AND `day` &lt;= #{endDay};
+	</select>
+	
+	<select id="selectStudentEventItemRange" parameterType="java.util.Map" resultType="Integer">
+		SELECT 
+		`${item}`
+		FROM
+		studentEvent
+		WHERE
+		student=#{student} AND `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} order by `day` asc;
+	</select>
+	
+	<insert id="insertStudentCommit" parameterType="org.gitmining.monitor.bean.StudentCommit">
+		INSERT INTO studentCommit(student,day,commit_count,add_line,delete_line,java_file,total_commit,total_add,total_delete) 
+		VALUES
+		(#{student},#{day},#{commit_count},#{add_line},#{delete_line},#{java_file},#{total_commit},
+		#{total_add},#{total_delete});
+	</insert>
+	
+	<insert id="insertStudentEvent" parameterType="org.gitmining.monitor.bean.StudentEvent">
+		INSERT INTO studentEvent(id, student, day, push, issue, comment, create,total) 
+		VALUES
+		(#{id},#{student},#{day},#{push},#{issue},#{comment},#{create},#{total});
+	</insert>
+	
+	<update id="updateStudentEvent" parameterType="org.gitmining.monitor.bean.StudentEvent">
+		UPDATE studentEvent
+		SET
+		student=#{student}
+		<if test="push != null">
+			,push=#{push}
+		</if>
+		<if test="issue != null">
+			,issue=#{issue}
+		</if>
+		<if test="comment != null">
+			,comment=#{comment}
+		</if>
+		<if test="create != null">
+			,create=#{create}
+		</if>
+		<if test="total != null">
+			,total=#{total}
+		</if>
+		WHERE
+		student=#{student} AND day=#{day};
+	</update>
+	
+	<update id="updateStudentCommit" parameterType="org.gitmining.monitor.bean.StudentCommit">
+		UPDATE studentCommit 
+		SET
+		student=#{student}
+		<if test="commit_count != null">
+			,commit_count=#{commit_count}
+		</if>
+		<if test="add_line != null">
+			,add_line=#{add_line}
+		</if>
+		<if test="delete_line != null">
+			,delete_line=#{delete_line}
+		</if>
+		<if test="java_file != null">
+			,java_file=#{java_file}
+		</if>
+		<if test="total_commit != null">
+			,total_commit=#{total_commit}
+		</if>
+		<if test="total_add != null">
+			,total_add=#{total_add}
+		</if>
+		<if test="total_delete != null">
+			,total_delete=#{total_delete}
+		</if>
+		WHERE
+		student=#{student} AND day=#{day};
+	</update>
+</mapper>
