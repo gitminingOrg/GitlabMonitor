@@ -16,12 +16,13 @@ public class StudentController {
 		this.studentService = studentService;
 	}
 	@RequestMapping(value="/student/commit/range")
-	public Map<String, List<Integer>> getStudentCommitItemRange(String student, String dayStart, String dayEnd){
+	public Map<String, List> getStudentCommitItemRange(String student, String dayStart, String dayEnd){
 		return studentService.getStudentCommitItem(student, dayStart, dayEnd);
 	}
 	
 	@RequestMapping(value="/student/event/range")
-	public Map<String, List<Integer>> getStudentEventItemRange(String student, String dayStart, String dayEnd){
+	public Map<String, List> getStudentEventItemRange(String student, String dayStart, String dayEnd){
 		return studentService.getStudentEventItem(student, dayStart, dayEnd);
 	}
+	
 }

@@ -1,4 +1,152 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="project">
+	<resultMap type="org.gitmining.monitor.bean.ProjectCommit" id="projectCommit">
+		<result property="id" column="id" />
+		<result property="team" column="team" />
+		<result property="day" column="day" />
+		<result property="commit_count" column="commit_count" />
+		<result property="add_line" column="add_line" />
+		<result property="delete_line" column="delete_line" />
+		<result property="java_file" column="java_file" />
+		<result property="total_commit" column="total_commit" />
+		<result property="total_add" column="total_add" />
+		<result property="total_delete" column="total_delete" />		
+	</resultMap>
+	
+	<resultMap type="org.gitmining.monitor.bean.ProjectEvent" id="projectEvent">
+		<result property="id" column="id" />
+		<result property="team" column="team" />
+		<result property="day" column="day" />
+		<result property="push" column="push" />
+		<result property="issue" column="issue" />
+		<result property="comment" column="comment" />
+		<result property="create" column="create" />	
+		<result property="total" column="total" />	
+	</resultMap>
+
+	<select id="selectProjectCommitRange" parameterType="java.util.Map" resultMap="projectCommit">
+		SELECT 
+		id, team, `day`, commit_count, add_line, delete_line,java_file,total_commit,total_add,total_delete
+		FROM
+		projectCommit
+		WHERE
+		team=#{team} AND `day` &gt;= #{startDay} AND `day` &lt;= #{endDay}
+	</select>
+	
+	<select id="selectAllProjectCommitRange" parameterType="java.util.Map" resultMap="projectCommit">
+		SELECT 
+		sum(commit_count) AS commit_count, sum(add_line) AS add_line,sum(delete_line) AS delete_line,sum(`java_file`) AS java_file, 
+		max(total_commit) AS total_commit,max(total_add) AS total_add,max(total_delete) AS total_delete,team   
+		FROM   
+		projectCommit   
+		WHERE  `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} group by team 
+		<if test="order != null">
+		ORDER BY `${order}` ${method}
+		</if>
+	</select>
+	
+	
+	<select id="selectProjectCommitItemRange" parameterType="java.util.Map"  resultType="Integer">
+		SELECT 
+		${item}
+		FROM
+		projectCommit
+		WHERE
+		team=#{team} AND `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} order by `day` asc;
+	</select>
+	
+	<select id="selectProjectEventRange" resultMap="projectEvent">
+		SELECT 
+		id, team, `day`, push, issue, comment, create,total
+		FROM
+		projectEvent
+		WHERE
+		team=#{team} AND `day` &gt;= #{startDay} AND `day` &lt;= #{endDay};
+	</select>
+	
+	<select id="selectAllProjectEventRange" parameterType="java.util.Map" resultMap="projectEvent">
+		SELECT 
+		sum(push) AS push, sum(issue) AS issue,sum(comment) AS comment,sum(`create`) AS `create`, sum(total) AS total
+		FROM   
+		projectCommit   
+		WHERE  `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} group by team 
+		<if test="order != null">
+		ORDER BY `${order}` ${method}
+		</if>
+	</select>
+	
+	<select id="selectProjectEventItemRange" parameterType="java.util.Map" resultType="Integer">
+		SELECT 
+		`${item}`
+		FROM
+		projectEvent
+		WHERE
+		team=#{team} AND `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} order by `day` asc;
+	</select>
+	
+	<insert id="insertProjectCommit" parameterType="org.gitmining.monitor.bean.ProjectCommit">
+		INSERT INTO projectCommit(team,`day`,commit_count,add_line,delete_line,java_file,total_commit,total_add,total_delete) 
+		VALUES
+		(#{team},#{day},#{commit_count},#{add_line},#{delete_line},#{java_file},#{total_commit},
+		#{total_add},#{total_delete});
+	</insert>
+	
+	<insert id="insertProjectEvent" parameterType="org.gitmining.monitor.bean.ProjectEvent">
+		INSERT INTO projectEvent(id, team, `day`, push, issue, comment, `create`,total) 
+		VALUES
+		(#{id},#{team},#{day},#{push},#{issue},#{comment},#{create},#{total});
+	</insert>
+	
+	<update id="updateProjectEvent" parameterType="org.gitmining.monitor.bean.ProjectEvent">
+		UPDATE projectEvent
+		SET
+		team=#{team}
+		<if test="push != null">
+			,push=#{push}
+		</if>
+		<if test="issue != null">
+			,issue=#{issue}
+		</if>
+		<if test="comment != null">
+			,comment=#{comment}
+		</if>
+		<if test="create != null">
+			,`create`=#{create}
+		</if>
+		<if test="total != null">
+			,total=#{total}
+		</if>
+		WHERE
+		team=#{team} AND `day`=#{day};
+	</update>
+	
+	<update id="updateProjectCommit" parameterType="org.gitmining.monitor.bean.ProjectCommit">
+		UPDATE projectCommit 
+		SET
+		team=#{team}
+		<if test="commit_count != null">
+			,commit_count=#{commit_count}
+		</if>
+		<if test="add_line != null">
+			,add_line=#{add_line}
+		</if>
+		<if test="delete_line != null">
+			,delete_line=#{delete_line}
+		</if>
+		<if test="java_file != null">
+			,java_file=#{java_file}
+		</if>
+		<if test="total_commit != null">
+			,total_commit=#{total_commit}
+		</if>
+		<if test="total_add != null">
+			,total_add=#{total_add}
+		</if>
+		<if test="total_delete != null">
+			,total_delete=#{total_delete}
+		</if>
+		WHERE
+		team=#{team} AND `day`=#{day};
+	</update>
 </mapper>
