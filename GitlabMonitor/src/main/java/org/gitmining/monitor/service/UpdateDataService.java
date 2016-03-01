@@ -28,10 +28,12 @@ public class UpdateDataService {
 
 	@Transactional(propagation=Propagation.REQUIRES_NEW, readOnly=false,timeout=5)
 	public void testUpdateData(){
+		System.out.println("service start!");
 		ProjectEvent projectEvent = new ProjectEvent();
 		Calendar calendar = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		for (int i = 0; i < 10; i++) {
+			
 			calendar.add(Calendar.DATE, i);
 			Random random = new Random();
 			projectEvent.setComment(random.nextInt(10));
@@ -39,7 +41,7 @@ public class UpdateDataService {
 			projectEvent.setDay(sdf.format(calendar.getTime()));
 			projectEvent.setIssue(random.nextInt(10));
 			projectEvent.setPush(random.nextInt(10));
-			projectEvent.setTeam("testTeam");
+			projectEvent.setTeam("testTeam31");
 			projectEvent.setTotal(random.nextInt(10));
 			projectDao.insertProjectEvent(projectEvent);
 			try {
