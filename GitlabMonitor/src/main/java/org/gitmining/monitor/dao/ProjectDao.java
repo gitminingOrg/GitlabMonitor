@@ -75,4 +75,8 @@ public class ProjectDao extends BaseDaoImpl{
 		params.put("endDay", endDay);
 		return sqlSession.selectList("project.selectProjectEventItemRange", params);
 	}
+	
+	public boolean insertProjectEvent(ProjectEvent projectEvent){
+		return sqlSession.insert("project.insertProjectEvent", projectEvent) == 1 ?true:false;
+	}
 }

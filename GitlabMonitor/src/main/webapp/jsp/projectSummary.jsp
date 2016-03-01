@@ -51,7 +51,7 @@
 </nav>
 <div class="container">
 <h2>Team Summary</h2>
-<form id="commitRange" class="form-inline" action="/GitlabMonitor/team/summary" method="POST" >
+<form id="commitRange" class="form-inline" action="/GitlabMonitor/project/summary" method="POST" >
 	<input type="text" id="dayStart" class="form-control" name="dayStart" placeholder="start day"/>
 	<input type="text" id="dayEnd" class="form-control" name="dayEnd" placeholder="end day"/>
 	<input type="submit" class="btn btn-primary" value="filter">

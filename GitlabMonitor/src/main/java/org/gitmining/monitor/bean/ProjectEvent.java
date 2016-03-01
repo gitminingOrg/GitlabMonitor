@@ -2,7 +2,7 @@ package org.gitmining.monitor.bean;
 
 public class ProjectEvent {
 	private int id;
-	private String student;
+	private String day;
 	private String team;
 	private int push;
 	private int issue;
@@ -15,11 +15,12 @@ public class ProjectEvent {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getStudent() {
-		return student;
+	
+	public String getDay() {
+		return day;
 	}
-	public void setStudent(String student) {
-		this.student = student;
+	public void setDay(String day) {
+		this.day = day;
 	}
 	public String getTeam() {
 		return team;
