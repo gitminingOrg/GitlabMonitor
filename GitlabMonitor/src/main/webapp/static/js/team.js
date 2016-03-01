@@ -6,7 +6,7 @@ $(document).ready(function() {
 	projectCommit(team,startDay,endDay);
 });
 
-function projectCommit(student,startDay,endDay){
+function projectCommit(team,startDay,endDay){
 	//repositories per user
 	var url = "/GitlabMonitor/project/commit/range"
 		$.ajax(url, {

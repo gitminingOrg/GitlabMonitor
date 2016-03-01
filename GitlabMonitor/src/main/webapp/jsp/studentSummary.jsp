@@ -51,10 +51,10 @@
 </nav>
 <div class="container">
 <h2>Student Summary</h2>
-<form id="commitRange" action="/GitlabMonitor/student/summary" method="POST" >
-	<input type="text" id="dayStart" name="dayStart" placeholder="start day"/>
-	<input type="text" id="dayEnd" name="dayEnd" placeholder="end day"/>
-	<input type="submit" value="filter">
+<form id="commitRange" class="form-inline" action="/GitlabMonitor/student/summary" method="POST" >
+	<input type="text" id="dayStart" class="form-control" name="dayStart" placeholder="start day"/>
+	<input type="text" id="dayEnd" class="form-control" name="dayEnd" placeholder="end day"/>
+	<input type="submit" class="btn btn-primary" value="filter">
 </form>
 
 <h3>Student Commit</h3>

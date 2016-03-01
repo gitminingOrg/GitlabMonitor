@@ -25,10 +25,10 @@ public class ProjectController {
 	
 	@RequestMapping(value="/project/commit/range")
 	public Map<String, List> getProjectCommitItemRange(HttpServletRequest request,HttpServletResponse response){
-		String project = request.getParameter("project");
+		String team = request.getParameter("team");
 		String dayStart = request.getParameter("dayStart");
 		String dayEnd = request.getParameter("dayEnd");
-		return projectService.getProjectCommitItem(project, dayStart, dayEnd);
+		return projectService.getProjectCommitItem(team, dayStart, dayEnd);
 	}
 	
 	@RequestMapping(value="/project/commit")
@@ -44,8 +44,11 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value="/project/event/range")
-	public Map<String, List> getProjectEventItemRange(String project, String dayStart, String dayEnd){
-		return projectService.getProjectEventItem(project, dayStart, dayEnd);
+	public Map<String, List> getProjectEventItemRange(HttpServletRequest request,HttpServletResponse response){
+		String team = request.getParameter("team");
+		String dayStart = request.getParameter("dayStart");
+		String dayEnd = request.getParameter("dayEnd");
+		return projectService.getProjectEventItem(team, dayStart, dayEnd);
 	}
 	
 	@RequestMapping(value="/project/summary")

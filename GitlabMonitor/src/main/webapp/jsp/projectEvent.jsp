@@ -52,11 +52,11 @@
 </nav>
 <div class="container">
 <h2>Team Event</h2>
-	<form id="commitRange" >
-		<input type="text" id="team" placeholder="team name"/>
-		<input type="text" id="dayStart" placeholder="start day"/>
-		<input type="text" id="dayEnd" placeholder="end day"/>
-		<input type="button" value="search" onclick="projectEvent(document.getElementById('team').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value);">
+	<form id="commitRange" class="form-inline">
+		<input type="text" id="team" class="form-control" placeholder="team name"/>
+		<input type="text" id="dayStart" class="form-control" placeholder="start day"/>
+		<input type="text" id="dayEnd" class="form-control" placeholder="end day"/>
+		<input type="button" class="btn btn-primary" value="search" onclick="projectEvent(document.getElementById('team').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value);">
 	</form>
 	
 	<div id="chart"></div>

@@ -17,7 +17,7 @@ function studentEvent(student,startDay,endDay){
 				"dayEnd": endDay,
 			},
 			success : function(data, textStatus) {
-				$('#user').highcharts({
+				$('#chart').highcharts({
 			        title: {
 			            text: 'User Event',
 			            x: -20 //center

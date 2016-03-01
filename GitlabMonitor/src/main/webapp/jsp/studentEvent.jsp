@@ -52,14 +52,14 @@
 </nav>
 <div class="container">
 <h2>Student Event</h2>
-	<form id="commitRange" >
-		<input type="text" id="student" placeholder="student name"/>
-		<input type="text" id="dayStart" placeholder="start day"/>
-		<input type="text" id="dayEnd" placeholder="end day"/>
-		<input type="button" value="search" onclick="studentEvent(document.getElementById('student').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value);">
+	<form id="commitRange" class="form-inline">
+		<input type="text" id="student" class="form-control" placeholder="student name"/>
+		<input type="text" id="dayStart" class="form-control" placeholder="start day"/>
+		<input type="text" id="dayEnd" class="form-control" placeholder="end day"/>
+		<input type="button" class="btn btn-primary" value="search" onclick="studentEvent(document.getElementById('student').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value);">
 	</form>
 	
-	<div id="team"></div>
+	<div id="chart"></div>
 </div>
 </body>
  <script src="/GitlabMonitor/static/js/library/jquery-1.11.3.js"></script>
