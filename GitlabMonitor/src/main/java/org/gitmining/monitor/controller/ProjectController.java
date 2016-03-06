@@ -42,7 +42,11 @@ public class ProjectController {
 		ModelAndView result = new ModelAndView("projectEvent");
 		return result;
 	}
-	
+	@RequestMapping(value="/project/team")
+	public ModelAndView showProjectTeamPage(HttpServletRequest request,HttpServletResponse response){
+		ModelAndView result = new ModelAndView("projectMember");
+		return result;
+	}
 	@RequestMapping(value="/project/event/range")
 	public Map<String, List> getProjectEventItemRange(HttpServletRequest request,HttpServletResponse response){
 		String team = request.getParameter("team");
@@ -79,5 +83,19 @@ public class ProjectController {
 		result.addObject("events", events);
 		
 		return result;
+	}
+	@RequestMapping("/project/teammember")
+	public Map<String, Object> selectTeamStudentCommitRange(HttpServletRequest request, HttpServletResponse response){
+		String dayStart = request.getParameter("dayStart");
+		String dayEnd = request.getParameter("dayEnd");
+		if(dayStart == null){
+			dayStart = "20160101";
+		}
+		if(dayEnd == null){
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			dayEnd = sdf.format(Calendar.getInstance().getTime());
+		}
+		String team = request.getParameter("team");
+		return projectService.selectTeamStudentCommitRange(team, dayStart, dayEnd);
 	}
 }

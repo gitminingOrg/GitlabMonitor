@@ -33,6 +33,8 @@
             <li><a href="/GitlabMonitor/student/commit">Student Commit</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="/GitlabMonitor/student/event">Student Event</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="/GitlabMonitor/project/team">Team Member</a></li>
           </ul>
         </li>
         

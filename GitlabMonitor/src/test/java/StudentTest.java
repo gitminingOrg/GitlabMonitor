@@ -7,11 +7,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)  
-@ContextConfiguration({"classpath:monitor-config.xml"})
+@ContextConfiguration({"classpath:monitor-config.xml","classpath:monitor-servlet.xml"})
 public class StudentTest {
 	@Resource StudentDao studentDao;
 	@Test
 	public void testSelectCommit(){
-		studentDao.selectStudentCommitRange("a", "2016-01-01", "2016-05-05");
+		System.out.println(studentDao.selectStudentCommitRange("a", "2016-01-01", "2016-05-05").size());
 	}
 }

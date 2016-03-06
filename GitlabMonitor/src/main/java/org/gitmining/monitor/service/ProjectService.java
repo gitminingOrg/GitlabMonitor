@@ -1,12 +1,15 @@
 package org.gitmining.monitor.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.gitmining.monitor.bean.ProjectCommit;
 import org.gitmining.monitor.bean.ProjectEvent;
+import org.gitmining.monitor.bean.StudentCommit;
 import org.gitmining.monitor.dao.ProjectDao;
+import org.gitmining.monitor.dao.StudentDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +21,12 @@ public class ProjectService {
 		this.projectDao = projectDao;
 	}
 	
+	@Autowired
+	private StudentDao studentDao;
+	public void setStudentDao(StudentDao studentDao) {
+		this.studentDao = studentDao;
+	}
+
 	public Map<String, List> getProjectCommitItem(String project, String startDay, String endDay){
 		Map<String, List> result = new HashMap<String, List>();
 		result.put("commit_count", projectDao.selectProjectCommitItemRange("commit_count",project,startDay,endDay));
@@ -56,6 +65,27 @@ public class ProjectService {
 	
 	public List<ProjectEvent> selectAllProjectEventRangeSort(String startDay, String endDay, String order, String method){
 		List<ProjectEvent> result = projectDao.selectAllProjectEventRangeSort(startDay, endDay, order, method);
+		return result;
+	}
+	
+	public Map<String, Object> selectTeamStudentCommitRange(String team,String startDay, String endDay){
+		Map<String, Object> result = new HashMap<String, Object>();
+		List<StudentCommit> commits = studentDao.selectTeamStudentCommitRange(startDay, endDay, team);
+		String[] statistics = {"commit_count","add_line","delete_line","java_file","total_commit","total_add","total_delete"};
+		result.put("statistics", statistics);
+		for (int i = 0; i < commits.size(); i++) {
+			StudentCommit commit = commits.get(i);
+			result.put("stu"+i, commits.get(i).getStudent());
+			List<Integer> data = new ArrayList<Integer>();
+			data.add(commit.getCommit_count());
+			data.add(commit.getAdd_line());
+			data.add(commit.getDelete_line());
+			data.add(commit.getJava_file());
+			data.add(commit.getTotal_commit());
+			data.add(commit.getTotal_add());
+			data.add(commit.getTotal_delete());
+			result.put("data"+i, data);
+		}
 		return result;
 	}
 	

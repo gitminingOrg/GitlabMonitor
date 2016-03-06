@@ -44,6 +44,8 @@
             <li><a href="/GitlabMonitor/project/commit">Team Commit</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="/GitlabMonitor/project/event">Team Event</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="/GitlabMonitor/project/team">Team Member</a></li>
           </ul>
         </li>
       </ul>
