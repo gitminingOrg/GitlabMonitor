@@ -55,7 +55,7 @@
   </div><!-- /.container-fluid -->
 </nav>
 <div class="container">
-<h2>Team Event</h2>
+<h2>Team Member</h2>
 	<form id="commitRange" class="form-inline">
 		<input type="text" id="team" class="form-control" value="${team}" placeholder="team name"/>
 		<input type="text" id="dayStart" class="form-control" placeholder="start day"/>
