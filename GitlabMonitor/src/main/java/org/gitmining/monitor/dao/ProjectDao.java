@@ -66,6 +66,7 @@ public class ProjectDao extends BaseDaoImpl{
 		params.put("endDay", endDay);
 		params.put("order", order);
 		params.put("method", method);
+		System.out.println(method);
 		return sqlSession.selectList("project.selectAllProjectEventRange", params);
 	}
 	

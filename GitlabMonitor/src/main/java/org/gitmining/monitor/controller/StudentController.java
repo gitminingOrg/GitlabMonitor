@@ -61,8 +61,11 @@ public class StudentController {
 	public ModelAndView showAllStudentSummary(HttpServletRequest request,HttpServletResponse response){
 		String dayStart = request.getParameter("dayStart");
 		String dayEnd = request.getParameter("dayEnd");
-		String order = request.getParameter("order");
+		String commitOrder = request.getParameter("commitOrder");
+		String eventOrder = request.getParameter("eventOrder");
+		
 		String method = request.getParameter("method");
+		
 		if(dayStart == null){
 			dayStart = "20160101";
 		}
@@ -72,12 +75,12 @@ public class StudentController {
 		}
 		List<StudentCommit> commits = new ArrayList<StudentCommit>();
 		List<StudentEvent> events = new ArrayList<StudentEvent>();
-		if(order == null){
+		if(commitOrder == null){
 			commits = studentService.selectAllStudentCommitRange(dayStart, dayEnd);
 			events = studentService.selectAllStudentEventRange(dayStart, dayEnd);
 		}else{
-			commits = studentService.selectAllStudentCommitRangeSort(dayStart, dayEnd,order,method);
-			events = studentService.selectAllStudentEventRangeSort(dayStart, dayEnd,order,method);
+			commits = studentService.selectAllStudentCommitRangeSort(dayStart, dayEnd,commitOrder,method);
+			events = studentService.selectAllStudentEventRangeSort(dayStart, dayEnd,eventOrder,method);
 		}
 		
 		ModelAndView result = new ModelAndView("studentSummary");

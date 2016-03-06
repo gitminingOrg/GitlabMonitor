@@ -67,7 +67,9 @@ public class ProjectController {
 	public ModelAndView showAllProjectSummary(HttpServletRequest request,HttpServletResponse response){
 		String dayStart = request.getParameter("dayStart");
 		String dayEnd = request.getParameter("dayEnd");
-		String order = request.getParameter("order");
+		String commitOrder = request.getParameter("commitOrder");
+		String eventOrder = request.getParameter("eventOrder");
+		
 		String method = request.getParameter("method");
 		if(dayStart == null){
 			dayStart = "20160101";
@@ -78,12 +80,12 @@ public class ProjectController {
 		}
 		List<ProjectCommit> commits = new ArrayList<ProjectCommit>();
 		List<ProjectEvent> events = new ArrayList<ProjectEvent>();
-		if(order == null){
+		if(commitOrder == null){
 			commits = projectService.selectAllProjectCommitRange(dayStart, dayEnd);
 			events = projectService.selectAllProjectEventRange(dayStart, dayEnd);
 		}else{
-			commits = projectService.selectAllProjectCommitRangeSort(dayStart, dayEnd,order,method);
-			events = projectService.selectAllProjectEventRangeSort(dayStart, dayEnd,order,method);
+			commits = projectService.selectAllProjectCommitRangeSort(dayStart, dayEnd,commitOrder,method);
+			events = projectService.selectAllProjectEventRangeSort(dayStart, dayEnd,eventOrder,method);
 		}
 		
 		ModelAndView result = new ModelAndView("projectSummary");

@@ -58,6 +58,25 @@
 <form id="commitRange" class="form-inline" action="/GitlabMonitor/student/summary" method="POST" >
 	<input type="text" id="dayStart" class="form-control" name="dayStart" value="${dayStart}" placeholder="start day"/>
 	<input type="text" id="dayEnd" class="form-control" name="dayEnd" value="${dayEnd}" placeholder="end day"/>
+	<select class="form-control" name="commitOrder">
+		  <option value ="commit_count">commit_count</option>
+		  <option value="add_line">add_line</option>
+		  <option value="delete_line">delete_line</option>
+		  <option value ="java_file">java_file</option>
+		  <option value="total_add">total_add</option>
+		  <option value="autotal_deletedi">total_delete</option>
+	</select>
+	<select class="form-control" name="eventOrder">
+		  <option value ="total">total</option>
+		  <option value="push">push</option>
+		  <option value="issue">issue</option>
+		  <option value ="comment">comment</option>
+		  <option value="create">create</option>
+	</select>
+	<select class="form-control" name="method">
+		  <option value ="desc">desc</option>
+		  <option value ="asc">asc</option>
+	</select>
 	<input type="submit" class="btn btn-primary" value="filter">
 </form>
 
