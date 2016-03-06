@@ -7,6 +7,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap.css">
 <link rel="stylesheet" href="/GitlabMonitor/static/js/jquery/css/ui-lightness/jquery-ui-1.9.1.custom.css" type="text/css" charset="utf-8">
+<link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap-datepicker3.min.css">
+<link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap-datepicker3.standalone.min.css">
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -72,4 +74,17 @@
  <script src="/GitlabMonitor/static/js/team.js"></script> 
  <script src="/GitlabMonitor/static/js/library/angular.min.js"></script>
  <script src="/GitlabMonitor/static/js/library/bootstrap.min.js"></script>
+   <script src="/GitlabMonitor/static/js/bootstrap-datepicker.min.js"></script>
+ <script type="text/javascript">
+ $('#dayStart').datepicker({
+	    format: "yyyymmdd",
+	    autoclose: true,
+	    todayHighlight: true
+ });
+ $('#dayEnd').datepicker({
+	    format: "yyyymmdd",
+	    autoclose: true,
+	    todayHighlight: true
+});
+ </script>
 </html>
