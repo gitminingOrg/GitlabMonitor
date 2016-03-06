@@ -26,11 +26,12 @@ public class StudentDao extends BaseDaoImpl{
 	}
 	
 	public List<StudentCommit> selectTeamStudentCommitRange(String startDay, String endDay, String team){
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("startDay", startDay);
-		params.put("endDay", endDay);
-		params.put("team", team);
-		return sqlSession.selectList("student.selectTeamStudentCommitRange", params);
+//		Map<String, Object> params = new HashMap<String, Object>();
+//		params.put("startDay", startDay);
+//		params.put("endDay", endDay);
+//		params.put("team", team);
+//		return sqlSession.selectList("student.selectTeamStudentCommitRange", params);
+		return selectAllStudentCommitRangeSort(startDay, endDay, "commit_count", "desc");
 	}
 	
 	public List<StudentCommit> selectAllStudentCommitRangeSort(String startDay, String endDay, String order, String method){
@@ -60,10 +61,11 @@ public class StudentDao extends BaseDaoImpl{
 	}
 	
 	public List<StudentEvent> selectAllStudentEventRange(String startDay, String endDay){
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("startDay", startDay);
-		params.put("endDay", endDay);
-		return sqlSession.selectList("student.selectAllStudentEventRange", params);
+//		Map<String, Object> params = new HashMap<String, Object>();
+//		params.put("startDay", startDay);
+//		params.put("endDay", endDay);
+//		return sqlSession.selectList("student.selectAllStudentEventRange", params);
+		return selectAllStudentEventRangeSort(startDay, endDay, "total", "desc");
 	}
 	
 	public List<StudentEvent> selectAllStudentEventRangeSort(String startDay, String endDay, String order, String method){

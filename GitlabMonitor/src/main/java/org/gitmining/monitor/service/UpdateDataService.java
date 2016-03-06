@@ -41,7 +41,7 @@ public class UpdateDataService {
 			projectEvent.setDay(sdf.format(calendar.getTime()));
 			projectEvent.setIssue(random.nextInt(10));
 			projectEvent.setPush(random.nextInt(10));
-			projectEvent.setTeam("testTeam31");
+			projectEvent.setTeam("testTeam3");
 			projectEvent.setTotal(random.nextInt(10));
 			projectDao.insertProjectEvent(projectEvent);
 			try {

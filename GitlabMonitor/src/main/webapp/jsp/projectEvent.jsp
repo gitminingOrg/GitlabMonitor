@@ -7,6 +7,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap.css">
 <link rel="stylesheet" href="/GitlabMonitor/static/js/jquery/css/ui-lightness/jquery-ui-1.9.1.custom.css" type="text/css" charset="utf-8">
+<link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap-datepicker3.min.css">
+<link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap-datepicker3.standalone.min.css">
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -55,7 +57,7 @@
 <div class="container">
 <h2>Team Event</h2>
 	<form id="commitRange" class="form-inline">
-		<input type="text" id="team" class="form-control" placeholder="team name"/>
+		<input type="text" id="team" class="form-control" value="${team}" placeholder="team name"/>
 		<input type="text" id="dayStart" class="form-control" placeholder="start day"/>
 		<input type="text" id="dayEnd" class="form-control" placeholder="end day"/>
 		<input type="button" class="btn btn-primary" value="search" onclick="projectEvent(document.getElementById('team').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value);">
@@ -71,4 +73,17 @@
  <script src="/GitlabMonitor/static/js/teamEvent.js"></script> 
  <script src="/GitlabMonitor/static/js/library/angular.min.js"></script>
  <script src="/GitlabMonitor/static/js/library/bootstrap.min.js"></script>
+  <script src="/GitlabMonitor/static/js/bootstrap-datepicker.min.js"></script>
+ <script type="text/javascript">
+ $('#dayStart').datepicker({
+	    format: "yyyymmdd",
+	    autoclose: true,
+	    todayHighlight: true
+ });
+ $('#dayEnd').datepicker({
+	    format: "yyyymmdd",
+	    autoclose: true,
+	    todayHighlight: true
+});
+ </script>
 </html>

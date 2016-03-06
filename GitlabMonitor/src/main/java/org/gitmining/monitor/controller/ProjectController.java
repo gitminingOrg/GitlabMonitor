@@ -34,12 +34,20 @@ public class ProjectController {
 	@RequestMapping(value="/project/commit")
 	public ModelAndView showProjectCommitPage(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView result = new ModelAndView("projectCommit");
+		String team = request.getParameter("team");
+		if(team != null){
+			result.addObject("team", team);
+		}
 		return result;
 	}
 	
 	@RequestMapping(value="/project/event")
 	public ModelAndView showProjectEventPage(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView result = new ModelAndView("projectEvent");
+		String team = request.getParameter("team");
+		if(team != null){
+			result.addObject("team", team);
+		}
 		return result;
 	}
 	@RequestMapping(value="/project/team")
@@ -81,7 +89,8 @@ public class ProjectController {
 		ModelAndView result = new ModelAndView("projectSummary");
 		result.addObject("commits", commits);
 		result.addObject("events", events);
-		
+		result.addObject("dayStart", dayStart);
+		result.addObject("dayEnd", dayEnd);
 		return result;
 	}
 	@RequestMapping("/project/teammember")

@@ -19,10 +19,11 @@ public class ProjectDao extends BaseDaoImpl{
 	}
 	
 	public List<ProjectCommit> selectAllProjectCommitRange(String startDay, String endDay){
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("startDay", startDay);
-		params.put("endDay", endDay);
-		return sqlSession.selectList("project.selectAllProjectCommitRange", params);
+//		Map<String, Object> params = new HashMap<String, Object>();
+//		params.put("startDay", startDay);
+//		params.put("endDay", endDay);
+//		return sqlSession.selectList("project.selectAllProjectCommitRange", params);
+		return selectAllProjectCommitRangeSort(startDay, endDay, "commit_count", "desc");
 	}
 	
 	public List<ProjectCommit> selectAllProjectCommitRangeSort(String startDay, String endDay, String order, String method){
@@ -52,10 +53,11 @@ public class ProjectDao extends BaseDaoImpl{
 	}
 	
 	public List<ProjectEvent> selectAllProjectEventRange(String startDay, String endDay){
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("startDay", startDay);
-		params.put("endDay", endDay);
-		return sqlSession.selectList("project.selectAllProjectEventRange", params);
+//		Map<String, Object> params = new HashMap<String, Object>();
+//		params.put("startDay", startDay);
+//		params.put("endDay", endDay);
+//		return sqlSession.selectList("project.selectAllProjectEventRange", params);
+		return selectAllProjectEventRangeSort(startDay, endDay, "total", "desc");
 	}
 	
 	public List<ProjectEvent> selectAllProjectEventRangeSort(String startDay, String endDay, String order, String method){

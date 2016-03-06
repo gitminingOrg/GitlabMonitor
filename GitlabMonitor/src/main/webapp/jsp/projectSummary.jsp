@@ -7,6 +7,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap.css">
 <link rel="stylesheet" href="/GitlabMonitor/static/js/jquery/css/ui-lightness/jquery-ui-1.9.1.custom.css" type="text/css" charset="utf-8">
+<link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap-datepicker3.min.css">
+<link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap-datepicker3.standalone.min.css">
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -54,8 +56,8 @@
 <div class="container">
 <h2>Team Summary</h2>
 <form id="commitRange" class="form-inline" action="/GitlabMonitor/project/summary" method="POST" >
-	<input type="text" id="dayStart" class="form-control" name="dayStart" placeholder="start day"/>
-	<input type="text" id="dayEnd" class="form-control" name="dayEnd" placeholder="end day"/>
+	<input type="text" id="dayStart" class="form-control" name="dayStart" value="${dayStart}" placeholder="start day"/>
+	<input type="text" id="dayEnd" class="form-control" name="dayEnd" value="${dayEnd}" placeholder="end day"/>
 	<input type="submit" class="btn btn-primary" value="filter">
 </form>
 
@@ -64,7 +66,7 @@
 	<thead><tr><th>name</th> <th>commit_count</th> <th>add_line</th> <th>delete_line</th> <th>java_file</th> <th>total_add</th> <th>total_delete</th></tr></thead>
 	<tbody>
 	<c:forEach items="${commits}" var="commit">
-		<tr><th>${commit.team}</th><th>${commit.commit_count}</th><th>${commit.add_line}</th><th>${commit.delete_line}</th>
+		<tr><th><a href="/GitlabMonitor/project/commit">${commit.team}</a></th><th>${commit.commit_count}</th><th>${commit.add_line}</th><th>${commit.delete_line}</th>
 		<th>${commit.java_file}</th><th>${commit.total_add}</th><th>${commit.total_delete}</th></tr>
 	</c:forEach>	
 	</tbody>
@@ -75,7 +77,7 @@
 	<thead><tr><th>name</th> <th>push</th> <th>issue</th> <th>comment</th> <th>create</th> <th>total</th></tr></thead>
 	<tbody>
 	<c:forEach items="${events}" var="event">
-		<tr><th>${event.team}</th><th>${event.push}</th><th>${event.issue}</th><th>${event.comment}</th>
+		<tr><th><a href="/GitlabMonitor/project/event?team=${event.team}">${event.team}</a></th><th>${event.push}</th><th>${event.issue}</th><th>${event.comment}</th>
 		<th>${event.create}</th><th>${event.total}</th></tr>
 	</c:forEach>	
 	</tbody>
@@ -88,4 +90,17 @@
  <script src="/GitlabMonitor/static/js/library/sand-signika.js"></script>
  <script src="/GitlabMonitor/static/js/library/angular.min.js"></script>
  <script src="/GitlabMonitor/static/js/library/bootstrap.min.js"></script>
+  <script src="/GitlabMonitor/static/js/bootstrap-datepicker.min.js"></script>
+ <script type="text/javascript">
+ $('#dayStart').datepicker({
+	    format: "yyyymmdd",
+	    autoclose: true,
+	    todayHighlight: true
+ });
+ $('#dayEnd').datepicker({
+	    format: "yyyymmdd",
+	    autoclose: true,
+	    todayHighlight: true
+});
+ </script>
 </html>

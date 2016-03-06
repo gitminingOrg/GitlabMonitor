@@ -35,12 +35,20 @@ public class StudentController {
 	@RequestMapping(value="/student/commit")
 	public ModelAndView showStudentCommitPage(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView result = new ModelAndView("studentCommit");
+		String student = request.getParameter("student");
+		if(student != null){
+			result.addObject("student", student);
+		}
 		return result;
 	}
 	
 	@RequestMapping(value="/student/event")
 	public ModelAndView showStudentEventPage(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView result = new ModelAndView("studentEvent");
+		String student = request.getParameter("student");
+		if(student != null){
+			result.addObject("student", student);
+		}
 		return result;
 	}
 	
@@ -75,7 +83,8 @@ public class StudentController {
 		ModelAndView result = new ModelAndView("studentSummary");
 		result.addObject("commits", commits);
 		result.addObject("events", events);
-		
+		result.addObject("dayStart", dayStart);
+		result.addObject("dayEnd", dayEnd);
 		return result;
 	}
 	
