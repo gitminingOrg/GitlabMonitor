@@ -1,8 +1,56 @@
-var team = $("#team").text();
-var startDay = $("#startDay").text();
-var endDay = $("#endDay").text();
+function projectComment(team,token,sen){
+	var url = "/GitlabMonitor/project/comment/submit"
+		$.ajax(url, {
+			type : 'POST',
+			data : {
+				"team" : team,
+				"token" : token,
+				"sen" : sen,
+			},
+			success : function(data, textStatus) {
+				if(data.status == 0){
+					alert(data.reason);
+				}else{
+						var url1 = "/GitlabMonitor/project/comment"
+						$.ajax(url1, {
+							type : 'POST',
+							data : {
+								"team" : team,
+							},
+							success : function(data, textStatus) {
+								var value = data;
+								var result = "";
+								for(var i in value){
+									result=result+"<p>"+value[i].words+"--"+value[i].time+"</p>";
+								}
+								$('#words').html(
+									result
+								)
+							}
+						});
+				}
+			}
+		});
 
+}
 function projectCommit(team,startDay,endDay){
+	var url1 = "/GitlabMonitor/project/comment"
+		$.ajax(url1, {
+			type : 'POST',
+			data : {
+				"team" : team,
+			},
+			success : function(data, textStatus) {
+				var value = data;
+				var result = "";
+				for(var i in value){
+					result=result+"<p>"+value[i].words+"--"+value[i].time+"</p>";
+				}
+				$('#words').html(
+					result
+				)
+			}
+		});
 	//repositories per user
 	var url = "/GitlabMonitor/project/commit/range"
 		$.ajax(url, {

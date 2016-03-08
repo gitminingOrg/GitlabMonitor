@@ -4,12 +4,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.gitmining.monitor.bean.ProjectComment;
 import org.gitmining.monitor.bean.ProjectCommit;
 import org.gitmining.monitor.bean.ProjectEvent;
+import org.gitmining.monitor.bean.StudentComment;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class ProjectDao extends BaseDaoImpl{
+	public boolean insertProjectComment(ProjectComment projectComment){
+		return sqlSession.insert("project.insertProjectComment", projectComment) == 1 ?true:false;
+	}
+	
+	public List<ProjectComment> selectProjectComment(String team){
+		return sqlSession.selectList("project.selectProjectComment", team);
+	}
+	
+	public Integer selectProjectCommentCount(String team, String token,String time){
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("team", team);
+		params.put("token", token);
+		params.put("time", time);
+		return sqlSession.selectOne("project.selectProjectCommentCount",params);
+	}
 	public List<ProjectCommit> selectProjectCommitRange(String team, String startDay, String endDay){
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("team", team);

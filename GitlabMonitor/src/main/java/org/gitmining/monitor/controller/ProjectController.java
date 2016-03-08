@@ -9,8 +9,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.gitmining.monitor.bean.ProjectComment;
 import org.gitmining.monitor.bean.ProjectCommit;
 import org.gitmining.monitor.bean.ProjectEvent;
+import org.gitmining.monitor.bean.StudentComment;
 import org.gitmining.monitor.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,20 @@ import org.springframework.web.servlet.ModelAndView;
 public class ProjectController {
 	@Autowired
 	private ProjectService projectService;
+	
+	@RequestMapping(value="/project/comment")
+	public List<ProjectComment> getProjectComment(HttpServletRequest request,HttpServletResponse response){
+		String team = request.getParameter("team");
+		return projectService.getProjectComments(team);
+	}
+	
+	@RequestMapping(value="/project/comment/submit")
+	public Map<String,Object> getProjectCommentSubmit(HttpServletRequest request,HttpServletResponse response){
+		String team = request.getParameter("team");
+		String token = request.getParameter("token");
+		String words = request.getParameter("sen");
+		return projectService.insertProjectComments(team, token, words);
+	}
 	
 	@RequestMapping(value="/project/commit/range")
 	public Map<String, List> getProjectCommitItemRange(HttpServletRequest request,HttpServletResponse response){

@@ -57,7 +57,7 @@
 </nav>
 <div class="container">
 
-<div id="content" class="col-md-10">
+<div id="content" class="container">
 <h2>Project Commit</h2>
 <form id="commitRange" class="form-inline">
 	<input type="text" class="form-control" id="team" placeholder="team name"/>
@@ -68,15 +68,18 @@
 <div id="user"></div>
 </div>
 
-<div id="board" class="col-md-2">
+<div id="board" class="container">
 <h1>吐槽板</h1>
+<form class="form-inline">
+<input type="text" class="form-control" id="sen" placeholder="say something"/>
+<input type="text" class="form-control" id="token" placeholder="token"/>
+<input type="button" class="btn btn-primary" value="commit" onclick="projectComment(document.getElementById('team').value,document.getElementById('token').value,document.getElementById('sen').value);">
+</form>
 <div id="words">
-<p>1. 为什么这个人这么懒，这么懒，这么懒，这么懒，这么懒，这么懒，这么懒，这么懒。。。。。。</p>
-<p>2. 为什么这个人这么懒，这么懒，这么懒，这么懒，这么懒，这么懒，这么懒，这么懒。。。。。。</p>
+<c:forEach items="${comments}" var="comment">
+	<p>${comment.words} -- ${comment.time}</p>
+</c:forEach>
 </div>
-<input type="text" class="form-control" id="words" placeholder="say something"/>
-<input type="text" class="form-control" id="login" placeholder="login"/>
-<input type="button" class="btn btn-primary" value="commit">
 </div>
 
 

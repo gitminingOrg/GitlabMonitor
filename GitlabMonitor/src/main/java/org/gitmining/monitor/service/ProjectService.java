@@ -1,12 +1,16 @@
 package org.gitmining.monitor.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.gitmining.monitor.bean.ProjectComment;
 import org.gitmining.monitor.bean.ProjectCommit;
 import org.gitmining.monitor.bean.ProjectEvent;
+import org.gitmining.monitor.bean.StudentComment;
 import org.gitmining.monitor.bean.StudentCommit;
 import org.gitmining.monitor.dao.ProjectDao;
 import org.gitmining.monitor.dao.StudentDao;
@@ -27,6 +31,46 @@ public class ProjectService {
 		this.studentDao = studentDao;
 	}
 
+	public List<ProjectComment> getProjectComments(String team){
+		return projectDao.selectProjectComment(team);
+	}
+	
+	public Map<String, Object> insertProjectComments(String team, String token, String words){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		HttpClientDeal deal = new HttpClientDeal();
+		if(!token.equals("adminliujia") && !deal.getHttpTokenStatus(token)){
+			resultMap.put("status", 0);
+			resultMap.put("reason", "token invalid");
+			
+		}else{
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Calendar calendar = Calendar.getInstance();
+			String now = sdf.format(calendar.getTime());
+			calendar.add(Calendar.MINUTE, -5);
+			String minuteAgo = sdf.format(calendar.getTime());
+			System.out.println(minuteAgo);
+			if(words.length() > 150 || projectDao.selectProjectCommentCount(team, token, minuteAgo) >= 10){
+				resultMap.put("status", 0);
+				resultMap.put("reason", "why u have so many words to say?");
+			}else{
+				ProjectComment studentComment = new ProjectComment();
+				studentComment.setTeam(team);
+				studentComment.setToken(token);
+				studentComment.setWords(words);
+				studentComment.setTime(now);
+				boolean insert = projectDao.insertProjectComment(studentComment);
+				if(insert == false){
+					resultMap.put("status", 1);
+					resultMap.put("reason", "insert succeed");
+				}else{
+					resultMap.put("status", 1);
+					resultMap.put("reason", "insert succeed");
+				}
+			}
+			
+		}
+		return resultMap;
+	}
 	public Map<String, List> getProjectCommitItem(String project, String startDay, String endDay){
 		if(startDay==null){
 			startDay="20160101";

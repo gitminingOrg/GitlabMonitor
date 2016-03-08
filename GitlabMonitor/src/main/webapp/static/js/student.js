@@ -1,8 +1,3 @@
-var student = $("#student").text();
-var startDay = $("#startDay").text();
-var endDay = $("#endDay").text();
-
-
 function studentComment(student,token,sen){
 	var url = "/GitlabMonitor/student/comment/submit"
 		$.ajax(url, {
@@ -15,27 +10,28 @@ function studentComment(student,token,sen){
 			success : function(data, textStatus) {
 				if(data.status == 0){
 					alert(data.reason);
+				}else{
+						var url1 = "/GitlabMonitor/student/comment"
+						$.ajax(url1, {
+							type : 'POST',
+							data : {
+								"student" : student,
+							},
+							success : function(data, textStatus) {
+								var value = data;
+								var result = "";
+								for(var i in value){
+									result=result+"<p>"+value[i].words+"--"+value[i].time+"</p>";
+								}
+								$('#words').html(
+									result
+								)
+							}
+						});
 				}
 			}
 		});
-	Pause(this,1000);
-	var url1 = "/GitlabMonitor/student/comment"
-		$.ajax(url1, {
-			type : 'POST',
-			data : {
-				"student" : student,
-			},
-			success : function(data, textStatus) {
-				var value = data;
-				var result = "";
-				for(var i in value){
-					result=result+"<p>"+value[i].words+"--"+value[i].time+"</p>";
-				}
-				$('#words').html(
-					result
-				)
-			}
-		});
+
 }
 function studentCommit(student,startDay,endDay){
 	//repositories per user

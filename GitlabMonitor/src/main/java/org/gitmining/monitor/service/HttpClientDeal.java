@@ -7,8 +7,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 public class HttpClientDeal {
-//	http://114.55.35.12/api/v3/users?access_token=BzkEVfK_jwk2ytzdx5-h
-	
 	public static void main(String[] args){
 		new HttpClientDeal().getHttpResponse("http://114.55.35.12/api/v3/users?private_token=BzkEVfK_jwk2ytzdx5-h");
 		
@@ -40,7 +38,7 @@ public class HttpClientDeal {
 	}
 	
 	public boolean getHttpTokenStatus(String token){
-		String head = "http://114.55.35.12/api/v3/users?access_token=";
+		String head = "http://114.55.35.12/api/v3/users?private_token=";
 		if(getHttpResponseCode(head+token) == 200){
 			return true;
 		}else{

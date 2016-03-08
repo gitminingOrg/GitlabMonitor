@@ -22,7 +22,6 @@ public class StudentService {
 	}
 	
 	public List<StudentComment> getStudentComments(String student){
-		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaa");
 		return studentDao.selectStudentComment(student);
 	}
 	
@@ -34,12 +33,12 @@ public class StudentService {
 			resultMap.put("reason", "token invalid");
 			
 		}else{
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-mm HH:mm:ss");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Calendar calendar = Calendar.getInstance();
 			String now = sdf.format(calendar.getTime());
 			calendar.add(Calendar.MINUTE, -5);
 			String minuteAgo = sdf.format(calendar.getTime());
-			if(words.length() > 150 || studentDao.selectStudentCommentCount(student, token, minuteAgo) >= 25){
+			if(words.length() > 150 || studentDao.selectStudentCommentCount(student, token, minuteAgo) >= 10){
 				resultMap.put("status", 0);
 				resultMap.put("reason", "why u have so many words to say?");
 			}else{
