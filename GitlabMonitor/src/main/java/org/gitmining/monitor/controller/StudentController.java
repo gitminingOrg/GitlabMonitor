@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.gitmining.monitor.bean.StudentComment;
 import org.gitmining.monitor.bean.StudentCommit;
 import org.gitmining.monitor.bean.StudentEvent;
 import org.gitmining.monitor.service.StudentService;
@@ -38,6 +39,8 @@ public class StudentController {
 		String student = request.getParameter("student");
 		if(student != null){
 			result.addObject("student", student);
+			List<StudentComment> comments = studentService.getStudentComments(student);
+			result.addObject("comments", comments);
 		}
 		return result;
 	}

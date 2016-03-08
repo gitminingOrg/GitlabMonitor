@@ -56,6 +56,8 @@
   </div><!-- /.container-fluid -->
 </nav>
 <div class="container">
+
+<div id="content" class="col-md-10">
 <h2>Project Commit</h2>
 <form id="commitRange" class="form-inline">
 	<input type="text" class="form-control" id="team" placeholder="team name"/>
@@ -66,6 +68,17 @@
 <div id="user"></div>
 </div>
 
+<div id="board" class="col-md-2">
+<h1>吐槽板</h1>
+<p>1. 为什么这个人这么懒，这么懒，这么懒，这么懒，这么懒，这么懒，这么懒，这么懒。。。。。。</p>
+<p>2. 为什么这个人这么懒，这么懒，这么懒，这么懒，这么懒，这么懒，这么懒，这么懒。。。。。。</p>
+<input type="text" class="form-control" id="words" placeholder="say something"/>
+<input type="text" class="form-control" id="login" placeholder="login"/>
+<input type="button" class="btn btn-primary" value="commit">
+</div>
+
+
+</div>
 </body>
  <script src="/GitlabMonitor/static/js/library/jquery-1.11.3.js"></script>
  <script src="/GitlabMonitor/static/js/library/highcharts.js"></script>

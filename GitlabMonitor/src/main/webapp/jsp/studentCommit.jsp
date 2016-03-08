@@ -56,16 +56,25 @@
   </div><!-- /.container-fluid -->
 </nav>
 <div class="container">
+
+<div id="content" class="col-md-10">
 <h2>Student Commit</h2>
-<form id="commitRange" class="form-inline">
-	<input type="text" id="student" class="form-control" value="${student}" placeholder="student name"/>
-	<input type="text" id="dayStart" class="form-control" placeholder="start day"/>
-	<input type="text" id="dayEnd" class="form-control" placeholder="end day"/>
-	<input type="button" class="btn btn-primary" value="search" onclick="studentCommit(document.getElementById('student').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value);">
-</form>
-<div id="user"></div>
+	<form id="commitRange" class="form-inline">
+		<input type="text" id="student" class="form-control" value="${student}" placeholder="student name"/>
+		<input type="text" id="dayStart" class="form-control" placeholder="start day"/>
+		<input type="text" id="dayEnd" class="form-control" placeholder="end day"/>
+		<input type="button" class="btn btn-primary" value="search" onclick="studentCommit(document.getElementById('student').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value);">
+	</form>
+	<div id="user"></div>
 </div>
 
+<div id="board" class="col-md-2">
+<h1>吐槽板</h1>
+<p>1. 为什么这个人这么懒，这么懒，这么懒，这么懒，这么懒，这么懒，这么懒，这么懒。。。。。。</p>
+<p>2. 为什么这个人这么懒，这么懒，这么懒，这么懒，这么懒，这么懒，这么懒，这么懒。。。。。。</p>
+</div>
+
+</div>
 </body>
  <script src="/GitlabMonitor/static/js/library/jquery-1.11.3.js"></script>
  <script src="/GitlabMonitor/static/js/library/highcharts.js"></script>

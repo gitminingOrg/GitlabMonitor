@@ -4,12 +4,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.gitmining.monitor.bean.ProjectEvent;
+import org.gitmining.monitor.bean.StudentComment;
 import org.gitmining.monitor.bean.StudentCommit;
 import org.gitmining.monitor.bean.StudentEvent;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class StudentDao extends BaseDaoImpl{
+	public boolean insertStudentComment(StudentComment studentComment){
+		return sqlSession.insert("student.insertStudentComment", studentComment) == 1 ?true:false;
+	}
+	
+	public List<StudentComment> selectStudentComment(String student){
+		return sqlSession.selectList("student.selectStudentComment", student);
+	}
+	
+	public Integer selectStudentCommentCount(String student, String token,String time){
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("student", student);
+		params.put("token", token);
+		params.put("time", time);
+		return sqlSession.selectOne("student.selectStudentCommentCount",params);
+	}
+	
 	public List<StudentCommit> selectStudentCommitRange(String student, String startDay, String endDay){
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("student", student);
@@ -85,6 +103,7 @@ public class StudentDao extends BaseDaoImpl{
 		params.put("endDay", endDay);
 		return sqlSession.selectList("student.selectStudentEventItemRange", params);
 	}
+	
 	
 	
 }

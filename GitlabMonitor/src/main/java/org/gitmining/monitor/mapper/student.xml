@@ -24,7 +24,32 @@
 		<result property="create" column="create" />	
 		<result property="total" column="total" />	
 	</resultMap>
-
+	
+	<resultMap type="org.gitmining.monitor.bean.StudentComment" id="studentComment">
+		<result property="id" column="id" />
+		<result property="student" column="student" />
+		<result property="token" column="token" />
+		<result property="words" column="words" />
+		<result property="time" column="time" />
+	</resultMap>
+	
+	<select id="selectStudentComment" resultMap="studentComment">
+		SELECT 
+		id, student, token,words,`time`
+		FROM
+		studentComment
+		WHERE
+		student=#{student} order by `time` desc
+	</select>
+	
+	<insert id="insertStudentComment" parameterType="studentComment">
+		INSERT INTO  studentComment(student, token,words,`time`) VALUES(#{student}, #{token},#{words},#{time});
+	</insert>
+	
+	<insert id="selectStudentCommentCount" parameterType="java.util.Map">
+		select count(*) from studentComment where student=#{student} AND token=#{token} AND time>=#{time}
+	</insert>
+	
 	<select id="selectStudentCommitRange" parameterType="java.util.Map" resultMap="studentCommit">
 		SELECT 
 		id, student, `day`, commit_count, add_line, delete_line,java_file,total_commit,total_add,total_delete
