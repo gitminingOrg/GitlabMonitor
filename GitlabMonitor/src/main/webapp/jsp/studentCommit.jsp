@@ -70,8 +70,14 @@
 
 <div id="board" class="col-md-2">
 <h1>吐槽板</h1>
-<p>1. 为什么这个人这么懒，这么懒，这么懒，这么懒，这么懒，这么懒，这么懒，这么懒。。。。。。</p>
-<p>2. 为什么这个人这么懒，这么懒，这么懒，这么懒，这么懒，这么懒，这么懒，这么懒。。。。。。</p>
+<div id="words">
+<c:forEach items="${comments}" var="comment">
+	<p>${comment.words} -- ${comment.time}</p>
+</c:forEach>
+</div>
+<input type="text" class="form-control" id="sen" placeholder="say something"/>
+<input type="text" class="form-control" id="token" placeholder="token"/>
+<input type="button" class="btn btn-primary" value="commit" onclick="studentComment(document.getElementById('student').value,document.getElementById('token').value,document.getElementById('sen').value);">
 </div>
 
 </div>

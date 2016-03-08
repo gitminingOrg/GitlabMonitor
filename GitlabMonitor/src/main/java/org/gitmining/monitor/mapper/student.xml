@@ -42,13 +42,13 @@
 		student=#{student} order by `time` desc
 	</select>
 	
-	<insert id="insertStudentComment" parameterType="studentComment">
+	<insert id="insertStudentComment" parameterType="org.gitmining.monitor.bean.StudentComment">
 		INSERT INTO  studentComment(student, token,words,`time`) VALUES(#{student}, #{token},#{words},#{time});
 	</insert>
 	
-	<insert id="selectStudentCommentCount" parameterType="java.util.Map">
+	<select id="selectStudentCommentCount" parameterType="java.util.Map" resultType="java.lang.Integer">
 		select count(*) from studentComment where student=#{student} AND token=#{token} AND time>=#{time}
-	</insert>
+	</select>
 	
 	<select id="selectStudentCommitRange" parameterType="java.util.Map" resultMap="studentCommit">
 		SELECT 

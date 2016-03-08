@@ -28,6 +28,12 @@ public class ProjectService {
 	}
 
 	public Map<String, List> getProjectCommitItem(String project, String startDay, String endDay){
+		if(startDay==null){
+			startDay="20160101";
+		}
+		if(endDay==null){
+			endDay="20200101";
+		}
 		Map<String, List> result = new HashMap<String, List>();
 		result.put("commit_count", projectDao.selectProjectCommitItemRange("commit_count",project,startDay,endDay));
 		result.put("add_line", projectDao.selectProjectCommitItemRange("add_line",project,startDay,endDay));
@@ -38,6 +44,12 @@ public class ProjectService {
 	}
 	
 	public Map<String, List> getProjectEventItem(String project, String startDay, String endDay){
+		if(startDay==null){
+			startDay="20160101";
+		}
+		if(endDay==null){
+			endDay="20200101";
+		}
 		Map<String, List> result = new HashMap<String, List>();
 		result.put("push", projectDao.selectProjectEventItemRange("push",project,startDay,endDay));
 		result.put("issue", projectDao.selectProjectEventItemRange("issue",project,startDay,endDay));
@@ -49,26 +61,56 @@ public class ProjectService {
 	}
 	
 	public List<ProjectCommit> selectAllProjectCommitRange(String startDay, String endDay){
+		if(startDay==null){
+			startDay="20160101";
+		}
+		if(endDay==null){
+			endDay="20200101";
+		}
 		List<ProjectCommit> result = projectDao.selectAllProjectCommitRange(startDay, endDay);
 		return result;
 	}
 	
 	public List<ProjectCommit> selectAllProjectCommitRangeSort(String startDay, String endDay, String order, String method){
+		if(startDay==null){
+			startDay="20160101";
+		}
+		if(endDay==null){
+			endDay="20200101";
+		}
 		List<ProjectCommit> result = projectDao.selectAllProjectCommitRangeSort(startDay, endDay, order, method);
 		return result;
 	}
 	
 	public List<ProjectEvent> selectAllProjectEventRange(String startDay, String endDay){
+		if(startDay==null){
+			startDay="20160101";
+		}
+		if(endDay==null){
+			endDay="20200101";
+		}
 		List<ProjectEvent> result = projectDao.selectAllProjectEventRange(startDay, endDay);
 		return result;
 	}
 	
 	public List<ProjectEvent> selectAllProjectEventRangeSort(String startDay, String endDay, String order, String method){
+		if(startDay==null){
+			startDay="20160101";
+		}
+		if(endDay==null){
+			endDay="20200101";
+		}
 		List<ProjectEvent> result = projectDao.selectAllProjectEventRangeSort(startDay, endDay, order, method);
 		return result;
 	}
 	
 	public Map<String, Object> selectTeamStudentCommitRange(String team,String startDay, String endDay){
+		if(startDay==null){
+			startDay="20160101";
+		}
+		if(endDay==null){
+			endDay="20200101";
+		}
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<StudentCommit> commits = studentDao.selectTeamStudentCommitRange(startDay, endDay, team);
 		String[] statistics = {"commit_count","add_line","delete_line","java_file","total_commit","total_add","total_delete"};

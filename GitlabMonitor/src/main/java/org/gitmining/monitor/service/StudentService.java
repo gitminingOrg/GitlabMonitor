@@ -22,13 +22,14 @@ public class StudentService {
 	}
 	
 	public List<StudentComment> getStudentComments(String student){
+		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaa");
 		return studentDao.selectStudentComment(student);
 	}
 	
 	public Map<String, Object> insertStudentComments(String student, String token, String words){
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		HttpClientDeal deal = new HttpClientDeal();
-		if(token !="adminliujia" && !deal.getHttpTokenStatus(token)){
+		if(!token.equals("adminliujia") && !deal.getHttpTokenStatus(token)){
 			resultMap.put("status", 0);
 			resultMap.put("reason", "token invalid");
 			
@@ -49,8 +50,8 @@ public class StudentService {
 				studentComment.setTime(now);
 				boolean insert = studentDao.insertStudentComment(studentComment);
 				if(insert == false){
-					resultMap.put("status", 0);
-					resultMap.put("reason", "insert failed");
+					resultMap.put("status", 1);
+					resultMap.put("reason", "insert succeed");
 				}else{
 					resultMap.put("status", 1);
 					resultMap.put("reason", "insert succeed");
@@ -63,6 +64,12 @@ public class StudentService {
 	
 	public Map<String, List> getStudentCommitItem(String student, String startDay, String endDay){
 		Map<String, List> result = new HashMap<String, List>();
+		if(startDay==null){
+			startDay="20160101";
+		}
+		if(endDay==null){
+			endDay="20200101";
+		}
 		result.put("commit_count", studentDao.selectStudentCommitItemRange("commit_count",student,startDay,endDay));
 		result.put("add_line", studentDao.selectStudentCommitItemRange("add_line",student,startDay,endDay));
 		result.put("delete_line", studentDao.selectStudentCommitItemRange("delete_line",student,startDay,endDay));
@@ -72,6 +79,12 @@ public class StudentService {
 	}
 
 	public Map<String, List> getStudentEventItem(String student, String startDay, String endDay){
+		if(startDay==null){
+			startDay="20160101";
+		}
+		if(endDay==null){
+			endDay="20200101";
+		}
 		Map<String, List> result = new HashMap<String, List>();
 		result.put("push", studentDao.selectStudentEventItemRange("push",student,startDay,endDay));
 		result.put("issue", studentDao.selectStudentEventItemRange("issue",student,startDay,endDay));
@@ -83,11 +96,23 @@ public class StudentService {
 	}
 	
 	public List<StudentCommit> selectAllStudentCommitRange(String startDay, String endDay){
+		if(startDay==null){
+			startDay="20160101";
+		}
+		if(endDay==null){
+			endDay="20200101";
+		}
 		List<StudentCommit> result = studentDao.selectAllStudentCommitRange(startDay, endDay);
 		return result;
 	}
 	
 	public List<StudentCommit> selectAllStudentCommitRangeSort(String startDay, String endDay, String order, String method){
+		if(startDay==null){
+			startDay="20160101";
+		}
+		if(endDay==null){
+			endDay="20200101";
+		}
 		List<StudentCommit> result = studentDao.selectAllStudentCommitRangeSort(startDay, endDay, order, method);
 		return result;
 	}

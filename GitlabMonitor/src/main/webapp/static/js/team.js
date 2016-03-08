@@ -2,10 +2,6 @@ var team = $("#team").text();
 var startDay = $("#startDay").text();
 var endDay = $("#endDay").text();
 
-$(document).ready(function() {
-	projectCommit(team,startDay,endDay);
-});
-
 function projectCommit(team,startDay,endDay){
 	//repositories per user
 	var url = "/GitlabMonitor/project/commit/range"

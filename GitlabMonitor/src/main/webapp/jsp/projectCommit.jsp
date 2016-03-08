@@ -70,8 +70,10 @@
 
 <div id="board" class="col-md-2">
 <h1>吐槽板</h1>
+<div id="words">
 <p>1. 为什么这个人这么懒，这么懒，这么懒，这么懒，这么懒，这么懒，这么懒，这么懒。。。。。。</p>
 <p>2. 为什么这个人这么懒，这么懒，这么懒，这么懒，这么懒，这么懒，这么懒，这么懒。。。。。。</p>
+</div>
 <input type="text" class="form-control" id="words" placeholder="say something"/>
 <input type="text" class="form-control" id="login" placeholder="login"/>
 <input type="button" class="btn btn-primary" value="commit">

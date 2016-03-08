@@ -32,16 +32,30 @@ public class StudentController {
 		String dayEnd = request.getParameter("dayEnd");
 		return studentService.getStudentCommitItem(student, dayStart, dayEnd);
 	}
+	@RequestMapping(value="/student/comment")
+	public List<StudentComment> getStudentComment(HttpServletRequest request,HttpServletResponse response){
+		String student = request.getParameter("student");
+		return studentService.getStudentComments(student);
+	}
+	
+	@RequestMapping(value="/student/comment/submit")
+	public Map<String,Object> getStudentCommentSubmit(HttpServletRequest request,HttpServletResponse response){
+		String student = request.getParameter("student");
+		String token = request.getParameter("token");
+		String words = request.getParameter("sen");
+		return studentService.insertStudentComments(student, token, words);
+	}
 	
 	@RequestMapping(value="/student/commit")
 	public ModelAndView showStudentCommitPage(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView result = new ModelAndView("studentCommit");
 		String student = request.getParameter("student");
+		List<StudentComment> comments = new ArrayList<StudentComment>();
 		if(student != null){
 			result.addObject("student", student);
-			List<StudentComment> comments = studentService.getStudentComments(student);
-			result.addObject("comments", comments);
+			comments = studentService.getStudentComments(student);
 		}
+		result.addObject("comments", comments);
 		return result;
 	}
 	
