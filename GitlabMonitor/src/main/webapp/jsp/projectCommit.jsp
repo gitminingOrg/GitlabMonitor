@@ -60,7 +60,7 @@
 <div id="content" class="container">
 <h2>Project Commit</h2>
 <form id="commitRange" class="form-inline">
-	<input type="text" class="form-control" id="team" placeholder="team name"/>
+	<input type="text" class="form-control" id="team" placeholder="team name" value="${team}"/>
 	<input type="text" class="form-control" id="dayStart" placeholder="start day"/>
 	<input type="text" class="form-control" id="dayEnd" placeholder="end day"/>
 	<input type="button" class="btn btn-primary" value="search" onclick="projectCommit(document.getElementById('team').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value);">

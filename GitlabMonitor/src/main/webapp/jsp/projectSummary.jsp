@@ -85,7 +85,7 @@
 	<thead><tr><th>name</th> <th>commit_count</th> <th>add_line</th> <th>delete_line</th> <th>java_file</th> <th>total_add</th> <th>total_delete</th></tr></thead>
 	<tbody>
 	<c:forEach items="${commits}" var="commit">
-		<tr><th><a href="/GitlabMonitor/project/commit">${commit.team}</a></th><th>${commit.commit_count}</th><th>${commit.add_line}</th><th>${commit.delete_line}</th>
+		<tr><th><a href="/GitlabMonitor/project/commit?team=${commit.team}">${commit.team}</a></th><th>${commit.commit_count}</th><th>${commit.add_line}</th><th>${commit.delete_line}</th>
 		<th>${commit.java_file}</th><th>${commit.total_add}</th><th>${commit.total_delete}</th></tr>
 	</c:forEach>	
 	</tbody>
