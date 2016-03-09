@@ -53,8 +53,8 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-<div class="container"><h1>别看了，主页没东西</h1><h1>保证没东西</h1><h1>你看到东西，我就嘿嘿嘿</h1></div>
-  
+<div class="col-md-6"><h1>别看了，主页没东西</h1><h1>保证没东西</h1><h1>你看到东西，我就嘿嘿嘿</h1></div>
+<div class="col-md-6"><img alt="图片出不来了" src="/GitlabMonitor/static/img/logo.jpeg" style="width:500px;height:400px;"></div>
 </body>
 <script src="/GitlabMonitor/static/js/library/jquery-1.11.3.js"></script>
 <script src="/GitlabMonitor/static/js/library/bootstrap.min.js"></script>
