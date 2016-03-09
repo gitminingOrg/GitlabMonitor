@@ -112,12 +112,12 @@
   <script src="/GitlabMonitor/static/js/bootstrap-datepicker.min.js"></script>
  <script type="text/javascript">
  $('#dayStart').datepicker({
-	    format: "yyyymmdd",
+	    format: "yyyy-mm-dd",
 	    autoclose: true,
 	    todayHighlight: true
  });
  $('#dayEnd').datepicker({
-	    format: "yyyymmdd",
+	    format: "yyyy-mm-dd",
 	    autoclose: true,
 	    todayHighlight: true
 });

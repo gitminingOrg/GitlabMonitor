@@ -72,7 +72,17 @@
 	</select>
 	
 	
-	<select id="selectProjectCommitItemRange" parameterType="java.util.Map"  resultType="Integer">
+	<select id="selectProjectCommitItemRange" parameterType="java.util.Map" resultType="Integer">
+		SELECT 
+		${item}
+		FROM
+		projectCommit
+		WHERE
+		team=#{team} AND `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} order by `day` asc;
+	</select>
+	
+	
+	<select id="selectProjectCommitItemRangeDay" parameterType="java.util.Map" resultType="String">
 		SELECT 
 		${item}
 		FROM
@@ -102,6 +112,15 @@
 	</select>
 	
 	<select id="selectProjectEventItemRange" parameterType="java.util.Map" resultType="Integer">
+		SELECT 
+		`${item}`
+		FROM
+		projectEvent
+		WHERE
+		team=#{team} AND `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} order by `day` asc;
+	</select>
+	
+	<select id="selectProjectEventItemRangeDay" parameterType="java.util.Map" resultType="String">
 		SELECT 
 		`${item}`
 		FROM

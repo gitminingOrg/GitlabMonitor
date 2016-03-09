@@ -86,10 +86,10 @@ public class ProjectController {
 		
 		String method = request.getParameter("method");
 		if(dayStart == null){
-			dayStart = "20160101";
+			dayStart = "2016-01-01";
 		}
 		if(dayEnd == null){
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			dayEnd = sdf.format(Calendar.getInstance().getTime());
 		}
 		List<ProjectCommit> commits = new ArrayList<ProjectCommit>();
@@ -114,10 +114,10 @@ public class ProjectController {
 		String dayStart = request.getParameter("dayStart");
 		String dayEnd = request.getParameter("dayEnd");
 		if(dayStart == null){
-			dayStart = "20160101";
+			dayStart = "2016-01-01";
 		}
 		if(dayEnd == null){
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			dayEnd = sdf.format(Calendar.getInstance().getTime());
 		}
 		String team = request.getParameter("team");

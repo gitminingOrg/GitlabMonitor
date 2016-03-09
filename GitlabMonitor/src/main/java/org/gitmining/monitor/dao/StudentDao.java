@@ -70,6 +70,15 @@ public class StudentDao extends BaseDaoImpl{
 		return sqlSession.selectList("student.selectStudentCommitItemRange", params);
 	}
 	
+	public List<String> selectStudentCommitItemRangeDay(String item,String student, String startDay, String endDay){
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("item", item);
+		params.put("student", student);
+		params.put("startDay", startDay);
+		params.put("endDay", endDay);
+		return sqlSession.selectList("student.selectStudentCommitItemRangeDay", params);
+	}
+	
 	public List<StudentEvent> selectStudentEventRange(String student, String startDay, String endDay){
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("student", student);
@@ -103,7 +112,14 @@ public class StudentDao extends BaseDaoImpl{
 		params.put("endDay", endDay);
 		return sqlSession.selectList("student.selectStudentEventItemRange", params);
 	}
-	
+	public List<String> selectStudentEventItemRangeDay(String item,String student, String startDay, String endDay){
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("item", item);
+		params.put("student", student);
+		params.put("startDay", startDay);
+		params.put("endDay", endDay);
+		return sqlSession.selectList("student.selectStudentEventItemRangeDay", params);
+	}
 	
 	
 }

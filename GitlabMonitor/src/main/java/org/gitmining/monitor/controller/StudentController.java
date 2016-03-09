@@ -84,10 +84,10 @@ public class StudentController {
 		String method = request.getParameter("method");
 		
 		if(dayStart == null){
-			dayStart = "20160101";
+			dayStart = "2016-01-01";
 		}
 		if(dayEnd == null){
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			dayEnd = sdf.format(Calendar.getInstance().getTime());
 		}
 		List<StudentCommit> commits = new ArrayList<StudentCommit>();

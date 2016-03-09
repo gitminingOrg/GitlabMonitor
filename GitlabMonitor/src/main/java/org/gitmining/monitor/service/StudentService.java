@@ -64,25 +64,25 @@ public class StudentService {
 	public Map<String, List> getStudentCommitItem(String student, String startDay, String endDay){
 		Map<String, List> result = new HashMap<String, List>();
 		if(startDay==null){
-			startDay="20160101";
+			startDay="2016-01-01";
 		}
 		if(endDay==null){
-			endDay="20200101";
+			endDay="2020-01-01";
 		}
 		result.put("commit_count", studentDao.selectStudentCommitItemRange("commit_count",student,startDay,endDay));
 		result.put("add_line", studentDao.selectStudentCommitItemRange("add_line",student,startDay,endDay));
 		result.put("delete_line", studentDao.selectStudentCommitItemRange("delete_line",student,startDay,endDay));
 		result.put("java_file", studentDao.selectStudentCommitItemRange("java_file",student,startDay,endDay));
-		result.put("day", studentDao.selectStudentCommitItemRange("day",student,startDay,endDay));
+		result.put("day", studentDao.selectStudentCommitItemRangeDay("day",student,startDay,endDay));
 		return result;
 	}
 
 	public Map<String, List> getStudentEventItem(String student, String startDay, String endDay){
 		if(startDay==null){
-			startDay="20160101";
+			startDay="2016-01-01";
 		}
 		if(endDay==null){
-			endDay="20200101";
+			endDay="2020-01-01";
 		}
 		Map<String, List> result = new HashMap<String, List>();
 		result.put("push", studentDao.selectStudentEventItemRange("push",student,startDay,endDay));
@@ -90,16 +90,16 @@ public class StudentService {
 		result.put("comment", studentDao.selectStudentEventItemRange("comment",student,startDay,endDay));
 		result.put("create", studentDao.selectStudentEventItemRange("create",student,startDay,endDay));
 		result.put("total", studentDao.selectStudentEventItemRange("total",student,startDay,endDay));
-		result.put("day", studentDao.selectStudentEventItemRange("day",student,startDay,endDay));
+		result.put("day", studentDao.selectStudentEventItemRangeDay("day",student,startDay,endDay));
 		return result;
 	}
 	
 	public List<StudentCommit> selectAllStudentCommitRange(String startDay, String endDay){
 		if(startDay==null){
-			startDay="20160101";
+			startDay="2016-01-01";
 		}
 		if(endDay==null){
-			endDay="20200101";
+			endDay="2020-01-01";
 		}
 		List<StudentCommit> result = studentDao.selectAllStudentCommitRange(startDay, endDay);
 		return result;
@@ -107,10 +107,10 @@ public class StudentService {
 	
 	public List<StudentCommit> selectAllStudentCommitRangeSort(String startDay, String endDay, String order, String method){
 		if(startDay==null){
-			startDay="20160101";
+			startDay="2016-01-01";
 		}
 		if(endDay==null){
-			endDay="20200101";
+			endDay="2020-01-01";
 		}
 		List<StudentCommit> result = studentDao.selectAllStudentCommitRangeSort(startDay, endDay, order, method);
 		return result;

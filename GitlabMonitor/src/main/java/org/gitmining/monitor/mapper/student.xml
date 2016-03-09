@@ -90,6 +90,14 @@
 		student=#{student} AND `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} order by `day` asc;
 	</select>
 	
+	<select id="selectStudentCommitItemRangeDay" parameterType="java.util.Map"  resultType="String">
+		SELECT 
+		${item}
+		FROM
+		studentCommit
+		WHERE
+		student=#{student} AND `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} order by `day` asc;
+	</select>
 	<select id="selectStudentEventRange" resultMap="studentEvent">
 		SELECT 
 		id, student, `day`, push, issue, comment, create,total
@@ -111,6 +119,15 @@
 	</select>
 	
 	<select id="selectStudentEventItemRange" parameterType="java.util.Map" resultType="Integer">
+		SELECT 
+		`${item}`
+		FROM
+		studentEvent
+		WHERE
+		student=#{student} AND `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} order by `day` asc;
+	</select>
+	
+	<select id="selectStudentEventItemRangeDay" parameterType="java.util.Map" resultType="String">
 		SELECT 
 		`${item}`
 		FROM
