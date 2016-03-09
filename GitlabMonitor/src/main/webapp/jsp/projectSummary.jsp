@@ -65,6 +65,7 @@
 		  <option value ="java_file">java_file</option>
 		  <option value="total_add">total_add</option>
 		  <option value="autotal_deletedi">total_delete</option>
+		  <option value ="team">name</option>
 	</select>
 	<select class="form-control" name="eventOrder">
 		  <option value ="total">total</option>
@@ -72,6 +73,7 @@
 		  <option value="issue">issue</option>
 		  <option value ="comment">comment</option>
 		  <option value="create">create</option>
+		  <option value ="team">name</option>
 	</select>
 	<select class="form-control" name="method">
 		  <option value ="desc">desc</option>
@@ -82,10 +84,10 @@
 
 <h3>Team Commit</h3>
 <table class="table table-striped table-bordered">
-	<thead><tr><th>name</th> <th>commit_count</th> <th>add_line</th> <th>delete_line</th> <th>java_file</th> <th>total_add</th> <th>total_delete</th></tr></thead>
+	<thead><tr><th>rank</th><th>name</th> <th>commit_count</th> <th>add_line</th> <th>delete_line</th> <th>java_file</th> <th>total_add</th> <th>total_delete</th></tr></thead>
 	<tbody>
-	<c:forEach items="${commits}" var="commit">
-		<tr><th><a href="/GitlabMonitor/project/commit?team=${commit.team}">${commit.team}</a></th><th>${commit.commit_count}</th><th>${commit.add_line}</th><th>${commit.delete_line}</th>
+	<c:forEach items="${commits}" var="commit" varStatus="status">
+		<tr><th>${ status.index + 1 }</th><th><a href="/GitlabMonitor/project/commit?team=${commit.team}">${commit.team}</a></th><th>${commit.commit_count}</th><th>${commit.add_line}</th><th>${commit.delete_line}</th>
 		<th>${commit.java_file}</th><th>${commit.total_add}</th><th>${commit.total_delete}</th></tr>
 	</c:forEach>	
 	</tbody>
@@ -93,10 +95,10 @@
 
 <h3>Team Event</h3>
 <table class="table table-striped table-bordered">
-	<thead><tr><th>name</th> <th>push</th> <th>issue</th> <th>comment</th> <th>create</th> <th>total</th></tr></thead>
+	<thead><tr><th>rank</th><th>name</th> <th>push</th> <th>issue</th> <th>comment</th> <th>create</th> <th>total</th></tr></thead>
 	<tbody>
-	<c:forEach items="${events}" var="event">
-		<tr><th><a href="/GitlabMonitor/project/event?team=${event.team}">${event.team}</a></th><th>${event.push}</th><th>${event.issue}</th><th>${event.comment}</th>
+	<c:forEach items="${events}" var="event" varStatus="status">
+		<tr><th>${ status.index + 1 }</th><th><a href="/GitlabMonitor/project/event?team=${event.team}">${event.team}</a></th><th>${event.push}</th><th>${event.issue}</th><th>${event.comment}</th>
 		<th>${event.create}</th><th>${event.total}</th></tr>
 	</c:forEach>	
 	</tbody>
