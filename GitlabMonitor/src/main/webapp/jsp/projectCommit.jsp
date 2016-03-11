@@ -35,8 +35,6 @@
             <li><a href="/GitlabMonitor/student/commit">Student Commit</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="/GitlabMonitor/student/event">Student Event</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="/GitlabMonitor/project/team">Team Member</a></li>
           </ul>
         </li>
         
@@ -48,6 +46,8 @@
             <li><a href="/GitlabMonitor/project/commit">Team Commit</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="/GitlabMonitor/project/event">Team Event</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="/GitlabMonitor/project/team">Team Member</a></li>
           </ul>
         </li>
       </ul>
@@ -64,6 +64,7 @@
 	<input type="text" class="form-control" id="dayStart" placeholder="start day"/>
 	<input type="text" class="form-control" id="dayEnd" placeholder="end day"/>
 	<input type="button" class="btn btn-primary" value="search" onclick="projectCommit(document.getElementById('team').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value);">
+	<a href="/GitlabMonitor/project/team?team=${team}" class="btn btn-success">Member Detail</a>
 </form>
 <div id="user"></div>
 </div>
@@ -75,6 +76,7 @@
 <input type="text" class="form-control" id="token" placeholder="token"/>
 <input type="button" class="btn btn-primary" value="commit" onclick="projectComment(document.getElementById('team').value,document.getElementById('token').value,document.getElementById('sen').value);">
 </form>
+
 <div id="words">
 <c:forEach items="${comments}" var="comment">
 	<p>${comment.words} -- ${comment.time}</p>

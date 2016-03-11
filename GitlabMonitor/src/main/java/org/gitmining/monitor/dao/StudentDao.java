@@ -37,19 +37,19 @@ public class StudentDao extends BaseDaoImpl{
 	}
 	
 	public List<StudentCommit> selectAllStudentCommitRange(String startDay, String endDay){
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("startDay", startDay);
-		params.put("endDay", endDay);
-		return sqlSession.selectList("student.selectAllStudentCommitRange", params);
-	}
-	
-	public List<StudentCommit> selectTeamStudentCommitRange(String startDay, String endDay, String team){
 //		Map<String, Object> params = new HashMap<String, Object>();
 //		params.put("startDay", startDay);
 //		params.put("endDay", endDay);
-//		params.put("team", team);
-//		return sqlSession.selectList("student.selectTeamStudentCommitRange", params);
+//		return sqlSession.selectList("student.selectAllStudentCommitRange", params);
 		return selectAllStudentCommitRangeSort(startDay, endDay, "commit_count", "desc");
+	}
+	
+	public List<StudentCommit> selectTeamStudentCommitRange(String startDay, String endDay, String team){
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("startDay", startDay);
+		params.put("endDay", endDay);
+		params.put("team", team);
+		return sqlSession.selectList("student.selectTeamStudentCommitRange", params);
 	}
 	
 	public List<StudentCommit> selectAllStudentCommitRangeSort(String startDay, String endDay, String order, String method){

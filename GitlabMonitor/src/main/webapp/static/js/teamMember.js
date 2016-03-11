@@ -60,7 +60,21 @@ function projectMember(team,startDay,endDay){
 			        }, {
 			            name: data.stu3,
 			            data: data.data3
-
+			        }, {
+			            name: data.stu4,
+			            data: data.data4
+			        }, {
+			            name: data.stu5,
+			            data: data.data5
+			        }, {
+			            name: data.stu6,
+			            data: data.data6
+			        }, {
+			            name: data.stu7,
+			            data: data.data7
+			        }, {
+			            name: data.stu8,
+			            data: data.data8
 			        }]
 			    });}
 			});}

@@ -67,6 +67,10 @@ public class ProjectController {
 	@RequestMapping(value="/project/team")
 	public ModelAndView showProjectTeamPage(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView result = new ModelAndView("projectMember");
+		String team = request.getParameter("team");
+		if(team != null){
+			result.addObject("team", team);
+		}
 		return result;
 	}
 	@RequestMapping(value="/project/event/range")
