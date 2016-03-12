@@ -5,6 +5,11 @@ import java.util.Calendar;
 import java.util.Random;
 
 import org.gitmining.monitor.bean.ProjectEvent;
+import org.gitmining.monitor.crawler.BranchCrawler;
+import org.gitmining.monitor.crawler.CommitCrawler;
+import org.gitmining.monitor.crawler.CommitStatistic;
+import org.gitmining.monitor.crawler.GroupCrawler;
+import org.gitmining.monitor.crawler.GroupProjectCrawler;
 import org.gitmining.monitor.dao.ProjectDao;
 import org.gitmining.monitor.dao.StudentDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,30 +31,20 @@ public class UpdateDataService {
 		this.studentDao = studentDao;
 	}
 
-	@Transactional(propagation=Propagation.REQUIRES_NEW, readOnly=false,timeout=5)
+	@Transactional(propagation=Propagation.REQUIRES_NEW, readOnly=false)
 	public void testUpdateData(){
-		System.out.println("service start!");
-		ProjectEvent projectEvent = new ProjectEvent();
-		Calendar calendar = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-		for (int i = 0; i < 10; i++) {
-			
-			calendar.add(Calendar.DATE, i);
-			Random random = new Random();
-			projectEvent.setComment(random.nextInt(10));
-			projectEvent.setCreate(random.nextInt(10));
-			projectEvent.setDay(sdf.format(calendar.getTime()));
-			projectEvent.setIssue(random.nextInt(10));
-			projectEvent.setPush(random.nextInt(10));
-			projectEvent.setTeam("testTeam3");
-			projectEvent.setTotal(random.nextInt(10));
-			projectDao.insertProjectEvent(projectEvent);
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		System.out.println("start update!");
+		GroupCrawler groupCrawler = new GroupCrawler();
+		GroupProjectCrawler groupProjectCrawler = new GroupProjectCrawler();
+		BranchCrawler branchCrawler = new BranchCrawler();
+		CommitCrawler commitCrawler = new CommitCrawler();
+		CommitStatistic commitStatistic = new CommitStatistic();
+		
+		groupCrawler.crawlGroup();
+		groupProjectCrawler.crawlGroupProject();
+		branchCrawler.crawlBranch();
+		commitCrawler.crawlCommit();
+		commitStatistic.countProjectCommit();
+		commitStatistic.countStudentCommit();
 	}
 }
