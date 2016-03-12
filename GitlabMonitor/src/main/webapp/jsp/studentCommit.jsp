@@ -56,16 +56,32 @@
   </div><!-- /.container-fluid -->
 </nav>
 <div class="container">
+
+<div id="content" class="container">
 <h2>Student Commit</h2>
-<form id="commitRange" class="form-inline">
-	<input type="text" id="student" class="form-control" value="${student}" placeholder="student name"/>
-	<input type="text" id="dayStart" class="form-control" placeholder="start day"/>
-	<input type="text" id="dayEnd" class="form-control" placeholder="end day"/>
-	<input type="button" class="btn btn-primary" value="search" onclick="studentCommit(document.getElementById('student').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value);">
-</form>
-<div id="user"></div>
+	<form id="commitRange" class="form-inline">
+		<input type="text" id="student" class="form-control" value="${student}" placeholder="student name"/>
+		<input type="text" id="dayStart" class="form-control" placeholder="start day"/>
+		<input type="text" id="dayEnd" class="form-control" placeholder="end day"/>
+		<input type="button" class="btn btn-primary" value="search" onclick="studentCommit(document.getElementById('student').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value);">
+	</form>
+	<div id="user"></div>
 </div>
 
+<div id="board" class="container">
+<h1>吐槽板</h1>
+<form class="form-inline">
+<input type="text" class="form-control" id="sen" placeholder="say something"/>
+<input type="text" class="form-control" id="token" placeholder="token"/>
+<input type="button" class="btn btn-primary" value="commit" onclick="studentComment(document.getElementById('student').value,document.getElementById('token').value,document.getElementById('sen').value);">
+</form>
+<div id="words">
+<c:forEach items="${comments}" var="comment">
+	<p>${comment.words} -- ${comment.time}</p>
+</c:forEach>
+</div>
+</div>
+</div>
 </body>
  <script src="/GitlabMonitor/static/js/library/jquery-1.11.3.js"></script>
  <script src="/GitlabMonitor/static/js/library/highcharts.js"></script>
@@ -77,12 +93,12 @@
   <script src="/GitlabMonitor/static/js/bootstrap-datepicker.min.js"></script>
  <script type="text/javascript">
  $('#dayStart').datepicker({
-	    format: "yyyymmdd",
+	    format: "yyyy-mm-dd",
 	    autoclose: true,
 	    todayHighlight: true
  });
  $('#dayEnd').datepicker({
-	    format: "yyyymmdd",
+	    format: "yyyy-mm-dd",
 	    autoclose: true,
 	    todayHighlight: true
 });

@@ -24,6 +24,31 @@
 		<result property="create" column="create" />	
 		<result property="total" column="total" />	
 	</resultMap>
+	
+	<resultMap type="org.gitmining.monitor.bean.ProjectComment" id="projectComment">
+		<result property="id" column="id" />
+		<result property="team" column="team" />
+		<result property="token" column="token" />
+		<result property="words" column="words" />
+		<result property="time" column="time" />
+	</resultMap>
+	
+	<select id="selectProjectComment" resultMap="projectComment">
+		SELECT 
+		id, team, token,words,`time`
+		FROM
+		projectComment
+		WHERE
+		team=#{team} order by `time` desc
+	</select>
+	
+	<insert id="insertProjectComment" parameterType="org.gitmining.monitor.bean.ProjectComment">
+		INSERT INTO  projectComment(team, token,words,`time`) VALUES(#{team}, #{token},#{words},#{time});
+	</insert>
+	
+	<select id="selectProjectCommentCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) from projectComment where team=#{team} AND token=#{token} AND time>=#{time}
+	</select>
 
 	<select id="selectProjectCommitRange" parameterType="java.util.Map" resultMap="projectCommit">
 		SELECT 
@@ -47,7 +72,17 @@
 	</select>
 	
 	
-	<select id="selectProjectCommitItemRange" parameterType="java.util.Map"  resultType="Integer">
+	<select id="selectProjectCommitItemRange" parameterType="java.util.Map" resultType="Integer">
+		SELECT 
+		${item}
+		FROM
+		projectCommit
+		WHERE
+		team=#{team} AND `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} order by `day` asc;
+	</select>
+	
+	
+	<select id="selectProjectCommitItemRangeDay" parameterType="java.util.Map" resultType="String">
 		SELECT 
 		${item}
 		FROM
@@ -77,6 +112,15 @@
 	</select>
 	
 	<select id="selectProjectEventItemRange" parameterType="java.util.Map" resultType="Integer">
+		SELECT 
+		`${item}`
+		FROM
+		projectEvent
+		WHERE
+		team=#{team} AND `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} order by `day` asc;
+	</select>
+	
+	<select id="selectProjectEventItemRangeDay" parameterType="java.util.Map" resultType="String">
 		SELECT 
 		`${item}`
 		FROM

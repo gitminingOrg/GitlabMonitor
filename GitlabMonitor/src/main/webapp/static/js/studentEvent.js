@@ -2,10 +2,6 @@ var student = $("#student").text();
 var startDay = $("#startDay").text();
 var endDay = $("#endDay").text();
 
-$(document).ready(function() {
-	studentEvent(student,startDay,endDay);
-});
-
 function studentEvent(student,startDay,endDay){
 	//repositories per user
 	var url = "/GitlabMonitor/student/event/range"

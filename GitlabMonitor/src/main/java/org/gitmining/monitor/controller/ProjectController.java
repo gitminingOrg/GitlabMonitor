@@ -9,11 +9,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.gitmining.monitor.bean.ProjectComment;
 import org.gitmining.monitor.bean.ProjectCommit;
 import org.gitmining.monitor.bean.ProjectEvent;
 import org.gitmining.monitor.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,6 +22,20 @@ import org.springframework.web.servlet.ModelAndView;
 public class ProjectController {
 	@Autowired
 	private ProjectService projectService;
+	
+	@RequestMapping(value="/project/comment")
+	public List<ProjectComment> getProjectComment(HttpServletRequest request,HttpServletResponse response){
+		String team = request.getParameter("team");
+		return projectService.getProjectComments(team);
+	}
+	
+	@RequestMapping(value="/project/comment/submit")
+	public Map<String,Object> getProjectCommentSubmit(HttpServletRequest request,HttpServletResponse response){
+		String team = request.getParameter("team");
+		String token = request.getParameter("token");
+		String words = request.getParameter("sen");
+		return projectService.insertProjectComments(team, token, words);
+	}
 	
 	@RequestMapping(value="/project/commit/range")
 	public Map<String, List> getProjectCommitItemRange(HttpServletRequest request,HttpServletResponse response){
@@ -53,6 +67,10 @@ public class ProjectController {
 	@RequestMapping(value="/project/team")
 	public ModelAndView showProjectTeamPage(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView result = new ModelAndView("projectMember");
+		String team = request.getParameter("team");
+		if(team != null){
+			result.addObject("team", team);
+		}
 		return result;
 	}
 	@RequestMapping(value="/project/event/range")
@@ -72,10 +90,10 @@ public class ProjectController {
 		
 		String method = request.getParameter("method");
 		if(dayStart == null){
-			dayStart = "20160101";
+			dayStart = "2016-01-01";
 		}
 		if(dayEnd == null){
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			dayEnd = sdf.format(Calendar.getInstance().getTime());
 		}
 		List<ProjectCommit> commits = new ArrayList<ProjectCommit>();
@@ -100,10 +118,10 @@ public class ProjectController {
 		String dayStart = request.getParameter("dayStart");
 		String dayEnd = request.getParameter("dayEnd");
 		if(dayStart == null){
-			dayStart = "20160101";
+			dayStart = "2016-01-01";
 		}
 		if(dayEnd == null){
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			dayEnd = sdf.format(Calendar.getInstance().getTime());
 		}
 		String team = request.getParameter("team");

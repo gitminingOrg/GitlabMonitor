@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.gitmining.monitor.bean.StudentComment;
 import org.gitmining.monitor.bean.StudentCommit;
 import org.gitmining.monitor.bean.StudentEvent;
 import org.gitmining.monitor.service.StudentService;
@@ -31,14 +32,30 @@ public class StudentController {
 		String dayEnd = request.getParameter("dayEnd");
 		return studentService.getStudentCommitItem(student, dayStart, dayEnd);
 	}
+	@RequestMapping(value="/student/comment")
+	public List<StudentComment> getStudentComment(HttpServletRequest request,HttpServletResponse response){
+		String student = request.getParameter("student");
+		return studentService.getStudentComments(student);
+	}
+	
+	@RequestMapping(value="/student/comment/submit")
+	public Map<String,Object> getStudentCommentSubmit(HttpServletRequest request,HttpServletResponse response){
+		String student = request.getParameter("student");
+		String token = request.getParameter("token");
+		String words = request.getParameter("sen");
+		return studentService.insertStudentComments(student, token, words);
+	}
 	
 	@RequestMapping(value="/student/commit")
 	public ModelAndView showStudentCommitPage(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView result = new ModelAndView("studentCommit");
 		String student = request.getParameter("student");
+		List<StudentComment> comments = new ArrayList<StudentComment>();
 		if(student != null){
 			result.addObject("student", student);
+			comments = studentService.getStudentComments(student);
 		}
+		result.addObject("comments", comments);
 		return result;
 	}
 	
@@ -67,10 +84,10 @@ public class StudentController {
 		String method = request.getParameter("method");
 		
 		if(dayStart == null){
-			dayStart = "20160101";
+			dayStart = "2016-01-01";
 		}
 		if(dayEnd == null){
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			dayEnd = sdf.format(Calendar.getInstance().getTime());
 		}
 		List<StudentCommit> commits = new ArrayList<StudentCommit>();

@@ -2,10 +2,6 @@ var team = $("#team").text();
 var startDay = $("#startDay").text();
 var endDay = $("#endDay").text();
 
-$(document).ready(function() {
-	projectEvent(team,startDay,endDay);
-});
-
 function projectEvent(team,startDay,endDay){
 	//repositories per user
 	var url = "/GitlabMonitor/project/event/range"
