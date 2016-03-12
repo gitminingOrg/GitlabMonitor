@@ -61,11 +61,11 @@
 	
 	<select id="selectAllProjectCommitRange" parameterType="java.util.Map" resultMap="projectCommit">
 		SELECT 
-		sum(commit_count) AS commit_count, sum(add_line) AS add_line,sum(delete_line) AS delete_line,sum(`java_file`) AS java_file, 
+		id,sum(commit_count) AS commit_count, sum(add_line) AS add_line,sum(delete_line) AS delete_line,sum(`java_file`) AS java_file, 
 		max(total_commit) AS total_commit,max(total_add) AS total_add,max(total_delete) AS total_delete,team   
 		FROM   
 		projectCommit   
-		WHERE  `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} group by team 
+		WHERE  `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} group by id 
 		<if test="order != null">
 		ORDER BY `${order}` ${method}
 		</if>
@@ -102,10 +102,10 @@
 	
 	<select id="selectAllProjectEventRange" parameterType="java.util.Map" resultMap="projectEvent">
 		SELECT 
-		sum(push) AS push, sum(issue) AS issue,sum(comment) AS comment,sum(`create`) AS `create`, sum(total) AS total,team
+		id,sum(push) AS push, sum(issue) AS issue,sum(comment) AS comment,sum(`create`) AS `create`, sum(total) AS total,team
 		FROM   
 		projectEvent   
-		WHERE  `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} group by team 
+		WHERE  `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} group by id 
 		<if test="order != null">
 		ORDER BY `${order}` ${method}
 		</if>

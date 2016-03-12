@@ -77,7 +77,7 @@
 </form>
 <div id="words">
 <c:forEach items="${comments}" var="comment">
-	<p>${comment.words} -- ${comment.time}</p>
+	<p>${comment.words} -----comment at: ${comment.time}</p>
 </c:forEach>
 </div>
 </div>

@@ -84,7 +84,7 @@
 
 <h3>Student Commit</h3>
 <table class="table table-striped table-bordered">
-	<thead><tr><th>rank</th><th>name</th> <th>commit_count</th> <th>add_line</th> <th>delete_line</th> <th>java_file</th> <th>total_add</th> <th>total_delete</th></tr></thead>
+	<thead><tr><th>rank</th><th>name</th><th>commit_count</th> <th>add_line</th> <th>delete_line</th> <th>java_file</th> <th>total_add</th> <th>total_delete</th></tr></thead>
 	<tbody>
 	<c:forEach items="${commits}" var="commit" varStatus="status">
 		<tr><th>${status.index + 1}</th><th><a href="/GitlabMonitor/student/commit?student=${commit.student}">${commit.student}</a></th><th>${commit.commit_count}</th><th>${commit.add_line}</th><th>${commit.delete_line}</th>
