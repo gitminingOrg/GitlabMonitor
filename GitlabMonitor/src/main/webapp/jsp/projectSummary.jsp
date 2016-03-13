@@ -79,16 +79,17 @@
 		  <option value ="desc">desc</option>
 		  <option value ="asc">asc</option>
 	</select>
+	<input type="text" id="formula" class="form-control" style="width:400px;" name="formula" value="${formula}" placeholder="support: +-*/%^() commit_count add_line delete_line java_file total_add total_delete and regular numbers"/>
 	<input type="submit" class="btn btn-primary" value="filter">
 </form>
 
 <h3>Team Commit</h3>
 <table class="table table-striped table-bordered">
-	<thead><tr><th>rank</th><th>id</th><th>name</th> <th>commit_count</th> <th>add_line</th> <th>delete_line</th> <th>java_file</th> <th>total_add</th> <th>total_delete</th></tr></thead>
+	<thead><tr><th>rank</th><th>id</th><th>name</th> <th>commit_count</th> <th>add_line</th> <th>delete_line</th> <th>java_file</th> <th>total_add</th> <th>total_delete</th><th>formula</th></tr></thead>
 	<tbody>
 	<c:forEach items="${commits}" var="commit" varStatus="status">
 		<tr><th>${ status.index + 1 }</th><th>${commit.id}</th><th><a href="/GitlabMonitor/project/commit?team=${commit.team}">${commit.team}</a></th><th>${commit.commit_count}</th><th>${commit.add_line}</th><th>${commit.delete_line}</th>
-		<th>${commit.java_file}</th><th>${commit.total_add}</th><th>${commit.total_delete}</th></tr>
+		<th>${commit.java_file}</th><th>${commit.total_add}</th><th>${commit.total_delete}</th><th>${commit.formula}</th></tr>
 	</c:forEach>	
 	</tbody>
 </table>

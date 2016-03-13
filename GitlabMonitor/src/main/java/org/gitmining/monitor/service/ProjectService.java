@@ -14,6 +14,7 @@ import org.gitmining.monitor.bean.StudentComment;
 import org.gitmining.monitor.bean.StudentCommit;
 import org.gitmining.monitor.dao.ProjectDao;
 import org.gitmining.monitor.dao.StudentDao;
+import org.gitmining.monitor.util.FormulaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -104,7 +105,7 @@ public class ProjectService {
 		return result;
 	}
 	
-	public List<ProjectCommit> selectAllProjectCommitRange(String startDay, String endDay){
+	public List<ProjectCommit> selectAllProjectCommitRange(String startDay, String endDay, String formula){
 		if(startDay==null){
 			startDay="2016-01-01";
 		}
@@ -112,10 +113,25 @@ public class ProjectService {
 			endDay="2020-01-01";
 		}
 		List<ProjectCommit> result = projectDao.selectAllProjectCommitRange(startDay, endDay);
+		if(formula != null && formula.trim().length() > 0){
+			formula = formula.replaceAll(" ", "");
+			for (ProjectCommit projectCommit : result) {
+				Map<String, Double> dict = new HashMap<String, Double>();
+				dict.put("add_line", (double) projectCommit.getAdd_line());
+				dict.put("delete_line", (double) projectCommit.getDelete_line());
+				dict.put("commit_count", (double) projectCommit.getCommit_count());
+				dict.put("java_file", (double) projectCommit.getJava_file());
+				dict.put("total_add", (double) projectCommit.getTotal_add());
+				dict.put("total_delete", (double) projectCommit.getTotal_delete());
+				dict.put("total_commit", (double) projectCommit.getTotal_commit());
+				
+				projectCommit.setFormula(FormulaUtil.calFormula(formula, dict));
+			}
+		}
 		return result;
 	}
 	
-	public List<ProjectCommit> selectAllProjectCommitRangeSort(String startDay, String endDay, String order, String method){
+	public List<ProjectCommit> selectAllProjectCommitRangeSort(String startDay, String endDay, String order, String method, String formula){
 		if(startDay==null){
 			startDay="2016-01-01";
 		}
@@ -123,6 +139,21 @@ public class ProjectService {
 			endDay="2020-01-01";
 		}
 		List<ProjectCommit> result = projectDao.selectAllProjectCommitRangeSort(startDay, endDay, order, method);
+		if(formula != null && formula.trim().length() > 0){
+			formula = formula.replaceAll(" ", "");
+			for (ProjectCommit projectCommit : result) {
+				Map<String, Double> dict = new HashMap<String, Double>();
+				dict.put("add_line", (double) projectCommit.getAdd_line());
+				dict.put("delete_line", (double) projectCommit.getDelete_line());
+				dict.put("commit_count", (double) projectCommit.getCommit_count());
+				dict.put("java_file", (double) projectCommit.getJava_file());
+				dict.put("total_add", (double) projectCommit.getTotal_add());
+				dict.put("total_delete", (double) projectCommit.getTotal_delete());
+				dict.put("total_commit", (double) projectCommit.getTotal_commit());
+				
+				projectCommit.setFormula(FormulaUtil.calFormula(formula, dict));
+			}
+		}
 		return result;
 	}
 	

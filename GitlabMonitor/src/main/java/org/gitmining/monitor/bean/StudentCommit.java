@@ -11,6 +11,7 @@ public class StudentCommit {
 	private int total_commit;
 	private int total_add;
 	private int total_delete;
+	private double formula;
 	public int getId() {
 		return id;
 	}
@@ -71,5 +72,10 @@ public class StudentCommit {
 	public void setTotal_delete(int total_delete) {
 		this.total_delete = total_delete;
 	}
-	
+	public double getFormula() {
+		return formula;
+	}
+	public void setFormula(double formula) {
+		this.formula = formula;
+	}
 }

@@ -80,7 +80,7 @@ public class StudentController {
 		String dayEnd = request.getParameter("dayEnd");
 		String commitOrder = request.getParameter("commitOrder");
 		String eventOrder = request.getParameter("eventOrder");
-		
+		String formula = request.getParameter("formula");
 		String method = request.getParameter("method");
 		
 		if(dayStart == null){
@@ -93,10 +93,10 @@ public class StudentController {
 		List<StudentCommit> commits = new ArrayList<StudentCommit>();
 		List<StudentEvent> events = new ArrayList<StudentEvent>();
 		if(commitOrder == null){
-			commits = studentService.selectAllStudentCommitRange(dayStart, dayEnd);
+			commits = studentService.selectAllStudentCommitRange(dayStart, dayEnd, formula);
 			events = studentService.selectAllStudentEventRange(dayStart, dayEnd);
 		}else{
-			commits = studentService.selectAllStudentCommitRangeSort(dayStart, dayEnd,commitOrder,method);
+			commits = studentService.selectAllStudentCommitRangeSort(dayStart, dayEnd,commitOrder,method,formula);
 			events = studentService.selectAllStudentEventRangeSort(dayStart, dayEnd,eventOrder,method);
 		}
 		
@@ -105,6 +105,7 @@ public class StudentController {
 		result.addObject("events", events);
 		result.addObject("dayStart", dayStart);
 		result.addObject("dayEnd", dayEnd);
+		result.addObject("formula", formula);
 		return result;
 	}
 	
