@@ -79,8 +79,20 @@
 		  <option value ="desc">desc</option>
 		  <option value ="asc">asc</option>
 	</select>
-	<input type="text" id="formula" class="form-control" style="width:400px;" name="formula" value="${formula}" placeholder="support: +-*/%^() commit_count add_line delete_line java_file total_add total_delete and regular numbers"/>
-	<input type="submit" class="btn btn-primary" value="filter">
+		<input type="submit" class="btn btn-primary" value="filter">
+		<br />
+		<div class="input-group">
+  			<span class="input-group-addon" id="basic-addon1">formula</span>
+  			<input type="text" id="formula" class="form-control" style="width:500px;" name="formula" value="${formula}" placeholder="support: +-*/%^() commit_count add_line delete_line java_file total_add total_delete and regular numbers"/>
+		</div>
+		<br />
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">filter</span>
+			<input type="text" id="filter" class="form-control" style="width:520px;" name="filter" value="${filter}" placeholder="commit_count>3;add_line<10;delete_line>100"/>
+		</div>
+		
+		
+		
 </form>
 
 <h3>Team Commit</h3>

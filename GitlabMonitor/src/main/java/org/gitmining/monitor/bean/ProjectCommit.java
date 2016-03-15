@@ -1,5 +1,7 @@
 package org.gitmining.monitor.bean;
 
+import java.util.Map;
+
 public class ProjectCommit {
 	private int id;
 	private String team;
@@ -79,4 +81,48 @@ public class ProjectCommit {
 		this.formula = formula;
 	}
 	
+	public boolean validate(Map<String, Integer> filter){
+		if(filter.containsKey("commit_count<") && commit_count >= filter.get("commit_count<")){
+				return false;
+		}
+		if(filter.containsKey("commit_count>") && commit_count <= filter.get("commit_count>")){
+			return false;
+		}
+		
+		if(filter.containsKey("add_line<") && add_line >= filter.get("add_line<")){
+			return false;
+		}
+		if(filter.containsKey("add_line>") && add_line <= filter.get("add_line>")){
+			return false;
+		}
+		
+		if(filter.containsKey("delete_line<") && delete_line >= filter.get("delete_line<")){
+			return false;
+		}
+		if(filter.containsKey("delete_line>") && delete_line <= filter.get("delete_line>")){
+			return false;
+		}
+		
+		if(filter.containsKey("java_file<") && java_file >= filter.get("java_file<")){
+			return false;
+		}
+		if(filter.containsKey("java_file>") && java_file <= filter.get("java_file>")){
+			return false;
+		}
+		
+		if(filter.containsKey("total_add<") && total_add >= filter.get("total_add<")){
+			return false;
+		}
+		if(filter.containsKey("total_add>") && total_add <= filter.get("total_add>")){
+			return false;
+		}
+		
+		if(filter.containsKey("total_delete<") && total_delete >= filter.get("total_delete<")){
+			return false;
+		}
+		if(filter.containsKey("total_delete>") && total_delete <= filter.get("total_delete>")){
+			return false;
+		}
+		return true;
+	}
 }

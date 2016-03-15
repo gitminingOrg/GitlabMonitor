@@ -88,6 +88,7 @@ public class ProjectController {
 		String commitOrder = request.getParameter("commitOrder");
 		String eventOrder = request.getParameter("eventOrder");
 		String formula = request.getParameter("formula");
+		String filter = request.getParameter("filter");
 		String method = request.getParameter("method");
 		if(dayStart == null){
 			dayStart = "2016-01-01";
@@ -99,10 +100,10 @@ public class ProjectController {
 		List<ProjectCommit> commits = new ArrayList<ProjectCommit>();
 		List<ProjectEvent> events = new ArrayList<ProjectEvent>();
 		if(commitOrder == null){
-			commits = projectService.selectAllProjectCommitRange(dayStart, dayEnd, formula);
+			commits = projectService.selectAllProjectCommitRange(dayStart, dayEnd, formula, filter);
 			events = projectService.selectAllProjectEventRange(dayStart, dayEnd);
 		}else{
-			commits = projectService.selectAllProjectCommitRangeSort(dayStart, dayEnd,commitOrder,method, formula);
+			commits = projectService.selectAllProjectCommitRangeSort(dayStart, dayEnd,commitOrder,method, formula, filter);
 			events = projectService.selectAllProjectEventRangeSort(dayStart, dayEnd,eventOrder,method);
 		}
 		
@@ -111,6 +112,7 @@ public class ProjectController {
 		result.addObject("commits", commits);
 		result.addObject("events", events);
 		result.addObject("formula", formula);
+		result.addObject("filter", filter);
 		result.addObject("dayStart", dayStart);
 		result.addObject("dayEnd", dayEnd);
 		return result;

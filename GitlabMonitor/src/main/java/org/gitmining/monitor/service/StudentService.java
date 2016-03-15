@@ -11,6 +11,7 @@ import org.gitmining.monitor.bean.StudentComment;
 import org.gitmining.monitor.bean.StudentCommit;
 import org.gitmining.monitor.bean.StudentEvent;
 import org.gitmining.monitor.dao.StudentDao;
+import org.gitmining.monitor.util.FilterUtil;
 import org.gitmining.monitor.util.FormulaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -96,7 +97,7 @@ public class StudentService {
 		return result;
 	}
 	
-	public List<StudentCommit> selectAllStudentCommitRange(String startDay, String endDay,String formula){
+	public List<StudentCommit> selectAllStudentCommitRange(String startDay, String endDay,String formula,String filter){
 		if(startDay==null){
 			startDay="2016-01-01";
 		}
@@ -104,25 +105,33 @@ public class StudentService {
 			endDay="2020-01-01";
 		}
 		List<StudentCommit> result = studentDao.selectAllStudentCommitRange(startDay, endDay);
+		Map<String, Integer> filterMap = FilterUtil.parseFilter(filter);
 		if(formula != null && formula.trim().length() > 0){
 			formula = formula.replaceAll(" ", "");
-			for (StudentCommit studentCommit : result) {
-				Map<String, Double> dict = new HashMap<String, Double>();
-				dict.put("add_line", (double) studentCommit.getAdd_line());
-				dict.put("delete_line", (double) studentCommit.getDelete_line());
-				dict.put("commit_count", (double) studentCommit.getCommit_count());
-				dict.put("java_file", (double) studentCommit.getJava_file());
-				dict.put("total_add", (double) studentCommit.getTotal_add());
-				dict.put("total_delete", (double) studentCommit.getTotal_delete());
-				dict.put("total_commit", (double) studentCommit.getTotal_commit());
+			for (int i=0; i<result.size(); i++) {
+				StudentCommit studentCommit = result.get(i);
+				if(filterMap != null && !studentCommit.validate(filterMap)){
+					result.remove(studentCommit);
+					i--;
+				}else{
+					Map<String, Double> dict = new HashMap<String, Double>();
+					dict.put("add_line", (double) studentCommit.getAdd_line());
+					dict.put("delete_line", (double) studentCommit.getDelete_line());
+					dict.put("commit_count", (double) studentCommit.getCommit_count());
+					dict.put("java_file", (double) studentCommit.getJava_file());
+					dict.put("total_add", (double) studentCommit.getTotal_add());
+					dict.put("total_delete", (double) studentCommit.getTotal_delete());
+					dict.put("total_commit", (double) studentCommit.getTotal_commit());
+					
+					studentCommit.setFormula(FormulaUtil.calFormula(formula, dict));
+				}
 				
-				studentCommit.setFormula(FormulaUtil.calFormula(formula, dict));
 			}
 		}
 		return result;
 	}
 	
-	public List<StudentCommit> selectAllStudentCommitRangeSort(String startDay, String endDay, String order, String method, String formula){
+	public List<StudentCommit> selectAllStudentCommitRangeSort(String startDay, String endDay, String order, String method, String formula,String filter){
 		formula = formula.replaceAll(" ", "");
 		if(startDay==null){
 			startDay="2016-01-01";
@@ -131,18 +140,27 @@ public class StudentService {
 			endDay="2020-01-01";
 		}
 		List<StudentCommit> result = studentDao.selectAllStudentCommitRangeSort(startDay, endDay, order, method);
+		Map<String, Integer> filterMap = FilterUtil.parseFilter(filter);
 		if(formula != null && formula.trim().length() > 0){
-			for (StudentCommit studentCommit : result) {
-				Map<String, Double> dict = new HashMap<String, Double>();
-				dict.put("add_line", (double) studentCommit.getAdd_line());
-				dict.put("delete_line", (double) studentCommit.getDelete_line());
-				dict.put("commit_count", (double) studentCommit.getCommit_count());
-				dict.put("java_file", (double) studentCommit.getJava_file());
-				dict.put("total_add", (double) studentCommit.getTotal_add());
-				dict.put("total_delete", (double) studentCommit.getTotal_delete());
-				dict.put("total_commit", (double) studentCommit.getTotal_commit());
+			formula = formula.replaceAll(" ", "");
+			for (int i=0; i<result.size(); i++) {
+				StudentCommit studentCommit = result.get(i);
+				if(filterMap != null && !studentCommit.validate(filterMap)){
+					result.remove(studentCommit);
+					i--;
+				}else{
+					Map<String, Double> dict = new HashMap<String, Double>();
+					dict.put("add_line", (double) studentCommit.getAdd_line());
+					dict.put("delete_line", (double) studentCommit.getDelete_line());
+					dict.put("commit_count", (double) studentCommit.getCommit_count());
+					dict.put("java_file", (double) studentCommit.getJava_file());
+					dict.put("total_add", (double) studentCommit.getTotal_add());
+					dict.put("total_delete", (double) studentCommit.getTotal_delete());
+					dict.put("total_commit", (double) studentCommit.getTotal_commit());
+					
+					studentCommit.setFormula(FormulaUtil.calFormula(formula, dict));
+				}
 				
-				studentCommit.setFormula(FormulaUtil.calFormula(formula, dict));
 			}
 		}
 		return result;
