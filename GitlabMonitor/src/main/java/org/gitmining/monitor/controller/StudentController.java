@@ -79,7 +79,7 @@ public class StudentController {
 		String dayStart = request.getParameter("dayStart");
 		String dayEnd = request.getParameter("dayEnd");
 		String commitOrder = request.getParameter("commitOrder");
-		String eventOrder = request.getParameter("eventOrder");
+		//String eventOrder = request.getParameter("eventOrder");
 		String formula = request.getParameter("formula");
 		String method = request.getParameter("method");
 		String filter = request.getParameter("filter");
@@ -92,18 +92,18 @@ public class StudentController {
 			dayEnd = sdf.format(Calendar.getInstance().getTime());
 		}
 		List<StudentCommit> commits = new ArrayList<StudentCommit>();
-		List<StudentEvent> events = new ArrayList<StudentEvent>();
+		//List<StudentEvent> events = new ArrayList<StudentEvent>();
 		if(commitOrder == null){
 			commits = studentService.selectAllStudentCommitRange(dayStart, dayEnd, formula,filter);
-			events = studentService.selectAllStudentEventRange(dayStart, dayEnd);
+			//events = studentService.selectAllStudentEventRange(dayStart, dayEnd);
 		}else{
 			commits = studentService.selectAllStudentCommitRangeSort(dayStart, dayEnd,commitOrder,method,formula,filter);
-			events = studentService.selectAllStudentEventRangeSort(dayStart, dayEnd,eventOrder,method);
+			//events = studentService.selectAllStudentEventRangeSort(dayStart, dayEnd,eventOrder,method);
 		}
 		
 		ModelAndView result = new ModelAndView("studentSummary");
 		result.addObject("commits", commits);
-		result.addObject("events", events);
+		//result.addObject("events", events);
 		result.addObject("dayStart", dayStart);
 		result.addObject("dayEnd", dayEnd);
 		result.addObject("formula", formula);

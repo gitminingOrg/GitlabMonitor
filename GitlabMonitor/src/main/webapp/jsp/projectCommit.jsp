@@ -58,15 +58,38 @@
 <div class="container">
 
 <div id="content" class="container">
-<h2>Project Commit</h2>
+<h2>Project Detail</h2>
+<div class="btn-group" style="float:right;" role="group" aria-label="...">
+  <button type="button" class="btn btn-default" onclick="showDailyChart();">Project Commit</button>
+  <button type="button" class="btn btn-default" onclick="showMemberChart();">Member Commit</button>
+  <button type="button" class="btn btn-default" onclick="showInfoChart();">Project Info</button>
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Time Range
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a href="#" onclick="projectCommit(document.getElementById('team').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value,'year');">Recent Year</a></li>
+      <li><a href="#" onclick="projectCommit(document.getElementById('team').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value, 'month');">Recent Month</a></li>
+      <li><a href="#" onclick="projectCommit(document.getElementById('team').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value, 'week');">Recent Week</a></li>
+    </ul>
+  </div>
+</div>
 <form id="commitRange" class="form-inline">
 	<input type="text" class="form-control" id="team" placeholder="team name" value="${team}"/>
-	<input type="text" class="form-control" id="dayStart" placeholder="start day"/>
-	<input type="text" class="form-control" id="dayEnd" placeholder="end day"/>
+	<input type="text" class="form-control" id="dayStart" value="${dayStart}" placeholder="start day"/>
+	<input type="text" class="form-control" id="dayEnd" value="${dayEnd}" placeholder="end day"/>
 	<input type="button" class="btn btn-primary" value="search" onclick="projectCommit(document.getElementById('team').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value);">
-	<a href="/GitlabMonitor/project/team?team=${team}" class="btn btn-success">Member Detail</a>
+<%-- 	<a href="/GitlabMonitor/project/team?team=${team}" class="btn btn-success">Member Detail</a> --%>
 </form>
-<div id="user"></div>
+
+<br />
+<div class="container">
+	<div id="dailyChart"></div>
+	<div id="memberChart" style="display:none"></div>
+	<div id="infoChart" style="display:none"></div>
+</div>
+
 </div>
 
 <div id="board" class="container">

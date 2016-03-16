@@ -73,14 +73,14 @@ public class ProjectService {
 		}
 		return resultMap;
 	}
-	public Map<String, List> getProjectCommitItem(String project, String startDay, String endDay){
+	public Map<String, Object> getProjectCommitItem(String project, String startDay, String endDay){
 		if(startDay==null){
 			startDay="2016-01-01";
 		}
 		if(endDay==null){
 			endDay="2020-01-01";
 		}
-		Map<String, List> result = new HashMap<String, List>();
+		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("commit_count", projectDao.selectProjectCommitItemRange("commit_count",project,startDay,endDay));
 		result.put("add_line", projectDao.selectProjectCommitItemRange("add_line",project,startDay,endDay));
 		result.put("delete_line", projectDao.selectProjectCommitItemRange("delete_line",project,startDay,endDay));
