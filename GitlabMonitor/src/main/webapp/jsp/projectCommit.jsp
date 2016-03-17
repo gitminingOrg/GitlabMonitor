@@ -39,15 +39,13 @@
         </li>
         
 		<li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Team <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Project <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="/GitlabMonitor/project/summary">Team Summary</a></li>
+            <li><a href="/GitlabMonitor/project/summary">Project Summary</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="/GitlabMonitor/project/commit">Team Commit</a></li>
+            <li><a href="/GitlabMonitor/project/commit">Project Detail</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="/GitlabMonitor/project/event">Team Event</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="/GitlabMonitor/project/team">Team Member</a></li>
+            <li><a href="/GitlabMonitor/project/event">Project Score</a></li>
           </ul>
         </li>
       </ul>
@@ -88,47 +86,29 @@
 	<div id="infoChart" style="display:none"></div>
 </div>
 <br />
+<div class="container">
 <div id="team introduction" class="row container">
-	<div class="col-md-5">
-		<div class="panel panel-default">
-		  <div class="panel-heading">
-		    <h3 class="panel-title">Team Introduction</h3>
-		  </div>
-		  <div class="panel-body">
-			<p>Team: ${teaminfo.name}</p>
-			<p>Description: ${teaminfo.description}</p>
-			<p>Page: <a href="${teaminfo.web_url}" target="view_window">${teaminfo.web_url}</a></p>
-		  </div>
-		</div>
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+	    <h3 class="panel-title">Team Introduction</h3>
+	  </div>
+	  <div class="panel-body">
+		<p>Team: ${teaminfo.name}</p>
+		<p>Description: ${teaminfo.description}</p>
+		<p>Page: <a href="${teaminfo.web_url}" target="view_window">${teaminfo.web_url}</a></p>
+		<p>Member name :<c:forEach items="${students}" var="student">	
+		 <a href="/GitlabMonitor/student/commit?student=${student.name}">${student.name}</a>
+		</c:forEach></p>
+		
+		<p>Team Projects:</p>
+		<p>
+		<c:forEach items="${projects}" var="project">
+			<a href="/GitlabMonitor/project/commit?team=${teaminfo.name}">${project.name}</a>
+		</c:forEach>
+		<p/>
+	  </div>
 	</div>
-	
-	<div class="col-md-3">
-		<div class="panel panel-default">
-		  <div class="panel-heading">
-		    <h3 class="panel-title">Team Member</h3>
-		  </div>
-		  <div class="panel-body">
-			<c:forEach items="${students}" var="student">	
-				<p>Member name : <a href="/GitlabMonitor/student/commit?student=${student.name}">${student.name}</a><p/>
-			</c:forEach>
-		  </div>
-		</div>
-	</div>
-
-	<div class="col-md-4">
-		<div class="panel panel-default">
-		  <div class="panel-heading">
-		    <h3 class="panel-title">Team Projects</h3>
-		  </div>
-		  <div class="panel-body">
-		    <p>
-			<c:forEach items="${projects}" var="project">
-				<a href="/GitlabMonitor/project/commit?team=${teaminfo.name}">${project.name}</a>
-			</c:forEach>
-			<p/>
-		  </div>
-		</div>	
-	</div>
+</div>
 </div>
 
 <!-- <div id="board"> -->

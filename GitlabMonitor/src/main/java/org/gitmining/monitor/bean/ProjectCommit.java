@@ -4,6 +4,7 @@ import java.util.Map;
 
 public class ProjectCommit {
 	private int id;
+	private String name;
 	private String team;
 	private String day;
 	private int commit_count;
@@ -19,6 +20,12 @@ public class ProjectCommit {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getTeam() {
 		return team;

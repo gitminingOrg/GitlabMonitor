@@ -9,7 +9,8 @@
 <link rel="stylesheet" href="/GitlabMonitor/static/js/jquery/css/ui-lightness/jquery-ui-1.9.1.custom.css" type="text/css" charset="utf-8">
 </head>
 <body>
-<nav class="navbar navbar-default">
+
+<nav class="navbar navbar-default" style="margin-bottom:0">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -53,8 +54,50 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-<div class="col-md-6"><h1>别看了，主页没东西</h1><h1>保证没东西</h1><h1>你看到东西，我就嘿嘿嘿</h1></div>
-<div class="col-md-6"><img alt="图片出不来了" src="/GitlabMonitor/static/img/logo.jpeg" style="width:500px;height:400px;"></div>
+<div class="jumbotron">
+<div class="container">
+<h1>Gitlab Monitor<small>&nbsp;&nbsp;let us help you</small></h1>
+</div>
+</div>
+<div class="container">
+<div class="row">
+
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <img src="/GitlabMonitor/static/img/a.png" alt="...">
+      <div class="caption">
+        <h3>Shadow Hunter</h3>
+        <p>Be happy, don't worry.</p>
+        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <img src="/GitlabMonitor/static/img/b.png" alt="not found">
+      <div class="caption">
+        <h3>SOR</h3>
+        <p>Help me, help you.</p>
+        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <img src="/GitlabMonitor/static/img/c.png" alt="...">
+      <div class="caption">
+        <h3>Spell Breaker</h3>
+        <p>Your magic is mine.</p>
+        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+      </div>
+    </div>
+  </div>
+  
+</div>
+</div>
+
 </body>
 <script src="/GitlabMonitor/static/js/library/jquery-1.11.3.js"></script>
 <script src="/GitlabMonitor/static/js/library/bootstrap.min.js"></script>
