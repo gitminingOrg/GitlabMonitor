@@ -66,17 +66,18 @@
 	      <span class="caret"></span>
 	    </button>
 	    <ul class="dropdown-menu">
-	      <li><a href="#" onclick="projectCommit(document.getElementById('team').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value,'year');">Recent Year</a></li>
-	      <li><a href="#" onclick="projectCommit(document.getElementById('team').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value, 'month');">Recent Month</a></li>
-	      <li><a href="#" onclick="projectCommit(document.getElementById('team').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value, 'week');">Recent Week</a></li>
+	      <li><a href="#" onclick="projectCommit(document.getElementById('projectId').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value,'year');">Recent Year</a></li>
+	      <li><a href="#" onclick="projectCommit(document.getElementById('projectId').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value, 'month');">Recent Month</a></li>
+	      <li><a href="#" onclick="projectCommit(document.getElementById('projectId').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value, 'week');">Recent Week</a></li>
 	    </ul>
 	  </div>
 	</div>
 	<form id="commitRange" class="form-inline">
+		<input type="hidden" id="projectId" name="projectId" value="${projectId}" />
 		<input type="text" class="form-control" id="team" placeholder="team name" value="${team}"/>
 		<input type="text" class="form-control" id="dayStart" value="${dayStart}" placeholder="start day"/>
 		<input type="text" class="form-control" id="dayEnd" value="${dayEnd}" placeholder="end day"/>
-		<input type="button" class="btn btn-primary" value="search" onclick="projectCommit(document.getElementById('team').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value);">
+		<input type="button" class="btn btn-primary" value="search" onclick="projectCommit(document.getElementById('projectId').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value);">
 	<%-- 	<a href="/GitlabMonitor/project/team?team=${team}" class="btn btn-success">Member Detail</a> --%>
 	</form>
 
@@ -103,7 +104,7 @@
 		<p>Team Projects:</p>
 		<p>
 		<c:forEach items="${projects}" var="project">
-			<a href="/GitlabMonitor/project/commit?team=${teaminfo.name}">${project.name}</a>
+			<a href="/GitlabMonitor/project/commit?team=${teaminfo.name}&id=${project.id}">${project.name}</a>
 		</c:forEach>
 		<p/>
 	  </div>

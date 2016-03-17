@@ -66,19 +66,19 @@ public class ProjectDao extends BaseDaoImpl{
 	public List<ProjectVO> selectTeamProject(String team){
 		return sqlSession.selectList("project.selectTeamProject", team);
 	}
-	public List<String> selectProjectCommitItemRange(String item,String team, String startDay, String endDay){
+	public List<String> selectProjectCommitItemRange(String item,int projectId, String startDay, String endDay){
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("item", item);
-		params.put("team", team);
+		params.put("projectId", projectId);
 		params.put("startDay", startDay);
 		params.put("endDay", endDay);
 		return sqlSession.selectList("project.selectProjectCommitItemRange", params);
 	}
 	
-	public List<Integer> selectProjectCommitItemRangeDay(String item,String team, String startDay, String endDay){
+	public List<Integer> selectProjectCommitItemRangeDay(String item,int projectId, String startDay, String endDay){
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("item", item);
-		params.put("team", team);
+		params.put("projectId", projectId);
 		params.put("startDay", startDay);
 		params.put("endDay", endDay);
 		return sqlSession.selectList("project.selectProjectCommitItemRangeDay", params);

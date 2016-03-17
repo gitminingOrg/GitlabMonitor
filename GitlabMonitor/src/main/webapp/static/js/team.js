@@ -1,8 +1,8 @@
-var team = $("#team").val();
+var projectId = $("#projectId").val();
 var startDay = $("#startDay").val();
 var endDay = $("#endDay").val();
 
-$(document).ready(projectCommit(team,startDay,endDay));
+$(document).ready(projectCommit(projectId,startDay,endDay));
 
 function showDailyChart(){
 	$("#dailyChart").show();
@@ -56,30 +56,30 @@ function projectComment(team,token,sen){
 		});
 
 }
-function projectCommit(team,startDay,endDay){
-	var url1 = "/GitlabMonitor/project/comment"
-		$.ajax(url1, {
-			type : 'POST',
-			data : {
-				"team" : team,
-			},
-			success : function(data, textStatus) {
-				var value = data;
-				var result = "";
-				for(var i in value){
-					result=result+"<p>"+value[i].words+"--"+value[i].time+"</p>";
-				}
-				$('#words').html(
-					result
-				)
-			}
-		});
+function projectCommit(projectId,startDay,endDay){
+//	var url1 = "/GitlabMonitor/project/comment"
+//		$.ajax(url1, {
+//			type : 'POST',
+//			data : {
+//				"team" : team,
+//			},
+//			success : function(data, textStatus) {
+//				var value = data;
+//				var result = "";
+//				for(var i in value){
+//					result=result+"<p>"+value[i].words+"--"+value[i].time+"</p>";
+//				}
+//				$('#words').html(
+//					result
+//				)
+//			}
+//		});
 	//repositories per user
 	var url = "/GitlabMonitor/project/commit/range"
 		$.ajax(url, {
 			type : 'POST',
 			data : {
-				"team" : team,
+				"projectId" : projectId,
 				"dayStart": startDay,
 				"dayEnd": endDay,
 			},
@@ -131,7 +131,7 @@ function projectCommit(team,startDay,endDay){
 		$.ajax(url, {
 			type : 'POST',
 			data : {
-				"team" : team,
+				"projectId" : projectId,
 				"dayStart": startDay,
 				"dayEnd": endDay,
 			},
@@ -189,30 +189,30 @@ function projectCommit(team,startDay,endDay){
 			});
 }
 
-function projectCommit(team,startDay,endDay,timeRange){
-	var url1 = "/GitlabMonitor/project/comment"
-		$.ajax(url1, {
-			type : 'POST',
-			data : {
-				"team" : team,
-			},
-			success : function(data, textStatus) {
-				var value = data;
-				var result = "";
-				for(var i in value){
-					result=result+"<p>"+value[i].words+"--"+value[i].time+"</p>";
-				}
-				$('#words').html(
-					result
-				)
-			}
-		});
+function projectCommit(projectId,startDay,endDay,timeRange){
+//	var url1 = "/GitlabMonitor/project/comment"
+//		$.ajax(url1, {
+//			type : 'POST',
+//			data : {
+//				"projectId" : projectId,
+//			},
+//			success : function(data, textStatus) {
+//				var value = data;
+//				var result = "";
+//				for(var i in value){
+//					result=result+"<p>"+value[i].words+"--"+value[i].time+"</p>";
+//				}
+//				$('#words').html(
+//					result
+//				)
+//			}
+//		});
 	//repositories per user
 	var url = "/GitlabMonitor/project/commit/range"
 		$.ajax(url, {
 			type : 'POST',
 			data : {
-				"team" : team,
+				"projectId" : projectId,
 				"dayStart": startDay,
 				"dayEnd": endDay,
 				"timeRange": timeRange,
@@ -265,7 +265,7 @@ function projectCommit(team,startDay,endDay,timeRange){
 		$.ajax(url, {
 			type : 'POST',
 			data : {
-				"team" : team,
+				"projectId" : projectId,
 				"dayStart": startDay,
 				"dayEnd": endDay,
 				"timeRange": timeRange,

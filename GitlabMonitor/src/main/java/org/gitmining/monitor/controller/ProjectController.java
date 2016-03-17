@@ -42,10 +42,10 @@ public class ProjectController {
 	
 	@RequestMapping(value="/project/commit/range")
 	public Map<String, Object> getProjectCommitItemRange(HttpServletRequest request,HttpServletResponse response){
-		String team = request.getParameter("team");
 		String dayStart = request.getParameter("dayStart");
 		String dayEnd = request.getParameter("dayEnd");
 		String timeRange = request.getParameter("timeRange");
+		int projectId = Integer.parseInt(request.getParameter("projectId"));
 		if(timeRange != null){
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Calendar calendar = Calendar.getInstance();
@@ -60,7 +60,7 @@ public class ProjectController {
 			}
 			dayStart = sdf.format(calendar.getTime());
 		}
-		Map<String, Object> result = projectService.getProjectCommitItem(team, dayStart, dayEnd);
+		Map<String, Object> result = projectService.getProjectCommitItem(projectId, dayStart, dayEnd);
 		result.put("dayStart", dayStart);
 		result.put("dayEnd", dayStart);
 		return result;
@@ -72,6 +72,7 @@ public class ProjectController {
 		String team = request.getParameter("team");
 		String dayStart = request.getParameter("dayStart");
 		String dayEnd = request.getParameter("dayEnd");
+		
 		
 		List<Student> students = projectService.getTeamStudent(team);
 		List<ProjectVO> projects = projectService.getTeamProject(team);
@@ -88,11 +89,18 @@ public class ProjectController {
 			calendar.set(Calendar.DAY_OF_MONTH, 1);
 			dayStart = sdf.format(calendar.getTime());
 		}
+		int projectId = 0;
+		try{
+			projectId = Integer.parseInt(request.getParameter("id"));
+		}catch (Exception e) {
+			projectId = projects.get(projects.size()-1).getId();
+		}
 		result.addObject("dayStart", dayStart);
 		result.addObject("dayEnd", dayEnd);
 		result.addObject("students", students);
 		result.addObject("projects", projects);
 		result.addObject("teaminfo", teaminfo);
+		result.addObject("projectId", projectId);
 		return result;
 	}
 	
@@ -183,8 +191,8 @@ public class ProjectController {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			dayEnd = sdf.format(Calendar.getInstance().getTime());
 		}
-		String team = request.getParameter("team");
-		Map<String, Object> result =  projectService.selectTeamStudentCommitRange(team, dayStart, dayEnd);
+		int projectId = Integer.parseInt(request.getParameter("projectId"));
+		Map<String, Object> result =  projectService.selectTeamStudentCommitRange(projectId, dayStart, dayEnd);
 		result.put("dayStart", dayStart);
 		result.put("dayEnd", dayEnd);
 		return result;

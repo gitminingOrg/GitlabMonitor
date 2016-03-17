@@ -107,20 +107,20 @@
 
 	<select id="selectProjectCommitRange" parameterType="java.util.Map" resultMap="projectCommit">
 		SELECT 
-		id, team, `day`, commit_count, add_line, delete_line,java_file,total_commit,total_add,total_delete
+		p.id AS id, g.name as name, team, `day`, commit_count, add_line, delete_line,java_file,total_commit,total_add,total_delete
 		FROM
-		projectCommit
+		projectCommit p, groupproject g
 		WHERE
-		team=#{team} AND `day` &gt;= #{startDay} AND `day` &lt;= #{endDay}
+		team=#{team} AND `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} AND p.id = g.id
 	</select>
 	
 	<select id="selectAllProjectCommitRange" parameterType="java.util.Map" resultMap="projectCommit">
 		SELECT 
-		id,sum(commit_count) AS commit_count, sum(add_line) AS add_line,sum(delete_line) AS delete_line,sum(`java_file`) AS java_file, 
+		p.id AS id, g.name as name,sum(commit_count) AS commit_count, sum(add_line) AS add_line,sum(delete_line) AS delete_line,sum(`java_file`) AS java_file, 
 		max(total_commit) AS total_commit,max(total_add) AS total_add,max(total_delete) AS total_delete,team   
 		FROM   
-		projectCommit   
-		WHERE  `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} group by id 
+		projectCommit p, groupproject g  
+		WHERE  p.id = g.id AND `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} group by id 
 		<if test="order != null">
 		ORDER BY `${order}` ${method}
 		</if>
@@ -133,7 +133,7 @@
 		FROM
 		projectCommit
 		WHERE
-		team=#{team} AND `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} order by `day` asc;
+		id=#{projectId} AND `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} order by `day` asc;
 	</select>
 	
 	
@@ -143,7 +143,7 @@
 		FROM
 		projectCommit
 		WHERE
-		team=#{team} AND `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} order by `day` asc;
+		id=#{projectId} AND `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} order by `day` asc;
 	</select>
 	
 	<select id="selectProjectEventRange" resultMap="projectEvent">

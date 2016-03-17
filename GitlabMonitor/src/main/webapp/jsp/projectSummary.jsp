@@ -96,10 +96,10 @@
 </form>
 <br />
 <table class="table table-striped table-bordered">
-	<thead><tr><th>rank</th><th>id</th><th>team</th> <th>commit_count</th> <th>add_line</th> <th>delete_line</th> <th>java_file</th> <th>total_add</th> <th>total_delete</th><th>formula</th></tr></thead>
+	<thead><tr><th>rank</th><th>name</th><th>commit_count</th> <th>add_line</th> <th>delete_line</th> <th>java_file</th> <th>total_add</th> <th>total_delete</th><th>formula</th></tr></thead>
 	<tbody id="commit_body">
 	<c:forEach items="${commits}" var="commit" varStatus="status">
-		<tr><th>${ status.index + 1 }</th><th>${commit.id}</th><th><a href="/GitlabMonitor/project/commit?team=${commit.team}&dayStart=${dayStart}&dayEnd=${dayEnd}">${commit.team}</a></th><th>${commit.commit_count}</th><th>${commit.add_line}</th><th>${commit.delete_line}</th>
+		<tr><th>${ status.index + 1 }</th><th><a href="/GitlabMonitor/project/commit?id=${commit.id}&team=${commit.team}&dayStart=${dayStart}&dayEnd=${dayEnd}">${commit.name}</a></th><th>${commit.commit_count}</th><th>${commit.add_line}</th><th>${commit.delete_line}</th>
 		<th>${commit.java_file}</th><th>${commit.total_add}</th><th>${commit.total_delete}</th><th>${commit.formula}</th></tr>
 	</c:forEach>	
 	</tbody>

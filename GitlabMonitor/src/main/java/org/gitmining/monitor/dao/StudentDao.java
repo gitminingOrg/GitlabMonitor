@@ -48,11 +48,11 @@ public class StudentDao extends BaseDaoImpl{
 		return selectAllStudentCommitRangeSort(startDay, endDay, "commit_count", "desc");
 	}
 	
-	public List<StudentCommit> selectTeamStudentCommitRange(String startDay, String endDay, String team){
+	public List<StudentCommit> selectTeamStudentCommitRange(String startDay, String endDay, int projectId){
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("startDay", startDay);
 		params.put("endDay", endDay);
-		params.put("team", team);
+		params.put("projectId", projectId);
 		return sqlSession.selectList("student.selectTeamStudentCommitRange", params);
 	}
 	

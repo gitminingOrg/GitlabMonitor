@@ -76,7 +76,7 @@ public class ProjectService {
 		}
 		return resultMap;
 	}
-	public Map<String, Object> getProjectCommitItem(String project, String startDay, String endDay){
+	public Map<String, Object> getProjectCommitItem(int projectId, String startDay, String endDay){
 		if(startDay==null){
 			startDay="2016-01-01";
 		}
@@ -84,11 +84,11 @@ public class ProjectService {
 			endDay="2020-01-01";
 		}
 		Map<String, Object> result = new HashMap<String, Object>();
-		result.put("commit_count", projectDao.selectProjectCommitItemRange("commit_count",project,startDay,endDay));
-		result.put("add_line", projectDao.selectProjectCommitItemRange("add_line",project,startDay,endDay));
-		result.put("delete_line", projectDao.selectProjectCommitItemRange("delete_line",project,startDay,endDay));
-		result.put("java_file", projectDao.selectProjectCommitItemRange("java_file",project,startDay,endDay));
-		result.put("day", projectDao.selectProjectCommitItemRangeDay("day",project,startDay,endDay));
+		result.put("commit_count", projectDao.selectProjectCommitItemRange("commit_count",projectId,startDay,endDay));
+		result.put("add_line", projectDao.selectProjectCommitItemRange("add_line",projectId,startDay,endDay));
+		result.put("delete_line", projectDao.selectProjectCommitItemRange("delete_line",projectId,startDay,endDay));
+		result.put("java_file", projectDao.selectProjectCommitItemRange("java_file",projectId,startDay,endDay));
+		result.put("day", projectDao.selectProjectCommitItemRangeDay("day",projectId,startDay,endDay));
 		return result;
 	}
 	
@@ -228,7 +228,7 @@ public class ProjectService {
 		return teamVO;
 	}
 	
-	public Map<String, Object> selectTeamStudentCommitRange(String team,String startDay, String endDay){
+	public Map<String, Object> selectTeamStudentCommitRange(int projectId,String startDay, String endDay){
 		if(startDay==null){
 			startDay="2016-01-01";
 		}
@@ -236,7 +236,7 @@ public class ProjectService {
 			endDay="2020-01-01";
 		}
 		Map<String, Object> result = new HashMap<String, Object>();
-		List<StudentCommit> commits = studentDao.selectTeamStudentCommitRange(startDay, endDay, team);
+		List<StudentCommit> commits = studentDao.selectTeamStudentCommitRange(startDay, endDay, projectId);
 		String[] statistics = {"commit_count","add_line","delete_line","java_file","total_commit","total_add","total_delete"};
 		result.put("statistics", statistics);
 		for (int i = 0; i < commits.size(); i++) {
