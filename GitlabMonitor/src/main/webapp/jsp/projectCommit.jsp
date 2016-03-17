@@ -56,56 +56,95 @@
   </div><!-- /.container-fluid -->
 </nav>
 <div class="container">
-
 <div id="content" class="container">
-<h2>Project Detail</h2>
-<div class="btn-group" style="float:right;" role="group" aria-label="...">
-  <button type="button" class="btn btn-default" onclick="showDailyChart();">Project Commit</button>
-  <button type="button" class="btn btn-default" onclick="showMemberChart();">Member Commit</button>
-  <button type="button" class="btn btn-default" onclick="showInfoChart();">Project Info</button>
-  <div class="btn-group" role="group">
-    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Time Range
-      <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu">
-      <li><a href="#" onclick="projectCommit(document.getElementById('team').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value,'year');">Recent Year</a></li>
-      <li><a href="#" onclick="projectCommit(document.getElementById('team').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value, 'month');">Recent Month</a></li>
-      <li><a href="#" onclick="projectCommit(document.getElementById('team').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value, 'week');">Recent Week</a></li>
-    </ul>
-  </div>
-</div>
-<form id="commitRange" class="form-inline">
-	<input type="text" class="form-control" id="team" placeholder="team name" value="${team}"/>
-	<input type="text" class="form-control" id="dayStart" value="${dayStart}" placeholder="start day"/>
-	<input type="text" class="form-control" id="dayEnd" value="${dayEnd}" placeholder="end day"/>
-	<input type="button" class="btn btn-primary" value="search" onclick="projectCommit(document.getElementById('team').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value);">
-<%-- 	<a href="/GitlabMonitor/project/team?team=${team}" class="btn btn-success">Member Detail</a> --%>
-</form>
+	<h2>Project Detail</h2>
+	<div class="btn-group" style="float:right;" role="group" aria-label="...">
+	  <button type="button" class="btn btn-default" onclick="showDailyChart();">Project Commit</button>
+	  <button type="button" class="btn btn-default" onclick="showMemberChart();">Member Commit</button>
+	  <button type="button" class="btn btn-default" onclick="showInfoChart();">Member Relationship</button>
+	  <div class="btn-group" role="group">
+	    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	      Time Range
+	      <span class="caret"></span>
+	    </button>
+	    <ul class="dropdown-menu">
+	      <li><a href="#" onclick="projectCommit(document.getElementById('team').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value,'year');">Recent Year</a></li>
+	      <li><a href="#" onclick="projectCommit(document.getElementById('team').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value, 'month');">Recent Month</a></li>
+	      <li><a href="#" onclick="projectCommit(document.getElementById('team').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value, 'week');">Recent Week</a></li>
+	    </ul>
+	  </div>
+	</div>
+	<form id="commitRange" class="form-inline">
+		<input type="text" class="form-control" id="team" placeholder="team name" value="${team}"/>
+		<input type="text" class="form-control" id="dayStart" value="${dayStart}" placeholder="start day"/>
+		<input type="text" class="form-control" id="dayEnd" value="${dayEnd}" placeholder="end day"/>
+		<input type="button" class="btn btn-primary" value="search" onclick="projectCommit(document.getElementById('team').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value);">
+	<%-- 	<a href="/GitlabMonitor/project/team?team=${team}" class="btn btn-success">Member Detail</a> --%>
+	</form>
 
-<br />
-<div class="container">
+	<br />
 	<div id="dailyChart"></div>
 	<div id="memberChart" style="display:none"></div>
 	<div id="infoChart" style="display:none"></div>
 </div>
+<br />
+<div id="team introduction" class="row container">
+	<div class="col-md-5">
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">Team Introduction</h3>
+		  </div>
+		  <div class="panel-body">
+			<p>Team: ${teaminfo.name}</p>
+			<p>Description: ${teaminfo.description}</p>
+			<p>Page: <a href="${teaminfo.web_url}" target="view_window">${teaminfo.web_url}</a></p>
+		  </div>
+		</div>
+	</div>
+	
+	<div class="col-md-3">
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">Team Member</h3>
+		  </div>
+		  <div class="panel-body">
+			<c:forEach items="${students}" var="student">	
+				<p>Member name : <a href="/GitlabMonitor/student/commit?student=${student.name}">${student.name}</a><p/>
+			</c:forEach>
+		  </div>
+		</div>
+	</div>
 
+	<div class="col-md-4">
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">Team Projects</h3>
+		  </div>
+		  <div class="panel-body">
+		    <p>
+			<c:forEach items="${projects}" var="project">
+				<a href="/GitlabMonitor/project/commit?team=${teaminfo.name}">${project.name}</a>
+			</c:forEach>
+			<p/>
+		  </div>
+		</div>	
+	</div>
 </div>
 
-<div id="board" class="container">
-<h1>吐槽板</h1>
-<form class="form-inline">
-<input type="text" class="form-control" id="sen" placeholder="say something"/>
-<input type="text" class="form-control" id="token" placeholder="token"/>
-<input type="button" class="btn btn-primary" value="commit" onclick="projectComment(document.getElementById('team').value,document.getElementById('token').value,document.getElementById('sen').value);">
-</form>
+<!-- <div id="board"> -->
+<!-- <h2>Spit out</h2> -->
+<!-- <form class="form-inline"> -->
+<!-- <input type="text" class="form-control" id="sen" placeholder="say something"/> -->
+<!-- <input type="text" class="form-control" id="token" placeholder="token"/> -->
+<!-- <input type="button" class="btn btn-primary" value="commit" onclick="projectComment(document.getElementById('team').value,document.getElementById('token').value,document.getElementById('sen').value);"> -->
+<!-- </form> -->
 
-<div id="words">
-<c:forEach items="${comments}" var="comment">
-	<p>${comment.words} -----comment at: ${comment.time}</p>
-</c:forEach>
-</div>
-</div>
+<!-- <div id="words"> -->
+<%-- <c:forEach items="${comments}" var="comment"> --%>
+<%-- 	<p>${comment.words} -----comment at: ${comment.time}</p> --%>
+<%-- </c:forEach> --%>
+<!-- </div> -->
+<!-- </div> -->
 
 
 </div>

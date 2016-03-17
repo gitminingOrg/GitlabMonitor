@@ -10,11 +10,15 @@
       	http://www.springframework.org/schema/security/spring-security-3.0.xsd
       	http://www.springframework.org/schema/context
       	http://www.springframework.org/schema/context/spring-context.xsd">
-	<http auto-config="true">
-		<form-login />
+	<http auto-config="true" use-expressions="false">
+		<form-login login-processing-url="/login/check" login-page="/login" authentication-failure-url="/login?login_error=t"/>
 		<http-basic/>
-		<logout />
-		<intercept-url pattern="/**" access="ROLE_SPITTER"/>
+		<logout logout-url="/login/logout"/>
+		<intercept-url pattern="/student/**" access="ROLE_SPITTER"/>
+		<intercept-url pattern="/project/**" access="ROLE_SPITTER"/>
+<!-- 		<intercept-url pattern="/login**" filters="none"/> -->
+<!-- 		<intercept-url pattern="/static**" filters="none"/> -->
+<!-- 		<intercept-url pattern="/GitlabMonitor/static**" filters="none"/> -->
 	</http>
 	<user-service id="userService1">
 		<user name="liujia" password="liujia" authorities="ROLE_SPITTER,ROLE_ADMIN,ROLE_TEST" />

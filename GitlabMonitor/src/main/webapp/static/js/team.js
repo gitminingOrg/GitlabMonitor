@@ -1,3 +1,9 @@
+var team = $("#team").val();
+var startDay = $("#startDay").val();
+var endDay = $("#endDay").val();
+
+$(document).ready(projectCommit(team,startDay,endDay));
+
 function showDailyChart(){
 	$("#dailyChart").show();
 	$("#memberChart").hide();

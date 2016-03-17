@@ -33,6 +33,25 @@
 		<result property="time" column="time" />
 	</resultMap>
 	
+	<resultMap type="org.gitmining.monitor.bean.Student" id="student">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="web_url" column="web_url" />
+		<result property="created_at" column="created_at" />
+		<result property="bio" column="bio" />
+		<result property="email" column="email" />
+		<result property="studentno" column="studentno" />
+	</resultMap>
+	
+	<select id="selectStudentInfo" resultMap="student">
+		SELECT 
+		id, name, web_url,created_at,bio,email,studentno
+		FROM
+		studentinfo
+		WHERE
+		name = #{student}
+	</select>
+	
 	<select id="selectStudentComment" resultMap="studentComment">
 		SELECT 
 		id, student, token,words,`time`
@@ -76,7 +95,7 @@
 		sum(commit_count) AS commit_count, sum(add_line) AS add_line,sum(delete_line) AS delete_line,sum(`java_file`) AS java_file, 
 		max(total_commit) AS total_commit,max(total_add) AS total_add,max(total_delete) AS total_delete,sc.student AS student   
 		FROM   
-		studentCommit sc,student s   
+		studentCommit sc,teamstudent s   
 		WHERE  `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} AND sc.student=s.name AND s.team=#{team} group by student 
 	</select>
 	

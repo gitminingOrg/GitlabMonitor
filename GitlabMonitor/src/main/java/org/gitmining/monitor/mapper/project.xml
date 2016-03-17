@@ -33,6 +33,61 @@
 		<result property="time" column="time" />
 	</resultMap>
 	
+	<resultMap type="org.gitmining.monitor.bean.Student" id="student">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="web_url" column="web_url" />
+		<result property="created_at" column="created_at" />
+		<result property="bio" column="bio" />
+		<result property="email" column="email" />
+		<result property="studentno" column="studentno" />
+	</resultMap>
+	
+	<resultMap type="org.gitmining.monitor.bean.ProjectVO" id="projectVO">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="description" column="description" />
+		<result property="web_url" column="web_url" />
+		<result property="path" column="path" />
+		<result property="groupId" column="groupid" />
+	</resultMap>
+	
+	<resultMap type="org.gitmining.monitor.bean.TeamVO" id="teamVO">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="path" column="path" />
+		<result property="description" column="description" />
+		<result property="web_url" column="web_url" />
+		<result property="ucode" column="ucode" />
+	</resultMap>
+	
+	<select id="selectTeamInfo" resultMap="teamVO">
+		SELECT 
+		id, name, path,description,web_url,ucode
+		FROM
+		team
+		WHERE
+		name = #{team}
+	</select>
+	
+	<select id="selectTeamStudent" resultMap="student">
+		SELECT 
+		id, name, web_url,created_at,bio,email,studentno
+		FROM
+		studentinfo
+		WHERE
+		name IN(select name from teamstudent where team = #{team})
+	</select>
+	
+	<select id="selectTeamProject" resultMap="projectVO">
+		SELECT 
+		id, name, web_url,path,groupid
+		FROM
+		groupproject
+		WHERE
+		groupid IN(select id from team where name = #{team})
+	</select>
+	
 	<select id="selectProjectComment" resultMap="projectComment">
 		SELECT 
 		id, team, token,words,`time`
@@ -41,7 +96,6 @@
 		WHERE
 		team=#{team} order by `time` desc
 	</select>
-	
 	<insert id="insertProjectComment" parameterType="org.gitmining.monitor.bean.ProjectComment">
 		INSERT INTO  projectComment(team, token,words,`time`) VALUES(#{team}, #{token},#{words},#{time});
 	</insert>

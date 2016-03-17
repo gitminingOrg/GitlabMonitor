@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.gitmining.monitor.bean.ProjectComment;
 import org.gitmining.monitor.bean.ProjectCommit;
 import org.gitmining.monitor.bean.ProjectEvent;
+import org.gitmining.monitor.bean.ProjectVO;
+import org.gitmining.monitor.bean.Student;
+import org.gitmining.monitor.bean.TeamVO;
 import org.gitmining.monitor.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,6 +72,11 @@ public class ProjectController {
 		String team = request.getParameter("team");
 		String dayStart = request.getParameter("dayStart");
 		String dayEnd = request.getParameter("dayEnd");
+		
+		List<Student> students = projectService.getTeamStudent(team);
+		List<ProjectVO> projects = projectService.getTeamProject(team);
+		TeamVO teaminfo = projectService.getTeamInfo(team);
+		
 		if(team != null){
 			result.addObject("team", team);
 		}
@@ -82,6 +90,9 @@ public class ProjectController {
 		}
 		result.addObject("dayStart", dayStart);
 		result.addObject("dayEnd", dayEnd);
+		result.addObject("students", students);
+		result.addObject("projects", projects);
+		result.addObject("teaminfo", teaminfo);
 		return result;
 	}
 	

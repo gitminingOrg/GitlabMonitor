@@ -58,18 +58,48 @@
 <div class="container">
 
 <div id="content" class="container">
-<h2>Student Commit</h2>
+<h2>Student Detail</h2>
+<div class="btn-group" style="float:right;" role="group" aria-label="...">
+	  <button type="button" class="btn btn-default">Personal Commit</button>
+	  <div class="btn-group" role="group">
+	    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	      Time Range
+	      <span class="caret"></span>
+	    </button>
+	    <ul class="dropdown-menu">
+	      <li><a href="#" onclick="studentCommit2(document.getElementById('student').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value,'year');">Recent Year</a></li>
+	      <li><a href="#" onclick="studentCommit2(document.getElementById('student').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value, 'month');">Recent Month</a></li>
+	      <li><a href="#" onclick="studentCommit2(document.getElementById('student').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value, 'week');">Recent Week</a></li>
+	    </ul>
+	  </div>
+	</div>
 	<form id="commitRange" class="form-inline">
 		<input type="text" id="student" class="form-control" value="${student}" placeholder="student name"/>
-		<input type="text" id="dayStart" class="form-control" placeholder="start day"/>
-		<input type="text" id="dayEnd" class="form-control" placeholder="end day"/>
+		<input type="text" id="dayStart" name="dayStart" class="form-control" value="${dayStart}" placeholder="start day"/>
+		<input type="text" id="dayEnd" name="dayEnd" class="form-control" value="${dayEnd}" placeholder="end day"/>
 		<input type="button" class="btn btn-primary" value="search" onclick="studentCommit(document.getElementById('student').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value);">
 	</form>
+	<br />
 	<div id="user"></div>
+</div>
+<br/>
+<div class="container">
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Student Introduction</h3>
+  </div>
+  <div class="panel-body">
+	<p>Student: ${studentInfo.name}</p>
+	<p>Email: ${studentInfo.email}</p>
+	<p>Bio: ${studentInfo.bio}</p>
+	<p>Page: <a href="${studentInfo.web_url}" target="view_window">${studentInfo.web_url}</a></p>
+	<p>Student No.: ${studentInfo.studentno}</p>
+  </div>
+</div>
 </div>
 
 <div id="board" class="container">
-<h1>吐槽板</h1>
+<h2>Spit Out</h2>
 <form class="form-inline">
 <input type="text" class="form-control" id="sen" placeholder="say something"/>
 <input type="text" class="form-control" id="token" placeholder="token"/>

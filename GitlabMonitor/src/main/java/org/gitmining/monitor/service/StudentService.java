@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.gitmining.monitor.bean.ProjectCommit;
+import org.gitmining.monitor.bean.Student;
 import org.gitmining.monitor.bean.StudentComment;
 import org.gitmining.monitor.bean.StudentCommit;
 import org.gitmining.monitor.bean.StudentEvent;
@@ -64,8 +65,15 @@ public class StudentService {
 		return resultMap;
 	}
 	
-	public Map<String, List> getStudentCommitItem(String student, String startDay, String endDay){
-		Map<String, List> result = new HashMap<String, List>();
+	public Student getStudentInfo(String student){
+		if(student == null || student.length() == 0){
+			return new Student();
+		}
+		return studentDao.getStudentInfo(student);
+	}
+	
+	public Map<String, Object> getStudentCommitItem(String student, String startDay, String endDay){
+		Map<String, Object> result = new HashMap<String, Object>();
 		if(startDay==null){
 			startDay="2016-01-01";
 		}

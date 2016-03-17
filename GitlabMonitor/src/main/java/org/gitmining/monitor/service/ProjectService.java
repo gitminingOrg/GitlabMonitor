@@ -10,8 +10,11 @@ import java.util.Map;
 import org.gitmining.monitor.bean.ProjectComment;
 import org.gitmining.monitor.bean.ProjectCommit;
 import org.gitmining.monitor.bean.ProjectEvent;
+import org.gitmining.monitor.bean.ProjectVO;
+import org.gitmining.monitor.bean.Student;
 import org.gitmining.monitor.bean.StudentComment;
 import org.gitmining.monitor.bean.StudentCommit;
+import org.gitmining.monitor.bean.TeamVO;
 import org.gitmining.monitor.dao.ProjectDao;
 import org.gitmining.monitor.dao.StudentDao;
 import org.gitmining.monitor.util.FilterUtil;
@@ -194,6 +197,35 @@ public class ProjectService {
 		}
 		List<ProjectEvent> result = projectDao.selectAllProjectEventRangeSort(startDay, endDay, order, method);
 		return result;
+	}
+	
+	public List<Student> getTeamStudent(String team){
+		List<Student> students = new ArrayList<Student>();
+		if(team == null || team.length() == 0){
+			return students;
+		}
+		students = projectDao.selectTeamStudent(team);
+		return students;
+	}
+	
+	public List<ProjectVO> getTeamProject(String team){
+		List<ProjectVO> projectVOs = new ArrayList<ProjectVO>();
+		if(team == null || team.length() == 0){
+			return projectVOs;
+		}
+		projectVOs = projectDao.selectTeamProject(team);
+		return projectVOs;
+	}
+	
+	public TeamVO getTeamInfo(String team){
+		if(team == null || team.length() == 0){
+			return new TeamVO();
+		}
+		TeamVO teamVO = projectDao.selectTeamInfo(team);
+		if(teamVO == null){
+			teamVO = new TeamVO();
+		}
+		return teamVO;
 	}
 	
 	public Map<String, Object> selectTeamStudentCommitRange(String team,String startDay, String endDay){
