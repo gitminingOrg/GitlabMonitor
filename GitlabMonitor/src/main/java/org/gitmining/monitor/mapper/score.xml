@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="score">
+	<resultMap type="org.gitmining.monitor.bean.CourseItem" id="courseItem">
+		<result property="id" column="item_id" />
+		<result property="name" column="name" />
+		<result property="course_id" column="course_id" />
+		
+		<collection property="scores" ofType="org.gitmining.monitor.bean.Score">
+			<result property="id" column="score_id" />
+			<result property="project_id" column="project_id" />
+			<result property="project_name" column="project_name" />
+			<result property="item_id" column="item_id" />
+			<result property="score" column="score" />
+		</collection>		
+	</resultMap>
+	
+	<resultMap type="org.gitmining.monitor.bean.Course" id="course">
+		<result property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="school_id" column="school_id"/>
+		<result property="starttime" column="starttime"/>
+		<result property="endtime" column="endtime"/>
+		<result property="teachers" column="teachers"/>
+	</resultMap>
+	
+	<select id="selectCourseItemByCourseName" resultMap="courseItem">
+		SELECT 
+		i.id AS item_id,
+		i.name AS name,
+		i.course_id AS course_id,
+		s.id AS  score_id,
+		s.project_id AS project_id,
+		s.score AS score,
+		g.name AS project_name
+		FROM
+		courseItem i,courseScore s,groupproject g
+		WHERE i.id = s.item_id AND s.project_id = g.id AND i.course_id 
+		IN 
+		(SELECT id FROM course WHERE name=#{name}) order by project_id asc;
+	</select>
+	
+	<select id="selectCourseInfo" resultMap="course">
+		SELECT 
+		id,name,school_id,starttime,endtime,teachers
+		FROM
+		course
+		WHERE
+		name=#{name};
+	</select>
+	
+	<select id="selectAllCourseNames" resultType="String">
+		SELECT
+		name
+		FROM
+		course
+	</select>
+</mapper>

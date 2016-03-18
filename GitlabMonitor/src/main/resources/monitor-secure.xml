@@ -14,15 +14,16 @@
 		<form-login login-processing-url="/login/check" login-page="/login" authentication-failure-url="/login?login_error=t"/>
 		<http-basic/>
 		<logout logout-url="/login/logout"/>
-		<intercept-url pattern="/student/**" access="ROLE_SPITTER"/>
-		<intercept-url pattern="/project/**" access="ROLE_SPITTER"/>
+		<intercept-url pattern="/student/**" access="ROLE_NORMAL"/>
+		<intercept-url pattern="/project/**" access="ROLE_NORMAL"/>
+		<intercept-url pattern="/admin/**" access="ROLE_ADMIN"/>
 <!-- 		<intercept-url pattern="/login**" filters="none"/> -->
 <!-- 		<intercept-url pattern="/static**" filters="none"/> -->
 <!-- 		<intercept-url pattern="/GitlabMonitor/static**" filters="none"/> -->
 	</http>
 	<user-service id="userService1">
-		<user name="liujia" password="liujia" authorities="ROLE_SPITTER,ROLE_ADMIN,ROLE_TEST" />
-		<user name="twoqubed" password="longhorns" authorities="ROLE_SPITTER" />
+		<user name="liujia" password="liujia" authorities="ROLE_NORMAL,ROLE_ADMIN,ROLE_TEST" />
+		<user name="normal" password="normal" authorities="ROLE_NORMAL" />
 		<user name="admin" password="admin" authorities="ROLE_ADMIN" />
 	</user-service>
 

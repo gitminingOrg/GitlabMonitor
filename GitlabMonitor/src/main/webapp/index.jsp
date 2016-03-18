@@ -68,7 +68,7 @@
       <div class="caption">
         <h3>Shadow Hunter</h3>
         <p>Be happy, don't worry.</p>
-        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+        <p><a href="/GitlabMonitor/login" class="btn btn-primary" role="button">Login</a> <label class="btn btn-default" role="button">I wanna in</label></p>
       </div>
     </div>
   </div>
@@ -79,7 +79,7 @@
       <div class="caption">
         <h3>SOR</h3>
         <p>Help me, help you.</p>
-        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+        <p><a href="/GitlabMonitor/register" class="btn btn-primary" role="button">Rigister</a> <label class="btn btn-default" role="button">I wanna try</label></p>
       </div>
     </div>
   </div>
@@ -90,7 +90,7 @@
       <div class="caption">
         <h3>Spell Breaker</h3>
         <p>Your magic is mine.</p>
-        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+        <p><a href="/GitlabMonitor/try" class="btn btn-primary" role="button">Donate</a> <a href="#" class="btn btn-default" role="button">I wanna pee</a></p>
       </div>
     </div>
   </div>

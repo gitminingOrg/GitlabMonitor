@@ -45,7 +45,7 @@
             <li role="separator" class="divider"></li>
             <li><a href="/GitlabMonitor/project/commit">Project Detail</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="/GitlabMonitor/project/event">Project Score</a></li>
+            <li><a href="/GitlabMonitor/project/score">Project Score</a></li>
           </ul>
         </li>
       </ul>
@@ -88,28 +88,28 @@
 </div>
 <br />
 <div class="container">
-<div id="team introduction" class="row container">
-	<div class="panel panel-default">
-	  <div class="panel-heading">
-	    <h3 class="panel-title">Team Introduction</h3>
-	  </div>
-	  <div class="panel-body">
-		<p>Team: ${teaminfo.name}</p>
-		<p>Description: ${teaminfo.description}</p>
-		<p>Page: <a href="${teaminfo.web_url}" target="view_window">${teaminfo.web_url}</a></p>
-		<p>Member name :<c:forEach items="${students}" var="student">	
-		 <a href="/GitlabMonitor/student/commit?student=${student.name}">${student.name}</a>
-		</c:forEach></p>
-		
-		<p>Team Projects:</p>
-		<p>
-		<c:forEach items="${projects}" var="project">
-			<a href="/GitlabMonitor/project/commit?team=${teaminfo.name}&id=${project.id}">${project.name}</a>
-		</c:forEach>
-		<p/>
-	  </div>
+	<div id="team introduction" class="row container">
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">Team Introduction</h3>
+		  </div>
+		  <div class="panel-body">
+			<p>Team: ${teaminfo.name}</p>
+			<p>Description: ${teaminfo.description}</p>
+			<p>Page: <a href="${teaminfo.web_url}" target="view_window">${teaminfo.web_url}</a></p>
+			<p>Member name :<c:forEach items="${students}" var="student">	
+			 <a href="/GitlabMonitor/student/commit?student=${student.name}">${student.name}</a>
+			</c:forEach></p>
+			
+			<p>Team Projects:</p>
+			<p>
+			<c:forEach items="${projects}" var="project">
+				<a href="/GitlabMonitor/project/commit?team=${teaminfo.name}&id=${project.id}">${project.name}</a>
+			</c:forEach>
+			<p/>
+		  </div>
+		</div>
 	</div>
-</div>
 </div>
 
 <!-- <div id="board"> -->
@@ -135,7 +135,6 @@
  <script src="/GitlabMonitor/static/js/library/highcharts-3d.js"></script>
  <script src="/GitlabMonitor/static/js/library/sand-signika.js"></script>
  <script src="/GitlabMonitor/static/js/team.js"></script> 
- <script src="/GitlabMonitor/static/js/library/angular.min.js"></script>
  <script src="/GitlabMonitor/static/js/library/bootstrap.min.js"></script>
    <script src="/GitlabMonitor/static/js/bootstrap-datepicker.min.js"></script>
  <script type="text/javascript">

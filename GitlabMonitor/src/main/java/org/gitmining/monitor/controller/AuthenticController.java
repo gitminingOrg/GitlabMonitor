@@ -14,4 +14,11 @@ public class AuthenticController {
 		view.setViewName("login");
 		return view;
 	}
+	
+	@RequestMapping("/register")
+	public ModelAndView showSign(HttpServletRequest request,HttpServletResponse response){
+		ModelAndView view = new ModelAndView();
+		view.setViewName("register");
+		return view;
+	}
 }
