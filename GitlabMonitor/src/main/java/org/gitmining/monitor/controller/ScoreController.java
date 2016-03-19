@@ -36,7 +36,6 @@ public class ScoreController {
 	@RequestMapping("/project/score/add")
 	public ModelAndView addProjectScore(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView view = new ModelAndView("projectScore");
-		
 		String columnName = request.getParameter("column");
 		int courseId = Integer.parseInt(request.getParameter("course_id"));
 		String courseName = request.getParameter("course_name");
@@ -52,16 +51,21 @@ public class ScoreController {
 	@RequestMapping("/project/score/change")
 	public Map<String, Object> changeProjectScore(HttpServletRequest request, HttpServletResponse response){
 		Map<String, Object> result = new HashMap<String, Object>();
-		String columnName = request.getParameter("column");
-		int courseId = Integer.parseInt(request.getParameter("course_id"));
-		String courseName = request.getParameter("course_name");
-		scoreService.addCourseScore(courseId, columnName);
-		List<CourseItem> courseItems = scoreService.getCourseScore("2016_nju_se_cseiii");
+		try{
+			int item_id = Integer.parseInt(request.getParameter("item_id"));
+			int project_id = Integer.parseInt(request.getParameter("project_id"));
+			int score = Integer.parseInt(request.getParameter("score"));
+			result = scoreService.updateScore(project_id, item_id, score);
+		}catch(NumberFormatException e){
+			result.put("status", "wrong");
+			result.put("info", "data not a int");
+		}
 		return result;
 	}
 	
 	@RequestMapping("/project/score/delete")
 	public ModelAndView deleteProjectScore(HttpServletRequest request, HttpServletResponse response){
+		System.out.println("aaaaaaaaa");
 		ModelAndView view = new ModelAndView("projectScore");
 		List<CourseItem> courseItems = scoreService.getCourseScore("2016_nju_se_cseiii");
 		view.addObject("itemScores", courseItems);

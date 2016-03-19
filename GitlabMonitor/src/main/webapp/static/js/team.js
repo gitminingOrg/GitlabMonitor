@@ -5,21 +5,24 @@ var endDay = $("#endDay").val();
 $(document).ready(projectCommit(projectId,startDay,endDay));
 
 function showDailyChart(){
-	$("#dailyChart").show();
 	$("#memberChart").hide();
 	$("#infoChart").hide();
+	$("#dailyChart").show();
+	$("#dailyChart").highcharts().reflow();
 }
 
 function showMemberChart(){
 	$("#dailyChart").hide();
-	$("#memberChart").show();
 	$("#infoChart").hide();
+	$("#memberChart").show();
+	$("#memberChart").highcharts().reflow();
 }
 
 function showInfoChart(){
 	$("#dailyChart").hide();
 	$("#memberChart").hide();
 	$("#infoChart").show();
+	
 }
 function projectComment(team,token,sen){
 	var url = "/GitlabMonitor/project/comment/submit"

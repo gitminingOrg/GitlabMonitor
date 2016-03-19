@@ -79,7 +79,7 @@
 		  <option value ="desc">desc</option>
 		  <option value ="asc">asc</option>
 	</select>
-		<input type="submit" class="btn btn-primary" value="filter">
+		<input type="submit" class="btn btn-primary " value="filter">
 		<br />
 		<div class="input-group">
   			<span class="input-group-addon" id="basic-addon1">formula</span>
@@ -89,10 +89,7 @@
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon2">filter</span>
 			<input type="text" id="filter" class="form-control" style="width:520px;" name="filter" value="${filter}" placeholder="commit_count>3;add_line<10;delete_line>100"/>
-		</div>
-		
-		
-		
+		</div>		
 </form>
 <br />
 <table class="table table-striped table-bordered">

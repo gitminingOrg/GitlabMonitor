@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/semantic.min.css">
 <link rel="stylesheet" href="/GitlabMonitor/static/js/jquery/css/ui-lightness/jquery-ui-1.9.1.custom.css" type="text/css" charset="utf-8">
 <link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap-datepicker3.min.css">
 <link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap-datepicker3.standalone.min.css">
@@ -77,13 +78,12 @@
 	<input type="hidden" id="course_name" name="course_name" value="${course.name}">
 	<button class="btn btn-primary" type="submit" class="form-control" >add a column</button>
 </form>
-
 <!-- <div class="row"> -->
 <!-- 	<div class="col-md-9"> -->
 		<table class="table table-striped table-bordered">
 		<thead><tr> 
 		<th>project</th>
-		<c:forEach items="${itemScores}" var="item"><th>${item.name}</th></c:forEach>
+		<c:forEach items="${itemScores}" var="item"><th> <form id="delete${item.id}" class="form-inline" action="/GitlabMonitor/project/score/delete"><label>${item.name}</label> <input type="hidden" name="itemId" value="${item.id}"> <i class="remove circle icon" onclick="removeItem(${item.id});"></i></form></th></c:forEach>
 		</tr></thead>
 		<tbody id="commit_body">
 			<c:forEach items="${itemScores[0].scores}" var="score" varStatus="outloop">
@@ -95,9 +95,7 @@
 		</c:forEach>
 		</tbody>
 		</table>
-<!-- 	</div> -->
-	
-	
+<!-- 	</div> -->	
 <!-- 	<div class="col-md-3" id="grid" style="display:none"> -->
 <!-- 		<table class="table table-striped table-bordered"> -->
 <!-- 		<thead><tr> <th><input type="text" class="form-control" placeholder="item name"/></th></tr></thead> -->
@@ -115,5 +113,6 @@
 </body>
  <script src="/GitlabMonitor/static/js/library/jquery-1.11.3.js"></script>
  <script src="/GitlabMonitor/static/js/library/bootstrap.min.js"></script>
+ <script src="/GitlabMonitor/static/js/library/semantic.min.js"></script>
  <script src="/GitlabMonitor/static/js/score.js"></script> 
 </html>

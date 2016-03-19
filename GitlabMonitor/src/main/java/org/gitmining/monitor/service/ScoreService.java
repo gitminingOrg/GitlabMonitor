@@ -1,7 +1,9 @@
 package org.gitmining.monitor.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.gitmining.monitor.bean.Course;
 import org.gitmining.monitor.bean.CourseItem;
@@ -48,6 +50,22 @@ public class ScoreService {
 	
 	public List<String> getAllCourseNames(){
 		return scoreDao.getCourseNames();
+	}
+	
+	public Map<String, Object> updateScore(int project_id, int item_id, int num){
+		Map<String, Object> result = new HashMap<String, Object>();
+		try{
+			Score score = new Score();
+			score.setItem_id(item_id);
+			score.setProject_id(project_id);
+			score.setScore(num);
+			scoreDao.updateProjectItemScore(score);	
+			result.put("status", "ok");
+		}catch(Exception e){
+			result.put("status", "wrong");
+			result.put("info", "server error");
+		}
+		return result;
 	}
 	
 }

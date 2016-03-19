@@ -30,4 +30,8 @@ public class ScoreDao extends BaseDaoImpl {
 	public int addItemScoreBatch(List<Score> scores){
 		return sqlSession.insert("score.addItemScoreBatch", scores);
 	}
+	
+	public int updateProjectItemScore(Score score){
+		return sqlSession.update("score.updateProjectItemScore", score);
+	}
 }
