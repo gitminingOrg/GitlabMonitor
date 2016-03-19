@@ -52,7 +52,6 @@ public class ScoreController {
 	@RequestMapping("/project/score/change")
 	public Map<String, Object> changeProjectScore(HttpServletRequest request, HttpServletResponse response){
 		Map<String, Object> result = new HashMap<String, Object>();
-		
 		String columnName = request.getParameter("column");
 		int courseId = Integer.parseInt(request.getParameter("course_id"));
 		String courseName = request.getParameter("course_name");
