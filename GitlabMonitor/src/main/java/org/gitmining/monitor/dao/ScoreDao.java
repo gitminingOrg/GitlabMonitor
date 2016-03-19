@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.gitmining.monitor.bean.Course;
 import org.gitmining.monitor.bean.CourseItem;
+import org.gitmining.monitor.bean.Score;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -14,8 +15,19 @@ public class ScoreDao extends BaseDaoImpl {
 	public Course getCourseInfo(String course){
 		return sqlSession.selectOne("score.selectCourseInfo", course);
 	}
-	
 	public List<String> getCourseNames(){
 		return sqlSession.selectList("score.selectAllCourseNames");
+	}
+	public int insertCourseItem(CourseItem courseItem){
+		sqlSession.insert("score.insertNewCourseItem",courseItem);
+		return courseItem.getId();
+	}
+	
+	public List<Integer> getCourseProjectID(int courseId){
+		return sqlSession.selectList("selectCourseProject",courseId);
+	}
+	
+	public int addItemScoreBatch(List<Score> scores){
+		return sqlSession.insert("score.addItemScoreBatch", scores);
 	}
 }

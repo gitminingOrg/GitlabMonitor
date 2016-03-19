@@ -55,4 +55,20 @@
 		FROM
 		course
 	</select>
+	<insert id="insertNewCourseItem" parameterType="org.gitmining.monitor.bean.CourseItem" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO courseItem(name,course_id) VALUES(#{name},#{course_id});
+	</insert>
+	
+	<select id="selectCourseProject" resultType="Integer">
+		SELECT project_id FROM courseChoose WHERE course_id = #{course_id};
+	</select>
+	
+	<insert id="addItemScoreBatch" useGeneratedKeys="true" parameterType="java.util.List">
+		INSERT INTO courseScore(project_id,item_id,score) 
+		VALUES
+		<foreach collection="list" item="item" index="index" separator="," >
+			(#{item.project_id},#{item.item_id},#{item.score})
+		</foreach>
+	</insert>
+	
 </mapper>

@@ -1,6 +1,8 @@
 package org.gitmining.monitor.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +24,45 @@ public class ScoreController {
 
 	@RequestMapping("/project/score")
 	public ModelAndView showProjectScore(HttpServletRequest request, HttpServletResponse response){
+		ModelAndView view = new ModelAndView("projectScore");
+		List<CourseItem> courseItems = scoreService.getCourseScore("2016_nju_se_cseiii");
+		view.addObject("itemScores", courseItems);
+		view.addObject("course", scoreService.getCourseInfo("2016_nju_se_cseiii"));
+		view.addObject("courseNames", scoreService.getAllCourseNames());
+		//view.addObject("length", courseItems.get(0).getScores().size());
+		return view;
+	}
+	
+	@RequestMapping("/project/score/add")
+	public ModelAndView addProjectScore(HttpServletRequest request, HttpServletResponse response){
+		ModelAndView view = new ModelAndView("projectScore");
+		
+		String columnName = request.getParameter("column");
+		int courseId = Integer.parseInt(request.getParameter("course_id"));
+		String courseName = request.getParameter("course_name");
+		scoreService.addCourseScore(courseId, columnName);
+		List<CourseItem> courseItems = scoreService.getCourseScore("2016_nju_se_cseiii");
+		view.addObject("itemScores", courseItems);
+		view.addObject("course", scoreService.getCourseInfo("2016_nju_se_cseiii"));
+		view.addObject("courseNames", scoreService.getAllCourseNames());
+		//view.addObject("length", courseItems.get(0).getScores().size());
+		return view;
+	}
+	
+	@RequestMapping("/project/score/change")
+	public Map<String, Object> changeProjectScore(HttpServletRequest request, HttpServletResponse response){
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		String columnName = request.getParameter("column");
+		int courseId = Integer.parseInt(request.getParameter("course_id"));
+		String courseName = request.getParameter("course_name");
+		scoreService.addCourseScore(courseId, columnName);
+		List<CourseItem> courseItems = scoreService.getCourseScore("2016_nju_se_cseiii");
+		return result;
+	}
+	
+	@RequestMapping("/project/score/delete")
+	public ModelAndView deleteProjectScore(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView view = new ModelAndView("projectScore");
 		List<CourseItem> courseItems = scoreService.getCourseScore("2016_nju_se_cseiii");
 		view.addObject("itemScores", courseItems);
