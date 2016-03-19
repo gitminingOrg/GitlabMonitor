@@ -21,4 +21,6 @@ public class AuthenticController {
 		view.setViewName("register");
 		return view;
 	}
+	
+	//dsafsadf
 }
