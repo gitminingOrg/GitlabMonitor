@@ -35,8 +35,7 @@
             <li role="separator" class="divider"></li>
             <li><a href="/GitlabMonitor/student/commit">Student Detail</a></li>
           </ul>
-        </li>
-        
+        </li>      
 		<li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Project <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -48,12 +47,25 @@
           </ul>
         </li>
       </ul>
-
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
 <div class="container">
 <h2>Student Summary</h2>
+<div class="btn-group" style="float:right;" role="group" aria-label="...">
+	  <button type="button" class="btn btn-primary" onclick="showInfoChart();">Time Range</button>
+	  <div class="btn-group" role="group">
+	    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	      Choose
+	      <span class="caret"></span>
+	    </button>
+	    <ul class="dropdown-menu">
+	      <li><a href="#" onclick="studentSummary(document.getElementById('formula').value,document.getElementById('filter').value,'year');">Recent Year</a></li>
+	      <li><a href="#" onclick="studentSummary(document.getElementById('formula').value,document.getElementById('filter').value,'month');">Recent Month</a></li>
+	      <li><a href="#" onclick="studentSummary(document.getElementById('formula').value,document.getElementById('filter').value,'week');">Recent Week</a></li>
+	    </ul>
+	  </div>
+</div>
 <form id="commitRange" class="form-inline" action="/GitlabMonitor/student/summary" method="POST" >
 	<input type="text" id="dayStart" class="form-control" name="dayStart" value="${dayStart}" placeholder="start day"/>
 	<input type="text" id="dayEnd" class="form-control" name="dayEnd" value="${dayEnd}" placeholder="end day"/>
