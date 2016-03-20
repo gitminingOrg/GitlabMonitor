@@ -6,20 +6,23 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.util.List;
 
+import org.gitmining.monitor.bean.Branch;
+import org.gitmining.monitor.bean.Project;
 import org.gitmining.monitor.crawlerdao.ProjectCrawlerDao;
-import org.gitmining.monitor.crawlerdao.StudentCrawlerDao;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 
-public class GroupProjectCrawler {
-	public void crawlGroupProject(){
+public class EventCrawler {
+	
+	public void crawlEvent(){
 		ProjectCrawlerDao projectCrawlerDao = new ProjectCrawlerDao();
-		StudentCrawlerDao studentCrawlerDao = new StudentCrawlerDao();
-		List<Integer> groupID = studentCrawlerDao.getTeamID();
-		for(int m = 0 ; m < groupID.size() ; m++){
+		List<Project> projectInfo = projectCrawlerDao.getGroupProject();
+		//List<String> date = projectCrawlerDao.getDate();
+		
+		for(int m = 0 ; m < projectInfo.size() ; m++){
 			int index = 1;
-			String root = "http://114.55.35.12/api/v3/groups/" + groupID.get(m) + "/projects?private_token=BzkEVfK_jwk2ytzdx5-h&page=";
+			String root = "http://114.55.35.12/api/v3/projects/" + projectInfo.get(m).getId() + "/events?private_token=BzkEVfK_jwk2ytzdx5-h&page=";
 			HttpURLConnection urlConnection = GetURLConnection.getUrlConnection(root + index);
 			BufferedReader reader = null;
 			String response = "";
@@ -34,15 +37,13 @@ public class GroupProjectCrawler {
 						JsonArray jsonArray = new JsonParser().parse(response)
 								.getAsJsonArray();
 						for(int i = 0 ; i < jsonArray.size() ; i ++){
-							int id = jsonArray.get(i).getAsJsonObject().get("id").getAsInt();
-							String name = jsonArray.get(i).getAsJsonObject().get("name_with_namespace").getAsString().replace(" / ", "/");
-							String path = jsonArray.get(i).getAsJsonObject().get("path_with_namespace").getAsString();
-							String description = jsonArray.get(i).getAsJsonObject().get("description").getAsString();
-							String web_url = jsonArray.get(i).getAsJsonObject().get("web_url").getAsString();
-							int groupid = groupID.get(m);
-							if(!projectCrawlerDao.findProjectByID(id)){
-								projectCrawlerDao.insertGroupProjectInfo(id, name,description,web_url, path, groupid);
-							}
+							String action_name = jsonArray.get(i).getAsJsonObject().get("action_name").getAsString();
+							String author_name = jsonArray.get(i).getAsJsonObject().get("author_username").getAsString();
+							String day = jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[0];
+							int projectID = projectInfo.get(m).getId();
+							
+							System.out.println(projectInfo.get(m).getId() + ":" + jsonArray.get(i).getAsJsonObject().get("action_name").getAsString() + "------" + jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[0]);
+							//projectCrawlerDao.insertCommit(id, author_name, author_email, day, add_line, delete_line, file, projectID);
 						}
 						index ++;
 						urlConnection = GetURLConnection.getUrlConnection(root + index);
@@ -52,7 +53,6 @@ public class GroupProjectCrawler {
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				projectCrawlerDao.updateLog(GetDate.getCurrentDate());
 				e.printStackTrace();
 			}
 		}

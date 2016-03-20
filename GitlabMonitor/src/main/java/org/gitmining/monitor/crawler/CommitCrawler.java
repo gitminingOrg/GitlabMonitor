@@ -7,11 +7,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.gitmining.monitor.bean.Branch;
 import org.gitmining.monitor.bean.Project;
 import org.gitmining.monitor.crawlerdao.ProjectCrawlerDao;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
@@ -22,8 +25,14 @@ public class CommitCrawler {
 		ProjectCrawlerDao projectCrawlerDao = new ProjectCrawlerDao();
 		List<Project> projectInfo = projectCrawlerDao.getGroupProject();
 		List<String> date = projectCrawlerDao.getDate();
+		Map<String, Integer> dataMap = new HashMap<String, Integer>();
+		for(int i = 0 ; i < date.size() - 2 ; i ++){
+			dataMap.put(date.get(i), 1);
+		}
+		boolean judgement = true;
 		
-		for(int m = 0 ; m < projectInfo.size() ; m++){
+		
+		for(int m = 0 ; m < projectInfo.size() ; m ++){
 			List<Branch> branches = projectCrawlerDao.getBranchByProjectID(projectInfo.get(m).getId());
 			for(int n = 0 ; n < branches.size() ; n ++){
 				int index = 0;
@@ -42,8 +51,7 @@ public class CommitCrawler {
 							JsonArray jsonArray = new JsonParser().parse(response)
 									.getAsJsonArray();
 							for(int i = 0 ; i < jsonArray.size() ; i ++){
-								System.out.println(date.size()+"ppppppppppppppppppppppppppppppppppppppppppppp");
-								if(jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[0].equals(date.get(date.size() - 1)) && !projectCrawlerDao.findCommit(projectInfo.get(m).getId(), jsonArray.get(i).getAsJsonObject().get("id").getAsString())){
+								if(!projectCrawlerDao.findCommit(projectInfo.get(m).getId(), jsonArray.get(i).getAsJsonObject().get("id").getAsString()) && !jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[0].equals("2016-03-18") && !jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[0].equals("2016-03-19")){
 									String commitURL = "http://114.55.35.12/" + projectInfo.get(m).getPath() + "/commit/" + jsonArray.get(i).getAsJsonObject().get("id").getAsString() + "?private_token=" + GetTokenInfo.getToken();
 									urlConnection = GetURLConnection.getUrlConnection(commitURL);
 									reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),"utf-8"));
@@ -66,18 +74,25 @@ public class CommitCrawler {
 									
 									System.out.println(projectInfo.get(m).getId() + ":" + jsonArray.get(i).getAsJsonObject().get("id").getAsString());
 									projectCrawlerDao.insertCommit(id, author_name, author_email, day, add_line, delete_line, file, projectID);
-								}else if(jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[0].equals(date.get(date.size() - 2))){
+								}/*else if(dataMap.containsKey(jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[0])){
+									judgement = false;
 									break;
-								}
+								}*/
 							}
-							index ++;
-							urlConnection = GetURLConnection.getUrlConnection(root + index);
-							reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),"utf-8"));
-							response = reader.readLine();
+							/*if(judgement){*/
+								index ++;
+								urlConnection = GetURLConnection.getUrlConnection(root + index);
+								reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),"utf-8"));
+								response = reader.readLine();
+							/*}else{
+								break;
+							}*/
 						}
 					}
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
+					System.err.println(root);
+					//projectCrawlerDao.updateLog(GetDate.getCurrentDate());
 					e.printStackTrace();
 				}
 			}

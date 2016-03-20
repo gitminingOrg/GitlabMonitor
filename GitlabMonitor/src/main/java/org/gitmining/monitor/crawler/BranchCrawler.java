@@ -34,7 +34,7 @@ public class BranchCrawler {
 						JsonArray jsonArray = new JsonParser().parse(response)
 								.getAsJsonArray();
 						for(int j = 0 ; j < jsonArray.size() ; j ++){
-							if(projectCrawlerDao.findBranch(list.get(i).getId(), jsonArray.get(j).getAsJsonObject().get("name").getAsString())){
+							if(!projectCrawlerDao.findBranch(list.get(i).getId(), jsonArray.get(j).getAsJsonObject().get("name").getAsString())){
 								projectCrawlerDao.insertBranch(list.get(i).getId(), jsonArray.get(j).getAsJsonObject().get("name").getAsString());
 							}
 						}
@@ -42,6 +42,7 @@ public class BranchCrawler {
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
+				projectCrawlerDao.updateLog(GetDate.getCurrentDate());
 				e.printStackTrace();
 			}
 		}

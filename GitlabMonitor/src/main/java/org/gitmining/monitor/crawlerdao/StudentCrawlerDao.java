@@ -6,15 +6,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gitmining.monitor.bean.Student;
 import org.gitmining.monitor.bean.StudentCommit;
 
 public class StudentCrawlerDao extends BasicDao{
 	
-	public void insertTeamInfo(int id,String name){
+	public void insertTeamInfo(int id,String name,String path,String description,String web_url,int ucode){
 		try {
-			PreparedStatement ps = conn.prepareStatement("insert into team(id,name) values(?,?)");
+			PreparedStatement ps = conn.prepareStatement("insert into team(id,name,path,description,web_url,ucode) values(?,?,?,?,?,?)");
 			ps.setInt(1, id);
 			ps.setString(2, name);
+			ps.setString(3, path);
+			ps.setString(4, description);
+			ps.setString(5, web_url);
+			ps.setInt(6, ucode);
 			ps.execute();
 			
 			ps.close();
@@ -24,9 +29,9 @@ public class StudentCrawlerDao extends BasicDao{
 		}
 	}
 	
-	public void insertMemberInfo(int memberID,String memberName,String team){
+	public void insertTeamMemberInfo(int memberID,String memberName,String team){
 		try {
-			PreparedStatement ps = conn.prepareStatement("insert into student(id,name,team) values(?,?,?)");
+			PreparedStatement ps = conn.prepareStatement("insert into teamstudent(id,name,team) values(?,?,?)");
 			ps.setInt(1, memberID);
 			ps.setString(2, memberName);
 			ps.setString(3, team);
@@ -193,5 +198,87 @@ public class StudentCrawlerDao extends BasicDao{
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+	}
+	
+	public List<Integer> getStudentID(){
+		List<Integer> result = new ArrayList<Integer>();
+		try {
+			PreparedStatement ps = conn.prepareStatement("select distinct id from teamstudent");
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				result.add(rs.getInt("id"));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return result;
+	}
+	
+	public void insertStudentInfo(Student student){
+		try {
+			PreparedStatement ps = conn.prepareStatement("insert into studentinfo(id,name,web_url,created_at,bio,email) values(?,?,?,?,?,?)");
+			ps.setInt(1, student.getId());
+			ps.setString(2, student.getName());
+			ps.setString(3, student.getWeb_url());
+			ps.setString(4, student.getCreated_at());
+			ps.setString(5, student.getBio());
+			ps.setString(6, student.getEmail());
+			ps.execute();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	public List<String> getTeamMemberByProjectID(int projectID){
+		List<String> result = new ArrayList<String>();
+		try {
+			PreparedStatement ps = conn.prepareStatement("select teamstudent.`name` from groupproject,team,teamstudent where groupproject.id=? and groupproject.groupid = team.id and team.`name` = teamstudent.team");
+			ps.setInt(1, projectID);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				result.add(rs.getString("name"));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return result;
+	}
+	
+	public int getFileNumberByDayAndProject(int porjectID,String day,String author_name){
+		int result = 0;
+		try {
+			PreparedStatement ps = conn.prepareStatement("SELECT author_name,COUNT(DISTINCT filename) number from `commit`,file where day <=? and id = sha and author_name=? and projectid=?");
+			ps.setString(1, day);
+			ps.setString(2, author_name);
+			ps.setInt(3, porjectID);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				result = rs.getInt("number");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return result;
+	}
+	
+	public int getRelationByFile(String authorA,String authorB,int projectID){
+		int result = 0;
+		try {
+			PreparedStatement ps = conn.prepareStatement("select COUNT(*) number from (select DISTINCT filename from `commit`,file where author_name=? and projectid=? and id = sha) A,(select DISTINCT filename from `commit`,file where author_name=? and projectid =? and id = sha) B WHERE A.filename = B.filename");
+			ps.setString(1, authorA);
+			ps.setInt(2, projectID);
+			ps.setString(3, authorB);
+			ps.setInt(4, projectID);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				result = rs.getInt("number");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return result;
 	}
 }

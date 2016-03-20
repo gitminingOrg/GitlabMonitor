@@ -24,11 +24,9 @@ public class CommitStatistic {
 		}
 		Map<Integer, String> map = projectCrawlerDao.getIDAndTeam();
 		try {
-			FileReader reader = new FileReader(new File("Log.txt"));
-			BufferedReader bufferedReader = new BufferedReader(reader);
-			String str = "";
-			while((str = bufferedReader.readLine()) != null){
-				String day = str;
+			List<String> date = projectCrawlerDao.getDate();
+			for(int k = 0 ; k < date.size() - 1 ; k ++){
+				String day = date.get(k);
 				for(int key : map.keySet()){
 					if(!projectCrawlerDao.findProjectCommit(key, day)){
 						ProjectCommit projectCommit = new ProjectCommit();
@@ -46,15 +44,16 @@ public class CommitStatistic {
 					}
 				}
 			}
-			bufferedReader.close();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			projectCrawlerDao.updateLog(GetDate.getCurrentDate());
 			e.printStackTrace();
 		}
 	}
 	
 	public void countStudentCommit(){
 		StudentCrawlerDao studentCrawlerDao = new StudentCrawlerDao();
+		ProjectCrawlerDao projectCrawlerDao = new ProjectCrawlerDao();
 		studentCrawlerDao.truncateStudentCommit();
 		List<StudentCommit> lists = studentCrawlerDao.getStudentCommit();
 		for(int i = 0 ; i < lists.size() ; i ++){
@@ -64,11 +63,9 @@ public class CommitStatistic {
 		List<Integer> ids = (List<Integer>)list.get(0);
 		List<String> students = (List<String>)list.get(1);
 		try {
-			FileReader reader = new FileReader(new File("Log.txt"));
-			BufferedReader bufferedReader = new BufferedReader(reader);
-			String str = "";
-			while((str = bufferedReader.readLine()) != null){
-				String day = str;
+			List<String> date = projectCrawlerDao.getDate();
+			for(int k = 0 ; k < date.size() - 1 ; k ++){
+				String day = date.get(k);
 				for(int i = 0 ; i < ids.size() ; i ++){
 					if(!studentCrawlerDao.findStudentCommit(ids.get(i), students.get(i), day)){
 						StudentCommit studentCommit = new StudentCommit();
@@ -86,9 +83,10 @@ public class CommitStatistic {
 					}
 				}
 			}
-			bufferedReader.close();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			projectCrawlerDao = new ProjectCrawlerDao();
+			projectCrawlerDao.updateLog(GetDate.getCurrentDate());
 			e.printStackTrace();
 		}
 	}

@@ -14,13 +14,15 @@ import org.gitmining.monitor.bean.ProjectCommit;
 
 public class ProjectCrawlerDao extends BasicDao {
 	
-	public void insertGroupProjectInfo(int id,String name,String path,int groupID){
+	public void insertGroupProjectInfo(int id,String name,String description,String web_url,String path,int groupID){
 		try {
-			PreparedStatement ps = conn.prepareStatement("insert into groupproject(id,name,path,groupid) values(?,?,?,?)");
+			PreparedStatement ps = conn.prepareStatement("insert into groupproject(id,name,description,web_url,path,groupid) values(?,?,?,?,?,?)");
 			ps.setInt(1, id);
 			ps.setString(2, name);
-			ps.setString(3, path);
-			ps.setInt(4, groupID);
+			ps.setString(3, description);
+			ps.setString(4, web_url);
+			ps.setString(5, path);
+			ps.setInt(6, groupID);
 			ps.execute();
 			
 			ps.close();
@@ -268,5 +270,96 @@ public class ProjectCrawlerDao extends BasicDao {
 			// TODO: handle exception
 		}
 		return  result;
+	}
+	
+	public void createLog(String date){
+		try {
+			PreparedStatement ps = conn.prepareStatement("insert into updateLog(day,start,end) values(?,1,1)");
+			ps.setString(1, date);
+			ps.execute();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	public void updateLog(String date){
+		try {
+			PreparedStatement ps = conn.prepareStatement("update updateLog set end=0 where day=?");
+			ps.setString(1, date);
+			ps.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	public void insertTest(String name){
+		try {
+			PreparedStatement ps = conn.prepareStatement("insert into Test(name) values(?)");
+			ps.setString(1, name);
+			ps.execute();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	public Map<String, String> getXXX(){
+		Map<String, String> result = new HashMap<String, String>();
+		try {
+			PreparedStatement ps = conn.prepareStatement("select commit.id,path from commit,groupproject where commit.projectid = groupproject.id");
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				result.put(rs.getString("id"), rs.getString("path"));
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return result;
+	}
+	
+	public void insertFile(String sha,String fileName,String type){
+		try {
+			PreparedStatement ps = conn.prepareStatement("insert into file(sha,filename,type) values(?,?,?)");
+			ps.setString(1, sha);
+			ps.setString(2, fileName);
+			ps.setString(3, type);
+			ps.execute();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	public boolean findFile(String sha,String fileName){
+		boolean result = false;
+		try {
+			PreparedStatement ps = conn.prepareStatement("select * from file where sha=? and filename=?");
+			ps.setString(1, sha);
+			ps.setString(2, fileName);
+			ResultSet rs = ps.executeQuery();
+			result = rs.next();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return result;
+	}
+	
+	public boolean findCommitBySha(String commitID){
+		boolean result = false;
+		try {
+			PreparedStatement ps = conn.prepareStatement("select * from commit where id=?");
+			ps.setString(1, commitID);
+			ResultSet rs = ps.executeQuery();
+			result = rs.next();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return result;
 	}
 }
