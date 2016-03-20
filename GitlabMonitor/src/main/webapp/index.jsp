@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-default" style="margin-bottom:0">
+<nav class="navbar navbar-inverse" style="margin-bottom:0">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -25,28 +25,24 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+        <li class="active"><a href="/GitlabMonitor/">Home <span class="sr-only">(current)</span></a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Student <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="/GitlabMonitor/student/summary">Student Summary</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="/GitlabMonitor/student/commit">Student Commit</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="/GitlabMonitor/student/event">Student Event</a></li>
+            <li><a href="/GitlabMonitor/student/commit">Student Detail</a></li>
           </ul>
         </li>
         
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Team <span class="caret"></span></a>
+		<li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Project <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="/GitlabMonitor/project/summary">Team Summary</a></li>
+            <li><a href="/GitlabMonitor/project/summary">Project Summary</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="/GitlabMonitor/project/commit">Team Commit</a></li>
+            <li><a href="/GitlabMonitor/project/commit">Project Detail</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="/GitlabMonitor/project/event">Team Event</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="/GitlabMonitor/project/team">Team Member</a></li>
+            <li><a href="/GitlabMonitor/project/score">Project Score</a></li>
           </ul>
         </li>
       </ul>
