@@ -1,3 +1,15 @@
+function cancelDelete(){
+	$("#addColumn").show();
+	$("#deleteColumn").hide();
+}
+
+function show_remove(name,id){
+	$("#warning_words").html('Are you sure to remove item named '+name+'?');
+	$("#delete_item").val(id);
+	$("#deleteColumn").show();
+	$("#addColumn").hide();
+}
+
 function showGrid(){
 	$("#grid").show();
 	$("#button").hide();

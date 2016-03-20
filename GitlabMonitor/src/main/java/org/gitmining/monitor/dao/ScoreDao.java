@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.gitmining.monitor.bean.Course;
 import org.gitmining.monitor.bean.CourseItem;
+import org.gitmining.monitor.bean.ProjectVO;
 import org.gitmining.monitor.bean.Score;
 import org.springframework.stereotype.Repository;
 
@@ -33,5 +34,12 @@ public class ScoreDao extends BaseDaoImpl {
 	
 	public int updateProjectItemScore(Score score){
 		return sqlSession.update("score.updateProjectItemScore", score);
+	}
+	public boolean disableCourseItem(int id){
+		System.out.println(sqlSession.update("score.disableCourseItem", id));
+		return true;
+	}
+	public List<ProjectVO> getCourseProjects(String name){
+		return sqlSession.selectList("score.selectCourseProjects",name);
 	}
 }

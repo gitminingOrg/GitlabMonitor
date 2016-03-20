@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.gitmining.monitor.bean.Course;
 import org.gitmining.monitor.bean.CourseItem;
+import org.gitmining.monitor.bean.ProjectVO;
 import org.gitmining.monitor.bean.Score;
 import org.gitmining.monitor.dao.ScoreDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,10 @@ public class ScoreService {
 		return scoreDao.getCourseNames();
 	}
 	
+	public List<ProjectVO> getAllCourseGroupNames(String courseName){
+		return scoreDao.getCourseProjects(courseName);
+	}
+	
 	public Map<String, Object> updateScore(int project_id, int item_id, int num){
 		Map<String, Object> result = new HashMap<String, Object>();
 		try{
@@ -68,4 +73,15 @@ public class ScoreService {
 		return result;
 	}
 	
+	public Map<String, Object> deleteCourseItem(int item_id){
+		Map<String, Object> result = new HashMap<String, Object>();
+		boolean status = scoreDao.disableCourseItem(item_id);
+		if(status){
+			result.put("status", "ok");
+		}else{
+			result.put("status", "fail");
+			result.put("info", "delete failure");
+		}
+		return result;
+	}
 }

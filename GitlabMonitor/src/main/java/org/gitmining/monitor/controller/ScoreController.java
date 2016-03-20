@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.gitmining.monitor.bean.CourseItem;
+import org.gitmining.monitor.bean.ProjectVO;
 import org.gitmining.monitor.service.ScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,9 @@ public class ScoreController {
 	public ModelAndView showProjectScore(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView view = new ModelAndView("projectScore");
 		List<CourseItem> courseItems = scoreService.getCourseScore("2016_nju_se_cseiii");
+		List<ProjectVO> projects = scoreService.getAllCourseGroupNames("2016_nju_se_cseiii");
 		view.addObject("itemScores", courseItems);
+		view.addObject("projects", projects);
 		view.addObject("course", scoreService.getCourseInfo("2016_nju_se_cseiii"));
 		view.addObject("courseNames", scoreService.getAllCourseNames());
 		//view.addObject("length", courseItems.get(0).getScores().size());
@@ -40,8 +43,10 @@ public class ScoreController {
 		int courseId = Integer.parseInt(request.getParameter("course_id"));
 		String courseName = request.getParameter("course_name");
 		scoreService.addCourseScore(courseId, columnName);
+		List<ProjectVO> projects = scoreService.getAllCourseGroupNames("2016_nju_se_cseiii");
 		List<CourseItem> courseItems = scoreService.getCourseScore("2016_nju_se_cseiii");
 		view.addObject("itemScores", courseItems);
+		view.addObject("projects", projects);
 		view.addObject("course", scoreService.getCourseInfo("2016_nju_se_cseiii"));
 		view.addObject("courseNames", scoreService.getAllCourseNames());
 		//view.addObject("length", courseItems.get(0).getScores().size());
@@ -65,9 +70,13 @@ public class ScoreController {
 	
 	@RequestMapping("/project/score/delete")
 	public ModelAndView deleteProjectScore(HttpServletRequest request, HttpServletResponse response){
-		System.out.println("aaaaaaaaa");
 		ModelAndView view = new ModelAndView("projectScore");
+		int itemId = Integer.parseInt(request.getParameter("delete_item"));
+		scoreService.deleteCourseItem(itemId);
+		
 		List<CourseItem> courseItems = scoreService.getCourseScore("2016_nju_se_cseiii");
+		List<ProjectVO> projects = scoreService.getAllCourseGroupNames("2016_nju_se_cseiii");
+		view.addObject("projects", projects);
 		view.addObject("itemScores", courseItems);
 		view.addObject("course", scoreService.getCourseInfo("2016_nju_se_cseiii"));
 		view.addObject("courseNames", scoreService.getAllCourseNames());

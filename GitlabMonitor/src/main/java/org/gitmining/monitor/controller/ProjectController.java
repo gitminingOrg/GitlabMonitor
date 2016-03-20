@@ -93,7 +93,9 @@ public class ProjectController {
 		try{
 			projectId = Integer.parseInt(request.getParameter("id"));
 		}catch (Exception e) {
-			projectId = projects.get(projects.size()-1).getId();
+			if(projects.size() != 0){
+				projectId = projects.get(projects.size()-1).getId();
+			}
 		}
 		result.addObject("dayStart", dayStart);
 		result.addObject("dayEnd", dayEnd);

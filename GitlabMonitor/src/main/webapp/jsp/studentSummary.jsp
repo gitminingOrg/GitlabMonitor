@@ -109,7 +109,7 @@
  <script src="/GitlabMonitor/static/js/library/sand-signika.js"></script>
  <script src="/GitlabMonitor/static/js/library/angular.min.js"></script>
  <script src="/GitlabMonitor/static/js/library/bootstrap.min.js"></script>
-  <script src="/GitlabMonitor/static/js/bootstrap-datepicker.min.js"></script>
+ <script src="/GitlabMonitor/static/js/bootstrap-datepicker.min.js"></script>
  <script type="text/javascript">
  $('#dayStart').datepicker({
 	    format: "yyyy-mm-dd",

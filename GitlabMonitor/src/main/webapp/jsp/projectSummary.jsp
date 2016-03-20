@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/semantic.min.css">
 <link rel="stylesheet" href="/GitlabMonitor/static/js/jquery/css/ui-lightness/jquery-ui-1.9.1.custom.css" type="text/css" charset="utf-8">
 <link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap-datepicker3.min.css">
 <link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap-datepicker3.standalone.min.css">
@@ -65,14 +66,14 @@
 		  <option value="autotal_deletedi">total_delete</option>
 		  <option value ="team">name</option>
 	</select>
-	<select class="form-control" name="eventOrder">
-		  <option value ="total">total</option>
-		  <option value="push">push</option>
-		  <option value="issue">issue</option>
-		  <option value ="comment">comment</option>
-		  <option value="create">create</option>
-		  <option value ="team">name</option>
-	</select>
+<!-- 	<select class="form-control" name="eventOrder"> -->
+<!-- 		  <option value ="total">total</option> -->
+<!-- 		  <option value="push">push</option> -->
+<!-- 		  <option value="issue">issue</option> -->
+<!-- 		  <option value ="comment">comment</option> -->
+<!-- 		  <option value="create">create</option> -->
+<!-- 		  <option value ="team">name</option> -->
+<!-- 	</select> -->
 	<select class="form-control" name="method">
 		  <option value ="desc">desc</option>
 		  <option value ="asc">asc</option>
@@ -91,7 +92,14 @@
 </form>
 <br />
 <table class="table table-striped table-bordered">
-	<thead><tr><th>rank</th><th>name</th><th>commit_count</th> <th>add_line</th> <th>delete_line</th> <th>java_file</th> <th>total_add</th> <th>total_delete</th><th>formula</th></tr></thead>
+	<thead><tr><th>rank</th><th onmouseover="showIcon('name');" onmouseout="hideIcon('name');">name<i id="iconname" class="pointing down icon" style="display: none"></i></th>
+	<th onmouseover="showIcon('commitcount');" onmouseout="hideIcon('commitcount');">commit_count<i id="iconcommitcount" class="pointing down icon" style="display: none"></i></th> 
+	<th onmouseover="showIcon('addline');" onmouseout="hideIcon('addline');">add_line<i id="iconaddline" class="pointing down icon" style="display: none"></i></th> 
+	<th onmouseover="showIcon('deleteline');" onmouseout="hideIcon('deleteline');">delete_line<i id="icondeleteline" class="pointing down icon" style="display: none"></i></th> 
+	<th onmouseover="showIcon('javafile');" onmouseout="hideIcon('javafile');">java_file<i id="iconjavafile" class="pointing down icon" style="display: none"></i></th> 
+	<th onmouseover="showIcon('totaladd');" onmouseout="hideIcon('totaladd');">total_add<i id="icontotaladd" class="pointing down icon" style="display: none"></i></th> 
+	<th onmouseover="showIcon('totaldelete');" onmouseout="hideIcon('totaldelete');">total_delete<i id="icontotaldelete" class="pointing down icon" style="display: none"></i></th>
+	<th>formula</th></tr></thead>
 	<tbody id="commit_body">
 	<c:forEach items="${commits}" var="commit" varStatus="status">
 		<tr><th>${ status.index + 1 }</th><th><a href="/GitlabMonitor/project/commit?id=${commit.id}&team=${commit.team}&dayStart=${dayStart}&dayEnd=${dayEnd}">${commit.name}</a></th><th>${commit.commit_count}</th><th>${commit.add_line}</th><th>${commit.delete_line}</th>
@@ -107,7 +115,9 @@
  <script src="/GitlabMonitor/static/js/library/sand-signika.js"></script>
  <script src="/GitlabMonitor/static/js/library/angular.min.js"></script>
  <script src="/GitlabMonitor/static/js/library/bootstrap.min.js"></script>
+ <script src="/GitlabMonitor/static/js/library/semantic.min.js"></script>
   <script src="/GitlabMonitor/static/js/bootstrap-datepicker.min.js"></script>
+  <script src="/GitlabMonitor/static/js/summary.js"></script> 
  <script type="text/javascript">
  $('#dayStart').datepicker({
 	    format: "yyyy-mm-dd",

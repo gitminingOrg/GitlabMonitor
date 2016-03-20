@@ -76,18 +76,25 @@
 	<input type="hidden" id="course_name" name="course_name" value="${course.name}">
 	<button class="btn btn-primary" type="submit" class="form-control" >add a column</button>
 </form>
+
+<form id="deleteColumn" class="form-inline" style="display: none" action="/GitlabMonitor/project/score/delete" method="POST" >
+	<span id="warning_words" style="font-weight: bold">Are you sure to remove item named 'test1'?</span>
+	<input type="hidden" id="delete_item" name="delete_item">
+	<button class="btn btn-danger" type="submit" class="form-control" >YES</button>
+	<button class="btn btn-default" type="button" class="form-control" onclick="cancelDelete();">Cancel</button>
+</form>
 <!-- <div class="row"> -->
 <!-- 	<div class="col-md-9"> -->
 		<table class="table table-striped table-bordered">
 		<thead><tr> 
 		<th>project</th>
-		<c:forEach items="${itemScores}" var="item"><th> <form id="delete${item.id}" class="form-inline" action="/GitlabMonitor/project/score/delete"><label>${item.name}</label> <input type="hidden" name="itemId" value="${item.id}"> <i class="remove circle icon" onclick="removeItem(${item.id});"></i></form></th></c:forEach>
+		<c:forEach items="${itemScores}" var="item"><th onclick="show_remove('${item.name}','${item.id}');">${item.name}&nbsp;&nbsp;<i class="remove circle icon"></i></th></c:forEach>
 		</tr></thead>
 		<tbody id="commit_body">
-			<c:forEach items="${itemScores[0].scores}" var="score" varStatus="outloop">
-			<tr><th>${score.project_name}</th>
+			<c:forEach items="${projects}" var="project" varStatus="outloop">
+			<tr><th>${project.name}</th>
 			<c:forEach items="${itemScores}" var="item">
-				<th onclick="showText('${item.id}','${score.project_id}');"><div id="ID${item.id}L${score.project_id}">${item.scores[outloop.index].score}</div><input onblur="changeScore('${item.id}','${score.project_id}',document.getElementById('ID${item.id}T${score.project_id}').value);" id="ID${item.id}T${score.project_id}" style="display: none" type="text" value="${item.scores[outloop.index].score}"></th>
+				<th onclick="showText('${item.id}','${project.id}');"><div id="ID${item.id}L${project.id}">${item.scores[outloop.index].score}</div><input onblur="changeScore('${item.id}','${project.id}',document.getElementById('ID${item.id}T${project.id}').value);" id="ID${item.id}T${project.id}" style="display: none" type="text" value="${item.scores[outloop.index].score}"></th>
 			</c:forEach>
 			</tr>
 		</c:forEach>

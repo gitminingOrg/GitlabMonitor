@@ -15,6 +15,15 @@
 		</collection>		
 	</resultMap>
 	
+	<resultMap type="org.gitmining.monitor.bean.ProjectVO" id="projectVO">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="description" column="description" />
+		<result property="web_url" column="web_url" />
+		<result property="path" column="path" />
+		<result property="groupId" column="groupid" />
+	</resultMap>
+	
 	<resultMap type="org.gitmining.monitor.bean.Course" id="course">
 		<result property="id" column="id"/>
 		<result property="name" column="name"/>
@@ -35,7 +44,7 @@
 		g.name AS project_name
 		FROM
 		courseItem i,courseScore s,groupproject g
-		WHERE i.id = s.item_id AND s.project_id = g.id AND i.course_id 
+		WHERE i.id = s.item_id AND s.project_id = g.id AND i.course_id AND i.removed = 0
 		IN 
 		(SELECT id FROM course WHERE name=#{name}) order by project_id asc;
 	</select>
@@ -78,4 +87,23 @@
 		WHERE
 		project_id = #{project_id}  and item_id=#{item_id}
 	</update>
+	
+	<update id="disableCourseItem">
+		UPDATE 
+		courseItem
+		SET
+		removed = 1
+		WHERE
+		id =#{id}
+	</update>
+	
+	<select id="selectCourseProjects" resultMap="projectVO">
+		SELECT
+		id,name,description,web_url,path,groupid
+		FROM
+		groupproject g
+		WHERE 
+		id
+		IN(select cc.project_id from courseChoose cc, course c where cc.course_id = c.id and c.name = #{name}) order by g.id asc
+	</select>
 </mapper>
