@@ -62,9 +62,9 @@
 	      <span class="caret"></span>
 	    </button>
 	    <ul class="dropdown-menu">
-	      <li><a href="#" onclick="projectCommit(document.getElementById('projectId').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value,'year');">Recent Year</a></li>
-	      <li><a href="#" onclick="projectCommit(document.getElementById('projectId').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value, 'month');">Recent Month</a></li>
-	      <li><a href="#" onclick="projectCommit(document.getElementById('projectId').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value, 'week');">Recent Week</a></li>
+	      <li><a href="#" onclick="projectSummary(document.getElementById('formula').value,document.getElementById('filter').value,'year');">Recent Year</a></li>
+	      <li><a href="#" onclick="projectSummary(document.getElementById('formula').value,document.getElementById('filter').value,'month');">Recent Month</a></li>
+	      <li><a href="#" onclick="projectSummary(document.getElementById('formula').value,document.getElementById('filter').value,'week');">Recent Week</a></li>
 	    </ul>
 	  </div>
 </div>
@@ -89,31 +89,31 @@
 	<thead><tr><th>rank</th>
 	<th onmouseover="showIcon('name');" onmouseout="hideIcon('name');">
 	name
-	<i onclick="refreshTable('${dayStart}','${dayEnd}','${formula}','${filter}','name');" id="iconname" class="pointing down icon" style="display: none"></i></th>
+	<i onclick="refreshTable(document.getElementById('dayStart').value,document.getElementById('dayEnd').value,'${formula}','${filter}','name');" id="iconname" class="pointing down icon" style="display: none"></i></th>
 	
 	<th onmouseover="showIcon('commitcount');" onmouseout="hideIcon('commitcount');">
 	commit_count
-	<i onclick="refreshTable('${dayStart}','${dayEnd}','${formula}','${filter}','commit_count');" id="iconcommitcount" class="pointing down icon" style="display: none"></i></th> 
+	<i onclick="refreshTable(document.getElementById('dayStart').value,document.getElementById('dayEnd').value,'${formula}','${filter}','commit_count');" id="iconcommitcount" class="pointing down icon" style="display: none"></i></th> 
 	
 	<th onmouseover="showIcon('addline');" onmouseout="hideIcon('addline');">
 	add_line
-	<i onclick="refreshTable('${dayStart}','${dayEnd}','${formula}','${filter}','add_line');" id="iconaddline" class="pointing down icon" style="display: none"></i></th> 
+	<i onclick="refreshTable(document.getElementById('dayStart').value,document.getElementById('dayEnd').value,'${formula}','${filter}','add_line');" id="iconaddline" class="pointing down icon" style="display: none"></i></th> 
 	
 	<th onmouseover="showIcon('deleteline');" onmouseout="hideIcon('deleteline');">
 	delete_line
-	<i onclick="refreshTable('${dayStart}','${dayEnd}','${formula}','${filter}','delete_line');" id="icondeleteline" class="pointing down icon" style="display: none"></i></th> 
+	<i onclick="refreshTable(document.getElementById('dayStart').value,document.getElementById('dayEnd').value,'${formula}','${filter}','delete_line');" id="icondeleteline" class="pointing down icon" style="display: none"></i></th> 
 	
 	<th onmouseover="showIcon('javafile');" onmouseout="hideIcon('javafile');">
 	java_file
-	<i onclick="refreshTable('${dayStart}','${dayEnd}','${formula}','${filter}','java_file');" id="iconjavafile" class="pointing down icon" style="display: none"></i></th> 
+	<i onclick="refreshTable(document.getElementById('dayStart').value,document.getElementById('dayEnd').value,'${formula}','${filter}','java_file');" id="iconjavafile" class="pointing down icon" style="display: none"></i></th> 
 	
 	<th onmouseover="showIcon('totaladd');" onmouseout="hideIcon('totaladd');">
 	total_add
-	<i onclick="refreshTable('${dayStart}','${dayEnd}','${formula}','${filter}','total_add');" id="icontotaladd" class="pointing down icon" style="display: none"></i></th> 
+	<i onclick="refreshTable(document.getElementById('dayStart').value,document.getElementById('dayEnd').value,'${formula}','${filter}','total_add');" id="icontotaladd" class="pointing down icon" style="display: none"></i></th> 
 	
 	<th onmouseover="showIcon('totaldelete');" onmouseout="hideIcon('totaldelete');">
 	total_delete
-	<i onclick="refreshTable('${dayStart}','${dayEnd}','${formula}','${filter}','total_delete');" id="icontotaldelete" class="pointing down icon" style="display: none"></i></th>
+	<i onclick="refreshTable(document.getElementById('dayStart').value,document.getElementById('dayEnd').value,'${formula}','${filter}','total_delete');" id="icontotaldelete" class="pointing down icon" style="display: none"></i></th>
 	
 	<th>formula</th></tr></thead>
 	<tbody id="commit_body">
@@ -126,7 +126,12 @@
 	</c:forEach>	
 	</tbody>
 </table>
+	<hr />
+	<footer>
+        <p>&copy; ise 2016</p>
+    </footer>
 </div>
+
 </body>
  <script src="/GitlabMonitor/static/js/library/jquery-1.11.3.js"></script>
  <script src="/GitlabMonitor/static/js/library/highcharts.js"></script>

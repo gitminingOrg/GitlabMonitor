@@ -142,6 +142,21 @@ public class ProjectController {
 		//String eventOrder = request.getParameter("eventOrder");
 		String formula = request.getParameter("formula");
 		String filter = request.getParameter("filter");
+		String timeRange = request.getParameter("range");
+		if(timeRange != null){
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Calendar calendar = Calendar.getInstance();
+			dayEnd = sdf.format(calendar.getTime());
+			
+			if(timeRange.equals("year")){
+				calendar.add(Calendar.YEAR, -1);
+			}else if(timeRange.equals("month")){
+				calendar.add(Calendar.MONTH, -1);
+			}else if(timeRange.equals("week")){
+				calendar.add(Calendar.WEEK_OF_YEAR, -1);
+			}
+			dayStart = sdf.format(calendar.getTime());
+		}
 		String method = "desc";
 		if(dayStart == null){
 			dayStart = "2016-01-01";

@@ -124,7 +124,10 @@
 <%-- </c:forEach> --%>
 <!-- </div> -->
 <!-- </div> -->
-
+	<hr />
+	<footer>
+        <p>&copy; ise 2016</p>
+    </footer>
 
 </div>
 </body>
