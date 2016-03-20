@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sf" uri ="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,18 +21,32 @@
 	</div>
 	
 	<div class="col-md-4">
-		<form class="form-signin" method="post" action="#">
+		<sf:form class="form-signin" method="post" modelAttribute="user" action="/GitlabMonitor/register/add">
+			<fieldset>
 			<h2 class="form-signin-heading">Please Register</h2>
-			
-			<label for="name" class="sr-only">Name</label> 
-			<input type="text" id="name" class="form-control" placeholder="name" required>
-			<label for="inputEmail" class="sr-only" >Email address</label> 
-			<input type="text" id="inputEmail" class="form-control" placeholder="login name" required autofocus> 
-			<label for="inputPassword" class="sr-only">Password</label> 
-			<input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-			
+			<table cellspacing="0">
+				<tr>
+					<th align="right"><sf:label path="name">Name</sf:label></th>
+					<td><sf:input path="name" type="text" class="form-control" placeholder="name" />
+						<sf:errors path="name" cssClass="error" />
+					</td>
+				</tr>
+				<tr>
+					<th align="right"><sf:label path="email" >Email address</sf:label></th>
+					<td><sf:input path="email" type="email" class="form-control" placeholder="email" /> 
+						<sf:errors path="email" cssClass="error" />
+					</td>
+				</tr>
+				<tr>
+					<th align="right"><sf:label path="password" >Password</sf:label></th>
+					<td><sf:password path="password" class="form-control" placeholder="password" />
+						<sf:errors path="password" cssClass="error" />
+					</td>
+				</tr>			
+			</table>
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-		</form>
+			</fieldset>
+		</sf:form>
 	</div>
 	
 	<div class="col-md-4">
@@ -39,4 +54,6 @@
 	</div>
 	</div>
 </body>
+<script src="/GitlabMonitor/static/js/library/bootstrap.min.js"></script>
+<script src="/GitlabMonitor/static/js/library/jquery-1.11.3.js"></script>
 </html>
