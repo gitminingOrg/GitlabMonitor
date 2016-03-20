@@ -8,7 +8,8 @@ public class Student {
 	private String created_at;
 	private String bio;
 	private String email;
-	
+	private String studentno;
+
 	public int getId() {
 		return id;
 	}
@@ -45,4 +46,12 @@ public class Student {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public String getStudentno() {
+		return studentno;
+	}
+	public void setStudentno(String studentno) {
+		this.studentno = studentno;
+	}
+
 }

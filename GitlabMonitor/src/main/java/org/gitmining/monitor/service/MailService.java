@@ -20,7 +20,7 @@ public class MailService {
 	public boolean sendMail(String to, String title, String content){
 		try{
 			simpleMailMessage.setTo(to);
-			simpleMailMessage.setText(title);
+			simpleMailMessage.setText(content);
 			simpleMailMessage.setSubject(title);
 			javaMailSender.send(simpleMailMessage);
 			return true;

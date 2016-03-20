@@ -1,7 +1,10 @@
 package org.gitmining.monitor.bean;
 
+import java.util.Map;
+
 public class ProjectCommit {
 	private int id;
+	private String name;
 	private String team;
 	private String day;
 	private int commit_count;
@@ -11,11 +14,18 @@ public class ProjectCommit {
 	private int total_commit;
 	private int total_add;
 	private int total_delete;
+	private double formula = 0;
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getTeam() {
 		return team;
@@ -71,5 +81,55 @@ public class ProjectCommit {
 	public void setTotal_delete(int total_delete) {
 		this.total_delete = total_delete;
 	}
+	public double getFormula() {
+		return formula;
+	}
+	public void setFormula(double formula) {
+		this.formula = formula;
+	}
 	
+	public boolean validate(Map<String, Integer> filter){
+		if(filter.containsKey("commit_count<") && commit_count >= filter.get("commit_count<")){
+				return false;
+		}
+		if(filter.containsKey("commit_count>") && commit_count <= filter.get("commit_count>")){
+			return false;
+		}
+		
+		if(filter.containsKey("add_line<") && add_line >= filter.get("add_line<")){
+			return false;
+		}
+		if(filter.containsKey("add_line>") && add_line <= filter.get("add_line>")){
+			return false;
+		}
+		
+		if(filter.containsKey("delete_line<") && delete_line >= filter.get("delete_line<")){
+			return false;
+		}
+		if(filter.containsKey("delete_line>") && delete_line <= filter.get("delete_line>")){
+			return false;
+		}
+		
+		if(filter.containsKey("java_file<") && java_file >= filter.get("java_file<")){
+			return false;
+		}
+		if(filter.containsKey("java_file>") && java_file <= filter.get("java_file>")){
+			return false;
+		}
+		
+		if(filter.containsKey("total_add<") && total_add >= filter.get("total_add<")){
+			return false;
+		}
+		if(filter.containsKey("total_add>") && total_add <= filter.get("total_add>")){
+			return false;
+		}
+		
+		if(filter.containsKey("total_delete<") && total_delete >= filter.get("total_delete<")){
+			return false;
+		}
+		if(filter.containsKey("total_delete>") && total_delete <= filter.get("total_delete>")){
+			return false;
+		}
+		return true;
+	}
 }

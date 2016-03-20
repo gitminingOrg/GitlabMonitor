@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap-datepicker3.standalone.min.css">
 </head>
 <body>
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -26,30 +26,28 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
+        <li class="active"><a href="/GitlabMonitor/">Home <span class="sr-only">(current)</span></a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Student <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="/GitlabMonitor/student/summary">Student Summary</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="/GitlabMonitor/student/commit">Student Commit</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="/GitlabMonitor/student/event">Student Event</a></li>
+            <li><a href="/GitlabMonitor/student/commit">Student Detail</a></li>
           </ul>
         </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Team <span class="caret"></span></a>
+        
+		<li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Project <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="/GitlabMonitor/project/summary">Team Summary</a></li>
+            <li><a href="/GitlabMonitor/project/summary">Project Summary</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="/GitlabMonitor/project/commit">Team Commit</a></li>
+            <li><a href="/GitlabMonitor/project/commit">Project Detail</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="/GitlabMonitor/project/event">Team Event</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="/GitlabMonitor/project/team">Team Member</a></li>
+            <li><a href="/GitlabMonitor/project/score">Project Score</a></li>
           </ul>
         </li>
       </ul>
+
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
@@ -79,27 +77,27 @@
 		  <option value ="desc">desc</option>
 		  <option value ="asc">asc</option>
 	</select>
-	<input type="submit" class="btn btn-primary" value="filter">
+		<input type="submit" class="btn btn-primary" value="filter">
+		<br />
+		<div class="input-group">
+  			<span class="input-group-addon" id="basic-addon1">formula</span>
+  			<input type="text" id="formula" class="form-control" style="width:500px;" name="formula" value="${formula}" placeholder="support: +-*/%^() commit_count add_line delete_line java_file total_add total_delete and regular numbers"/>
+		</div>
+		<br />
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">filter</span>
+			<input type="text" id="filter" class="form-control" style="width:520px;" name="filter" value="${filter}" placeholder="commit_count>3;add_line<10;delete_line>100"/>
+		</div>
 </form>
 
 <h3>Student Commit</h3>
 <table class="table table-striped table-bordered">
-	<thead><tr><th>rank</th><th>name</th> <th>commit_count</th> <th>add_line</th> <th>delete_line</th> <th>java_file</th> <th>total_add</th> <th>total_delete</th></tr></thead>
+	<thead><tr><th>rank</th><th>name</th><th>commit_count</th> <th>add_line</th> 
+	<th>delete_line</th> <th>java_file</th> <th>total_add</th> <th>total_delete</th> <th>formula</th></tr></thead>
 	<tbody>
 	<c:forEach items="${commits}" var="commit" varStatus="status">
 		<tr><th>${status.index + 1}</th><th><a href="/GitlabMonitor/student/commit?student=${commit.student}">${commit.student}</a></th><th>${commit.commit_count}</th><th>${commit.add_line}</th><th>${commit.delete_line}</th>
-		<th>${commit.java_file}</th><th>${commit.total_add}</th><th>${commit.total_delete}</th></tr>
-	</c:forEach>	
-	</tbody>
-</table>
-
-<h3>Student Event</h3>
-<table class="table table-striped table-bordered">
-	<thead><tr><th>rank</th><th>name</th> <th>push</th> <th>issue</th> <th>comment</th> <th>create</th> <th>total</th></tr></thead>
-	<tbody>
-	<c:forEach items="${events}" var="event" varStatus="status">
-		<tr><th>${status.index + 1}</th><th><a href="/GitlabMonitor/student/event?student=${event.student}">${event.student}</a></th><th>${event.push}</th><th>${event.issue}</th><th>${event.comment}</th>
-		<th>${event.create}</th><th>${event.total}</th></tr>
+		<th>${commit.java_file}</th><th>${commit.total_add}</th><th>${commit.total_delete}</th><th>${commit.formula}</th></tr>
 	</c:forEach>	
 	</tbody>
 </table>
@@ -111,7 +109,7 @@
  <script src="/GitlabMonitor/static/js/library/sand-signika.js"></script>
  <script src="/GitlabMonitor/static/js/library/angular.min.js"></script>
  <script src="/GitlabMonitor/static/js/library/bootstrap.min.js"></script>
-  <script src="/GitlabMonitor/static/js/bootstrap-datepicker.min.js"></script>
+ <script src="/GitlabMonitor/static/js/bootstrap-datepicker.min.js"></script>
  <script type="text/javascript">
  $('#dayStart').datepicker({
 	    format: "yyyy-mm-dd",

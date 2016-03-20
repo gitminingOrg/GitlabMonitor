@@ -3,12 +3,14 @@ package org.gitmining.monitor.controller;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.gitmining.monitor.bean.Student;
 import org.gitmining.monitor.bean.StudentComment;
 import org.gitmining.monitor.bean.StudentCommit;
 import org.gitmining.monitor.bean.StudentEvent;
@@ -26,12 +28,31 @@ public class StudentController {
 		this.studentService = studentService;
 	}
 	@RequestMapping(value="/student/commit/range")
-	public Map<String, List> getStudentCommitItemRange(HttpServletRequest request,HttpServletResponse response){
+	public Map<String, Object> getStudentCommitItemRange(HttpServletRequest request,HttpServletResponse response){
 		String student = request.getParameter("student");
 		String dayStart = request.getParameter("dayStart");
 		String dayEnd = request.getParameter("dayEnd");
-		return studentService.getStudentCommitItem(student, dayStart, dayEnd);
+		String timeRange = request.getParameter("timeRange");
+		if(timeRange != null){
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Calendar calendar = Calendar.getInstance();
+			dayEnd = sdf.format(calendar.getTime());
+			
+			if(timeRange.equals("year")){
+				calendar.add(Calendar.YEAR, -1);
+			}else if(timeRange.equals("month")){
+				calendar.add(Calendar.MONTH, -1);
+			}else if(timeRange.equals("week")){
+				calendar.add(Calendar.WEEK_OF_YEAR, -1);
+			}
+			dayStart = sdf.format(calendar.getTime());
+		}
+		Map<String, Object> result = studentService.getStudentCommitItem(student, dayStart, dayEnd);
+		result.put("dayStart", dayStart);
+		result.put("dayEnd", dayEnd);
+		return result;
 	}
+	
 	@RequestMapping(value="/student/comment")
 	public List<StudentComment> getStudentComment(HttpServletRequest request,HttpServletResponse response){
 		String student = request.getParameter("student");
@@ -50,11 +71,26 @@ public class StudentController {
 	public ModelAndView showStudentCommitPage(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView result = new ModelAndView("studentCommit");
 		String student = request.getParameter("student");
+		String dayStart = request.getParameter("dayStart");
+		String dayEnd = request.getParameter("dayEnd");
+		
 		List<StudentComment> comments = new ArrayList<StudentComment>();
 		if(student != null){
 			result.addObject("student", student);
 			comments = studentService.getStudentComments(student);
 		}
+		if(dayEnd == null){
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Calendar calendar = Calendar.getInstance();
+			dayEnd = sdf.format(calendar.getTime());
+			calendar.set(Calendar.MONTH, 1);
+			calendar.set(Calendar.DAY_OF_MONTH, 1);
+			dayStart = sdf.format(calendar.getTime());
+		}
+		Student studentInfo = studentService.getStudentInfo(student);
+		result.addObject("studentInfo", studentInfo);
+		result.addObject("dayStart", dayStart);
+		result.addObject("dayEnd", dayEnd);
 		result.addObject("comments", comments);
 		return result;
 	}
@@ -79,9 +115,10 @@ public class StudentController {
 		String dayStart = request.getParameter("dayStart");
 		String dayEnd = request.getParameter("dayEnd");
 		String commitOrder = request.getParameter("commitOrder");
-		String eventOrder = request.getParameter("eventOrder");
-		
+		//String eventOrder = request.getParameter("eventOrder");
+		String formula = request.getParameter("formula");
 		String method = request.getParameter("method");
+		String filter = request.getParameter("filter");
 		
 		if(dayStart == null){
 			dayStart = "2016-01-01";
@@ -91,20 +128,22 @@ public class StudentController {
 			dayEnd = sdf.format(Calendar.getInstance().getTime());
 		}
 		List<StudentCommit> commits = new ArrayList<StudentCommit>();
-		List<StudentEvent> events = new ArrayList<StudentEvent>();
+		//List<StudentEvent> events = new ArrayList<StudentEvent>();
 		if(commitOrder == null){
-			commits = studentService.selectAllStudentCommitRange(dayStart, dayEnd);
-			events = studentService.selectAllStudentEventRange(dayStart, dayEnd);
+			commits = studentService.selectAllStudentCommitRange(dayStart, dayEnd, formula,filter);
+			//events = studentService.selectAllStudentEventRange(dayStart, dayEnd);
 		}else{
-			commits = studentService.selectAllStudentCommitRangeSort(dayStart, dayEnd,commitOrder,method);
-			events = studentService.selectAllStudentEventRangeSort(dayStart, dayEnd,eventOrder,method);
+			commits = studentService.selectAllStudentCommitRangeSort(dayStart, dayEnd,commitOrder,method,formula,filter);
+			//events = studentService.selectAllStudentEventRangeSort(dayStart, dayEnd,eventOrder,method);
 		}
 		
 		ModelAndView result = new ModelAndView("studentSummary");
 		result.addObject("commits", commits);
-		result.addObject("events", events);
+		//result.addObject("events", events);
 		result.addObject("dayStart", dayStart);
 		result.addObject("dayEnd", dayEnd);
+		result.addObject("formula", formula);
+		result.addObject("filter", filter);
 		return result;
 	}
 	
