@@ -114,28 +114,28 @@ public class StudentService {
 		}
 		List<StudentCommit> result = studentDao.selectAllStudentCommitRange(startDay, endDay);
 		Map<String, Integer> filterMap = FilterUtil.parseFilter(filter);
-		if(formula != null && formula.trim().length() > 0){
-			formula = formula.replaceAll(" ", "");
-			for (int i=0; i<result.size(); i++) {
-				StudentCommit studentCommit = result.get(i);
-				if(filterMap != null && !studentCommit.validate(filterMap)){
-					result.remove(studentCommit);
-					i--;
-				}else{
-					Map<String, Double> dict = new HashMap<String, Double>();
-					dict.put("add_line", (double) studentCommit.getAdd_line());
-					dict.put("delete_line", (double) studentCommit.getDelete_line());
-					dict.put("commit_count", (double) studentCommit.getCommit_count());
-					dict.put("java_file", (double) studentCommit.getJava_file());
-					dict.put("total_add", (double) studentCommit.getTotal_add());
-					dict.put("total_delete", (double) studentCommit.getTotal_delete());
-					dict.put("total_commit", (double) studentCommit.getTotal_commit());
-					
+		
+		for (int i=0; i<result.size(); i++) {
+			StudentCommit studentCommit = result.get(i);
+			if(filterMap != null && !studentCommit.validate(filterMap)){
+				result.remove(studentCommit);
+				i--;
+			}else{
+				Map<String, Double> dict = new HashMap<String, Double>();
+				dict.put("add_line", (double) studentCommit.getAdd_line());
+				dict.put("delete_line", (double) studentCommit.getDelete_line());
+				dict.put("commit_count", (double) studentCommit.getCommit_count());
+				dict.put("java_file", (double) studentCommit.getJava_file());
+				dict.put("total_add", (double) studentCommit.getTotal_add());
+				dict.put("total_delete", (double) studentCommit.getTotal_delete());
+				dict.put("total_commit", (double) studentCommit.getTotal_commit());
+				if(formula != null && formula.trim().length() > 0){
+					formula = formula.replaceAll(" ", "");
 					studentCommit.setFormula(FormulaUtil.calFormula(formula, dict));
 				}
-				
 			}
 		}
+		
 		return result;
 	}
 	
@@ -149,28 +149,29 @@ public class StudentService {
 		}
 		List<StudentCommit> result = studentDao.selectAllStudentCommitRangeSort(startDay, endDay, order, method);
 		Map<String, Integer> filterMap = FilterUtil.parseFilter(filter);
-		if(formula != null && formula.trim().length() > 0){
-			formula = formula.replaceAll(" ", "");
-			for (int i=0; i<result.size(); i++) {
-				StudentCommit studentCommit = result.get(i);
-				if(filterMap != null && !studentCommit.validate(filterMap)){
-					result.remove(studentCommit);
-					i--;
-				}else{
-					Map<String, Double> dict = new HashMap<String, Double>();
-					dict.put("add_line", (double) studentCommit.getAdd_line());
-					dict.put("delete_line", (double) studentCommit.getDelete_line());
-					dict.put("commit_count", (double) studentCommit.getCommit_count());
-					dict.put("java_file", (double) studentCommit.getJava_file());
-					dict.put("total_add", (double) studentCommit.getTotal_add());
-					dict.put("total_delete", (double) studentCommit.getTotal_delete());
-					dict.put("total_commit", (double) studentCommit.getTotal_commit());
-					
-					studentCommit.setFormula(FormulaUtil.calFormula(formula, dict));
+		
+		for (int i=0; i<result.size(); i++) {
+			StudentCommit studentCommit = result.get(i);
+			if(filterMap != null && !studentCommit.validate(filterMap)){
+				result.remove(studentCommit);
+				i--;
+			}else{
+				Map<String, Double> dict = new HashMap<String, Double>();
+				dict.put("add_line", (double) studentCommit.getAdd_line());
+				dict.put("delete_line", (double) studentCommit.getDelete_line());
+				dict.put("commit_count", (double) studentCommit.getCommit_count());
+				dict.put("java_file", (double) studentCommit.getJava_file());
+				dict.put("total_add", (double) studentCommit.getTotal_add());
+				dict.put("total_delete", (double) studentCommit.getTotal_delete());
+				dict.put("total_commit", (double) studentCommit.getTotal_commit());
+				if(formula != null && formula.trim().length() > 0){
+					formula = formula.replaceAll(" ", "");
+				studentCommit.setFormula(FormulaUtil.calFormula(formula, dict));
 				}
-				
 			}
+			
 		}
+		
 		return result;
 	}
 	

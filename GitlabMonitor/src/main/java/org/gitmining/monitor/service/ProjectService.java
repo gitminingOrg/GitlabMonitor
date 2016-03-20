@@ -118,28 +118,28 @@ public class ProjectService {
 		}
 		List<ProjectCommit> result = projectDao.selectAllProjectCommitRange(startDay, endDay);
 		Map<String, Integer> filterMap = FilterUtil.parseFilter(filter);
-		if(formula != null && formula.trim().length() > 0){
-			formula = formula.replaceAll(" ", "");
-			for (int i=0; i<result.size(); i++) {
-				ProjectCommit projectCommit = result.get(i);
-				if(filterMap != null && !projectCommit.validate(filterMap)){
-					result.remove(projectCommit);
-					i--;
-				}else{
-					Map<String, Double> dict = new HashMap<String, Double>();
-					dict.put("add_line", (double) projectCommit.getAdd_line());
-					dict.put("delete_line", (double) projectCommit.getDelete_line());
-					dict.put("commit_count", (double) projectCommit.getCommit_count());
-					dict.put("java_file", (double) projectCommit.getJava_file());
-					dict.put("total_add", (double) projectCommit.getTotal_add());
-					dict.put("total_delete", (double) projectCommit.getTotal_delete());
-					dict.put("total_commit", (double) projectCommit.getTotal_commit());
-					
+		
+		for (int i=0; i<result.size(); i++) {
+			ProjectCommit projectCommit = result.get(i);
+			if(filterMap != null && !projectCommit.validate(filterMap)){
+				result.remove(projectCommit);
+				i--;
+			}else{
+				Map<String, Double> dict = new HashMap<String, Double>();
+				dict.put("add_line", (double) projectCommit.getAdd_line());
+				dict.put("delete_line", (double) projectCommit.getDelete_line());
+				dict.put("commit_count", (double) projectCommit.getCommit_count());
+				dict.put("java_file", (double) projectCommit.getJava_file());
+				dict.put("total_add", (double) projectCommit.getTotal_add());
+				dict.put("total_delete", (double) projectCommit.getTotal_delete());
+				dict.put("total_commit", (double) projectCommit.getTotal_commit());
+				if(formula != null && formula.trim().length() > 0){
+					formula = formula.replaceAll(" ", "");
 					projectCommit.setFormula(FormulaUtil.calFormula(formula, dict));
 				}
-				
 			}
 		}
+		
 		return result;
 	}
 	
@@ -152,27 +152,27 @@ public class ProjectService {
 		}
 		List<ProjectCommit> result = projectDao.selectAllProjectCommitRangeSort(startDay, endDay, order, method);
 		Map<String, Integer> filterMap = FilterUtil.parseFilter(filter);
-		if(formula != null && formula.trim().length() > 0){
-			formula = formula.replaceAll(" ", "");
-			for (int i=0; i<result.size(); i++) {
-				ProjectCommit projectCommit = result.get(i);
-				if(filterMap != null && !projectCommit.validate(filterMap)){
-					result.remove(projectCommit);
-					i--;
-				}else{
-					Map<String, Double> dict = new HashMap<String, Double>();
-					dict.put("add_line", (double) projectCommit.getAdd_line());
-					dict.put("delete_line", (double) projectCommit.getDelete_line());
-					dict.put("commit_count", (double) projectCommit.getCommit_count());
-					dict.put("java_file", (double) projectCommit.getJava_file());
-					dict.put("total_add", (double) projectCommit.getTotal_add());
-					dict.put("total_delete", (double) projectCommit.getTotal_delete());
-					dict.put("total_commit", (double) projectCommit.getTotal_commit());
-					
+		
+		for (int i=0; i<result.size(); i++) {
+			ProjectCommit projectCommit = result.get(i);
+			if(filterMap != null && !projectCommit.validate(filterMap)){
+				result.remove(projectCommit);
+				i--;
+			}else{
+				Map<String, Double> dict = new HashMap<String, Double>();
+				dict.put("add_line", (double) projectCommit.getAdd_line());
+				dict.put("delete_line", (double) projectCommit.getDelete_line());
+				dict.put("commit_count", (double) projectCommit.getCommit_count());
+				dict.put("java_file", (double) projectCommit.getJava_file());
+				dict.put("total_add", (double) projectCommit.getTotal_add());
+				dict.put("total_delete", (double) projectCommit.getTotal_delete());
+				dict.put("total_commit", (double) projectCommit.getTotal_commit());
+				if(formula != null && formula.trim().length() > 0){
+					formula = formula.replaceAll(" ", "");
 					projectCommit.setFormula(FormulaUtil.calFormula(formula, dict));
 				}
-				
 			}
+			
 		}
 		return result;
 	}
