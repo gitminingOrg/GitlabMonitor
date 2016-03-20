@@ -54,56 +54,75 @@
 </nav>
 <div class="container">
 <h2>Project Summary</h2>
+<div class="btn-group" style="float:right;" role="group" aria-label="...">
+	  <button type="button" class="btn btn-primary" onclick="showInfoChart();">Time Range</button>
+	  <div class="btn-group" role="group">
+	    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	      Choose
+	      <span class="caret"></span>
+	    </button>
+	    <ul class="dropdown-menu">
+	      <li><a href="#" onclick="projectCommit(document.getElementById('projectId').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value,'year');">Recent Year</a></li>
+	      <li><a href="#" onclick="projectCommit(document.getElementById('projectId').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value, 'month');">Recent Month</a></li>
+	      <li><a href="#" onclick="projectCommit(document.getElementById('projectId').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value, 'week');">Recent Week</a></li>
+	    </ul>
+	  </div>
+</div>
 <form id="commitRange" class="form-inline" action="/GitlabMonitor/project/summary" method="POST" >
 	<input type="text" id="dayStart" class="form-control" name="dayStart" value="${dayStart}" placeholder="start day"/>
 	<input type="text" id="dayEnd" class="form-control" name="dayEnd" value="${dayEnd}" placeholder="end day"/>
-	<select class="form-control" name="commitOrder">
-		  <option value ="commit_count">commit_count</option>
-		  <option value="add_line">add_line</option>
-		  <option value="delete_line">delete_line</option>
-		  <option value ="java_file">java_file</option>
-		  <option value="total_add">total_add</option>
-		  <option value="autotal_deletedi">total_delete</option>
-		  <option value ="team">name</option>
-	</select>
-<!-- 	<select class="form-control" name="eventOrder"> -->
-<!-- 		  <option value ="total">total</option> -->
-<!-- 		  <option value="push">push</option> -->
-<!-- 		  <option value="issue">issue</option> -->
-<!-- 		  <option value ="comment">comment</option> -->
-<!-- 		  <option value="create">create</option> -->
-<!-- 		  <option value ="team">name</option> -->
-<!-- 	</select> -->
-	<select class="form-control" name="method">
-		  <option value ="desc">desc</option>
-		  <option value ="asc">asc</option>
-	</select>
-		<input type="submit" class="btn btn-primary " value="filter">
-		<br />
-		<div class="input-group">
-  			<span class="input-group-addon" id="basic-addon1">formula</span>
-  			<input type="text" id="formula" class="form-control" style="width:500px;" name="formula" value="${formula}" placeholder="support: +-*/%^() commit_count add_line delete_line java_file total_add total_delete and regular numbers"/>
-		</div>
-		<br />
-		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon2">filter</span>
-			<input type="text" id="filter" class="form-control" style="width:520px;" name="filter" value="${filter}" placeholder="commit_count>3;add_line<10;delete_line>100"/>
-		</div>		
+
+	<input type="submit" class="btn btn-primary " value="filter">
+	<br />
+	<div class="input-group">
+ 			<span class="input-group-addon" id="basic-addon1">FORMULA</span>
+ 			<input type="text" id="formula" class="form-control" style="width:500px;" name="formula" value="${formula}" placeholder="support: +-*/%^() commit_count add_line delete_line java_file total_add total_delete and regular numbers"/>
+	</div>
+	<br />
+	<div class="input-group">
+		<span class="input-group-addon" id="basic-addon2">FILTER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		<input type="text" id="filter" class="form-control" style="width:500px;" name="filter" value="${filter}" placeholder="commit_count>3;add_line<10;delete_line>100"/>
+	</div>		
 </form>
 <br />
 <table class="table table-striped table-bordered">
-	<thead><tr><th>rank</th><th onmouseover="showIcon('name');" onmouseout="hideIcon('name');">name<i id="iconname" class="pointing down icon" style="display: none"></i></th>
-	<th onmouseover="showIcon('commitcount');" onmouseout="hideIcon('commitcount');">commit_count<i id="iconcommitcount" class="pointing down icon" style="display: none"></i></th> 
-	<th onmouseover="showIcon('addline');" onmouseout="hideIcon('addline');">add_line<i id="iconaddline" class="pointing down icon" style="display: none"></i></th> 
-	<th onmouseover="showIcon('deleteline');" onmouseout="hideIcon('deleteline');">delete_line<i id="icondeleteline" class="pointing down icon" style="display: none"></i></th> 
-	<th onmouseover="showIcon('javafile');" onmouseout="hideIcon('javafile');">java_file<i id="iconjavafile" class="pointing down icon" style="display: none"></i></th> 
-	<th onmouseover="showIcon('totaladd');" onmouseout="hideIcon('totaladd');">total_add<i id="icontotaladd" class="pointing down icon" style="display: none"></i></th> 
-	<th onmouseover="showIcon('totaldelete');" onmouseout="hideIcon('totaldelete');">total_delete<i id="icontotaldelete" class="pointing down icon" style="display: none"></i></th>
+	<thead><tr><th>rank</th>
+	<th onmouseover="showIcon('name');" onmouseout="hideIcon('name');">
+	name
+	<i onclick="refreshTable('${dayStart}','${dayEnd}','${formula}','${filter}','name');" id="iconname" class="pointing down icon" style="display: none"></i></th>
+	
+	<th onmouseover="showIcon('commitcount');" onmouseout="hideIcon('commitcount');">
+	commit_count
+	<i onclick="refreshTable('${dayStart}','${dayEnd}','${formula}','${filter}','commit_count');" id="iconcommitcount" class="pointing down icon" style="display: none"></i></th> 
+	
+	<th onmouseover="showIcon('addline');" onmouseout="hideIcon('addline');">
+	add_line
+	<i onclick="refreshTable('${dayStart}','${dayEnd}','${formula}','${filter}','add_line');" id="iconaddline" class="pointing down icon" style="display: none"></i></th> 
+	
+	<th onmouseover="showIcon('deleteline');" onmouseout="hideIcon('deleteline');">
+	delete_line
+	<i onclick="refreshTable('${dayStart}','${dayEnd}','${formula}','${filter}','delete_line');" id="icondeleteline" class="pointing down icon" style="display: none"></i></th> 
+	
+	<th onmouseover="showIcon('javafile');" onmouseout="hideIcon('javafile');">
+	java_file
+	<i onclick="refreshTable('${dayStart}','${dayEnd}','${formula}','${filter}','java_file');" id="iconjavafile" class="pointing down icon" style="display: none"></i></th> 
+	
+	<th onmouseover="showIcon('totaladd');" onmouseout="hideIcon('totaladd');">
+	total_add
+	<i onclick="refreshTable('${dayStart}','${dayEnd}','${formula}','${filter}','total_add');" id="icontotaladd" class="pointing down icon" style="display: none"></i></th> 
+	
+	<th onmouseover="showIcon('totaldelete');" onmouseout="hideIcon('totaldelete');">
+	total_delete
+	<i onclick="refreshTable('${dayStart}','${dayEnd}','${formula}','${filter}','total_delete');" id="icontotaldelete" class="pointing down icon" style="display: none"></i></th>
+	
 	<th>formula</th></tr></thead>
 	<tbody id="commit_body">
 	<c:forEach items="${commits}" var="commit" varStatus="status">
-		<tr><th>${ status.index + 1 }</th><th><a href="/GitlabMonitor/project/commit?id=${commit.id}&team=${commit.team}&dayStart=${dayStart}&dayEnd=${dayEnd}">${commit.name}</a></th><th>${commit.commit_count}</th><th>${commit.add_line}</th><th>${commit.delete_line}</th>
-		<th>${commit.java_file}</th><th>${commit.total_add}</th><th>${commit.total_delete}</th><th>${commit.formula}</th></tr>
+		<tr><th>${ status.index + 1 }</th>
+		<th><a href="/GitlabMonitor/project/commit?id=${commit.id}&team=${commit.team}&dayStart=${dayStart}&dayEnd=${dayEnd}">${commit.name}</a></th>
+		<th>${commit.commit_count}</th><th>${commit.add_line}</th><th>${commit.delete_line}</th>
+		<th>${commit.java_file}</th><th>${commit.total_add}</th>
+		<th>${commit.total_delete}</th><th>${commit.formula}</th></tr>
 	</c:forEach>	
 	</tbody>
 </table>
@@ -112,8 +131,6 @@
  <script src="/GitlabMonitor/static/js/library/jquery-1.11.3.js"></script>
  <script src="/GitlabMonitor/static/js/library/highcharts.js"></script>
  <script src="/GitlabMonitor/static/js/library/highcharts-3d.js"></script>
- <script src="/GitlabMonitor/static/js/library/sand-signika.js"></script>
- <script src="/GitlabMonitor/static/js/library/angular.min.js"></script>
  <script src="/GitlabMonitor/static/js/library/bootstrap.min.js"></script>
  <script src="/GitlabMonitor/static/js/library/semantic.min.js"></script>
   <script src="/GitlabMonitor/static/js/bootstrap-datepicker.min.js"></script>

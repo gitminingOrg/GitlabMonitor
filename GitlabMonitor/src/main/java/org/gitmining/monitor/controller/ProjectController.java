@@ -3,6 +3,7 @@ package org.gitmining.monitor.controller;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -132,6 +133,38 @@ public class ProjectController {
 		return projectService.getProjectEventItem(team, dayStart, dayEnd);
 	}
 	
+	@RequestMapping(value="/project/summary/data")
+	public Map<String, Object> ProjectCommitSummaryData(HttpServletRequest request,HttpServletResponse respons){
+		Map<String, Object> result = new HashMap<String, Object>();
+		String dayStart = request.getParameter("dayStart");
+		String dayEnd = request.getParameter("dayEnd");
+		String commitOrder = request.getParameter("commitOrder");
+		//String eventOrder = request.getParameter("eventOrder");
+		String formula = request.getParameter("formula");
+		String filter = request.getParameter("filter");
+		String method = "desc";
+		if(dayStart == null){
+			dayStart = "2016-01-01";
+		}
+		if(dayEnd == null){
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			dayEnd = sdf.format(Calendar.getInstance().getTime());
+		}
+		List<ProjectCommit> commits = new ArrayList<ProjectCommit>();
+		if(commitOrder == null){
+			commits = projectService.selectAllProjectCommitRange(dayStart, dayEnd, formula, filter);
+		}else{
+			commits = projectService.selectAllProjectCommitRangeSort(dayStart, dayEnd,commitOrder,method, formula, filter);
+		}
+		
+		result.put("commits", commits);
+		result.put("formula", formula);
+		result.put("filter", filter);
+		result.put("dayStart", dayStart);
+		result.put("dayEnd", dayEnd);
+		
+		return result;
+	}
 	@RequestMapping(value="/project/summary")
 	public ModelAndView showAllProjectSummary(HttpServletRequest request,HttpServletResponse response){
 		String dayStart = request.getParameter("dayStart");
@@ -167,6 +200,8 @@ public class ProjectController {
 		result.addObject("dayEnd", dayEnd);
 		return result;
 	}
+	
+	
 	@RequestMapping("/project/teammember")
 	public Map<String, Object> selectTeamStudentCommitRange(HttpServletRequest request, HttpServletResponse response){
 		String dayStart = request.getParameter("dayStart");
