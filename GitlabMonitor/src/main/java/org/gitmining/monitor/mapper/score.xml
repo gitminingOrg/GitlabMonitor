@@ -44,7 +44,7 @@
 		g.name AS project_name
 		FROM
 		courseItem i,courseScore s,groupproject g
-		WHERE i.id = s.item_id AND s.project_id = g.id AND i.course_id AND i.removed = 0
+		WHERE i.id = s.item_id AND s.project_id = g.id AND i.removed = 0 AND i.course_id 
 		IN 
 		(SELECT id FROM course WHERE name=#{name}) order by project_id asc;
 	</select>

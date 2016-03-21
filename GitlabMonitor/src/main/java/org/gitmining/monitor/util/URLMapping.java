@@ -64,6 +64,10 @@ public class URLMapping {
 	 */
 	public static final String PROJECT_SCORE_DELETE = "/project/score/delete";
 	/**
+	 * search team
+	 */
+	public static final String PROJECT_TEAM_SEARCH = "/project/team/search";
+	/**
 	 * show student commit page
 	 */
 	public static final String STUDENT_COMMIT = "/student/commit";

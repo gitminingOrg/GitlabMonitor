@@ -9,7 +9,6 @@ import org.gitmining.monitor.bean.ProjectCommit;
 import org.gitmining.monitor.bean.ProjectEvent;
 import org.gitmining.monitor.bean.ProjectVO;
 import org.gitmining.monitor.bean.Student;
-import org.gitmining.monitor.bean.StudentComment;
 import org.gitmining.monitor.bean.TeamVO;
 import org.springframework.stereotype.Repository;
 
@@ -22,7 +21,10 @@ public class ProjectDao extends BaseDaoImpl{
 	public List<ProjectComment> selectProjectComment(String team){
 		return sqlSession.selectList("project.selectProjectComment", team);
 	}
-	
+	public List<TeamVO> selectLikeTeams(String team){
+		team = "%"+team+"%";
+		return sqlSession.selectList("project.selectTeamLikeInfo", team);
+	}
 	public Integer selectProjectCommentCount(String team, String token,String time){
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("team", team);
@@ -129,5 +131,9 @@ public class ProjectDao extends BaseDaoImpl{
 	}
 	public boolean insertProjectEvent(ProjectEvent projectEvent){
 		return sqlSession.insert("project.insertProjectEvent", projectEvent) == 1 ?true:false;
+	}
+	
+	public List<String> selectAllCourseNames(){
+		return sqlSession.selectList("project.selectAllCourses");
 	}
 }

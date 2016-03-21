@@ -7,6 +7,7 @@ $(document).ready(projectCommit(projectId,startDay,endDay));
 function showDailyChart(){
 	$("#memberChart").hide();
 	$("#infoChart").hide();
+	$("#chooseTeam").hide();
 	$("#dailyChart").show();
 	$("#dailyChart").highcharts().reflow();
 }
@@ -14,6 +15,7 @@ function showDailyChart(){
 function showMemberChart(){
 	$("#dailyChart").hide();
 	$("#infoChart").hide();
+	$("#chooseTeam").hide();
 	$("#memberChart").show();
 	$("#memberChart").highcharts().reflow();
 }
@@ -21,8 +23,25 @@ function showMemberChart(){
 function showInfoChart(){
 	$("#dailyChart").hide();
 	$("#memberChart").hide();
+	$("#chooseTeam").hide();
 	$("#infoChart").show();
-	
+}
+
+function showChooseTeam(){
+	$("#satisfieldTeams").html("");
+	$("#possible_name").val("");
+	$("#dailyChart").hide();
+	$("#memberChart").hide();
+	$("#infoChart").hide();
+	$("#chooseTeam").show();
+}
+
+function cancelChooseTeam(){
+	$("#memberChart").hide();
+	$("#infoChart").hide();
+	$("#chooseTeam").hide();
+	$("#dailyChart").show();
+	$("#dailyChart").highcharts().reflow();
 }
 function projectComment(team,token,sen){
 	var url = "/GitlabMonitor/project/comment/submit"
@@ -58,6 +77,36 @@ function projectComment(team,token,sen){
 			}
 		});
 
+}
+
+function searchTeams(possible_name){
+	var url = "/GitlabMonitor/project/team/search"
+		$.ajax(url,{
+			type: 'GET',
+			data:{
+				"possible_name":possible_name,
+			},
+			success : function(data, textStatus) {
+				if(data.status == 1){
+					$('#satisfieldTeams').html("<h3>"+data.info+"</h3>");
+				}else if(data.status == 0){
+					var teams = "<div class=\"panel panel-default\"><ul class=\"list-group\">";
+					for(var i=0; i<data.content.teams.length; i++){
+						teams=teams+"<li class=\"list-group-item\"> <input type=\"button\" class=\"btn btn-primary btn-sm\" value=\"Choose\" onclick=\"chooseTeam(\'"+data.content.teams[i].name+"\',\'"+data.content.teams[i].id+"\')\">"+"&nbsp;&nbsp;";
+						teams=teams+"Team Name: "+data.content.teams[i].name+"&nbsp;&nbsp;Description: "+data.content.teams[i].description+"</li>"
+					}
+					teams=teams+"</ul></div>"
+					$('#satisfieldTeams').html(teams);
+				}
+			}
+		});
+}
+
+function chooseTeam(team_name,team_id){
+	$("#chooseTeam").hide();
+	$("#dailyChart").show();
+	$("#dailyChart").highcharts().reflow();
+	$("#team").val(team_name);
 }
 function projectCommit(projectId,startDay,endDay){
 //	var url1 = "/GitlabMonitor/project/comment"

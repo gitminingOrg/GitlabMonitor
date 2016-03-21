@@ -7,12 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.velocity.app.event.ReferenceInsertionEventHandler.referenceInsertExecutor;
 import org.gitmining.monitor.bean.ProjectComment;
 import org.gitmining.monitor.bean.ProjectCommit;
 import org.gitmining.monitor.bean.ProjectEvent;
 import org.gitmining.monitor.bean.ProjectVO;
 import org.gitmining.monitor.bean.Student;
-import org.gitmining.monitor.bean.StudentComment;
 import org.gitmining.monitor.bean.StudentCommit;
 import org.gitmining.monitor.bean.TeamVO;
 import org.gitmining.monitor.dao.ProjectDao;
@@ -228,6 +228,13 @@ public class ProjectService {
 		return teamVO;
 	}
 	
+	public List<TeamVO> getLikeTeams(String team){
+		if(team == null){
+			team="";
+		}
+		return projectDao.selectLikeTeams(team);
+	}
+	
 	public Map<String, Object> selectTeamStudentCommitRange(int projectId,String startDay, String endDay){
 		if(startDay==null){
 			startDay="2016-01-01";
@@ -255,4 +262,7 @@ public class ProjectService {
 		return result;
 	}
 	
+	public List<String> getAllCourses(){
+		return projectDao.selectAllCourseNames();
+	}
 }

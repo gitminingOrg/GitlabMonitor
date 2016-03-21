@@ -70,6 +70,21 @@
 </div>
 
 <div class="container">
+<div class="btn-group" style="float:right;" role="group" aria-label="...">
+	  <button type="button" class="btn btn-primary">Course</button>
+	  <div class="btn-group" role="group">
+	    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Choose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	      <span class="caret"></span>
+	    </button>
+	    <ul class="dropdown-menu">
+	      <c:forEach items="${courseNames}" var="name">
+	      	<li><a href="/GitlabMonitor/project/score?course_name=${name}">${name}</a></li>
+	      </c:forEach>
+
+	    </ul>
+	  </div>
+</div>
 <form id="addColumn" class="form-inline" action="/GitlabMonitor/project/score/add" method="POST" >
 	<input type="text" id="column" name="column" class="form-control" placeholder="new column name" onkeydown="if(event.keyCode==13)return false;"  required>
 	<input type="hidden" id="course_id" name="course_id" value="${course.id}">
@@ -85,6 +100,7 @@
 </form>
 <!-- <div class="row"> -->
 <!-- 	<div class="col-md-9"> -->
+		<br />
 		<table class="table table-striped table-bordered">
 		<thead><tr> 
 		<th>project</th>

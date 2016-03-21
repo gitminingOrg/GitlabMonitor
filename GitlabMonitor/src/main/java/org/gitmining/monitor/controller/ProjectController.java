@@ -16,10 +16,12 @@ import org.gitmining.monitor.bean.ProjectVO;
 import org.gitmining.monitor.bean.Student;
 import org.gitmining.monitor.bean.TeamVO;
 import org.gitmining.monitor.service.ProjectService;
+import org.gitmining.monitor.util.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
 import static org.gitmining.monitor.util.URLMapping.*;
 
 @RestController
@@ -248,6 +250,20 @@ public class ProjectController {
 		result.put("dayStart", dayStart);
 		result.put("dayEnd", dayEnd);
 		return result;
+	}
+	@RequestMapping(value=PROJECT_TEAM_SEARCH)
+	public ResultMap searchPossibleTeams(HttpServletRequest request, HttpServletResponse response){
+		String possible_name = request.getParameter("possible_name");
+		List<TeamVO> teamVOs = projectService.getLikeTeams(possible_name);
+		ResultMap resultMap = new ResultMap();
+		if(teamVOs == null || teamVOs.size() == 0){
+			resultMap.setStatus(ResultMap.FAIL_STATUS);
+			resultMap.setInfo("Sory, no matched team name!");
+		}else {
+			resultMap.setStatus(ResultMap.SUCCESS_STATUS);
+			resultMap.add("teams", teamVOs);
+		}
+		return resultMap;
 	}
 }
 

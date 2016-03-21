@@ -70,16 +70,27 @@
 	    </ul>
 	  </div>
 	</div>
-	<form id="commitRange" class="form-inline">
+	<form id="commitRange" class="form-inline" method="POST" action="/GitlabMonitor/project/commit">
 		<input type="hidden" id="projectId" name="projectId" value="${projectId}" />
-		<input type="text" class="form-control" id="team" placeholder="team name" value="${team}"/>
-		<input type="text" class="form-control" id="dayStart" value="${dayStart}" placeholder="start day"/>
-		<input type="text" class="form-control" id="dayEnd" value="${dayEnd}" placeholder="end day"/>
-		<input type="button" class="btn btn-primary" value="search" onclick="projectCommit(document.getElementById('projectId').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value);">
+		<input type="text" class="form-control" readonly="readonly" id="team" name="team" placeholder="team name" value="${team}" onclick="showChooseTeam()"/>
+		<input type="text" class="form-control" id="dayStart" name="dayStart" value="${dayStart}" placeholder="start day"/>
+		<input type="text" class="form-control" id="dayEnd" name="dayEnd" value="${dayEnd}" placeholder="end day"/>
+		<input type="submit" class="btn btn-primary" value="search">
 	<%-- 	<a href="/GitlabMonitor/project/team?team=${team}" class="btn btn-success">Member Detail</a> --%>
 	</form>
 
 	<br />
+	<div id="chooseTeam" style="display: none"> 
+		<h3>Satisfied Teams</h3> 
+		<form id="chooseTeamForm" class="form-inline">
+			<input type="text" id="possible_name" class="form-control" style="width:300px;" placeholder="Type a substring your team name contains" id="teamlike">
+			<input type="button" class="btn btn-primary" value="Search Team" onclick="searchTeams(document.getElementById('possible_name').value)" >
+		</form>
+		
+		<div id="satisfieldTeams">
+		</div>
+		<input type="button" class="btn btn-default" value="Cancel" onclick="cancelChooseTeam()">
+	</div>
 	<div id="dailyChart"></div>
 	<div id="memberChart" style="display:none"></div>
 	<div id="infoChart" style="display:none"></div>
