@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.gitmining.monitor.bean.ProjectComment;
 import org.gitmining.monitor.bean.ProjectCommit;
-import org.gitmining.monitor.bean.ProjectEvent;
 import org.gitmining.monitor.bean.ProjectVO;
 import org.gitmining.monitor.bean.Student;
 import org.gitmining.monitor.bean.TeamVO;
@@ -21,19 +20,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import static org.gitmining.monitor.util.URLMapping.*;
 
 @RestController
 public class ProjectController {
 	@Autowired
 	private ProjectService projectService;
 	
-	@RequestMapping(value="/project/comment")
+	@RequestMapping(value=PROJECT_COMMENT)
 	public List<ProjectComment> getProjectComment(HttpServletRequest request,HttpServletResponse response){
 		String team = request.getParameter("team");
 		return projectService.getProjectComments(team);
 	}
 	
-	@RequestMapping(value="/project/comment/submit")
+	@RequestMapping(value=PROJECT_COMMENT_SUBMIT)
 	public Map<String,Object> getProjectCommentSubmit(HttpServletRequest request,HttpServletResponse response){
 		String team = request.getParameter("team");
 		String token = request.getParameter("token");
@@ -41,7 +41,7 @@ public class ProjectController {
 		return projectService.insertProjectComments(team, token, words);
 	}
 	
-	@RequestMapping(value="/project/commit/range")
+	@RequestMapping(value=PROJECT_COMMIT_RANGE)
 	public Map<String, Object> getProjectCommitItemRange(HttpServletRequest request,HttpServletResponse response){
 		String dayStart = request.getParameter("dayStart");
 		String dayEnd = request.getParameter("dayEnd");
@@ -67,7 +67,7 @@ public class ProjectController {
 		return result;
 	}
 	
-	@RequestMapping(value="/project/commit")
+	@RequestMapping(value=PROJECT_COMMIT)
 	public ModelAndView showProjectCommitPage(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView result = new ModelAndView("projectCommit");
 		String team = request.getParameter("team");
@@ -107,7 +107,7 @@ public class ProjectController {
 		return result;
 	}
 	
-	@RequestMapping(value="/project/event")
+	@RequestMapping(value=PROJECT_EVENT)
 	public ModelAndView showProjectEventPage(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView result = new ModelAndView("projectEvent");
 		String team = request.getParameter("team");
@@ -116,7 +116,7 @@ public class ProjectController {
 		}
 		return result;
 	}
-	@RequestMapping(value="/project/team")
+	@RequestMapping(value=PROJECT_TEAM)
 	public ModelAndView showProjectTeamPage(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView result = new ModelAndView("projectMember");
 		String team = request.getParameter("team");
@@ -125,7 +125,7 @@ public class ProjectController {
 		}
 		return result;
 	}
-	@RequestMapping(value="/project/event/range")
+	@RequestMapping(value=PROJECT_EVENT_RANGE)
 	public Map<String, List> getProjectEventItemRange(HttpServletRequest request,HttpServletResponse response){
 		String team = request.getParameter("team");
 		String dayStart = request.getParameter("dayStart");
@@ -133,7 +133,7 @@ public class ProjectController {
 		return projectService.getProjectEventItem(team, dayStart, dayEnd);
 	}
 	
-	@RequestMapping(value="/project/summary/data")
+	@RequestMapping(value=PROJECT_SUMMARY_DATA)
 	public Map<String, Object> ProjectCommitSummaryData(HttpServletRequest request,HttpServletResponse respons){
 		Map<String, Object> result = new HashMap<String, Object>();
 		String dayStart = request.getParameter("dayStart");
@@ -180,7 +180,7 @@ public class ProjectController {
 		
 		return result;
 	}
-	@RequestMapping(value="/project/summary")
+	@RequestMapping(value=PROJECT_SUMMARY)
 	public ModelAndView showAllProjectSummary(HttpServletRequest request,HttpServletResponse response){
 		String dayStart = request.getParameter("dayStart");
 		String dayEnd = request.getParameter("dayEnd");
@@ -217,7 +217,7 @@ public class ProjectController {
 	}
 	
 	
-	@RequestMapping("/project/teammember")
+	@RequestMapping(value=PROJECT_TEAMMEMBER)
 	public Map<String, Object> selectTeamStudentCommitRange(HttpServletRequest request, HttpServletResponse response){
 		String dayStart = request.getParameter("dayStart");
 		String dayEnd = request.getParameter("dayEnd");

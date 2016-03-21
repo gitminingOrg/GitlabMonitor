@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import static org.gitmining.monitor.util.URLMapping.*;
 
 @RestController
 public class ScoreController {
@@ -23,7 +24,7 @@ public class ScoreController {
 		this.scoreService = scoreService;
 	}
 
-	@RequestMapping("/project/score")
+	@RequestMapping(value=PROJECT_SCORE)
 	public ModelAndView showProjectScore(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView view = new ModelAndView("projectScore");
 		List<CourseItem> courseItems = scoreService.getCourseScore("2016_nju_se_cseiii");
@@ -36,7 +37,7 @@ public class ScoreController {
 		return view;
 	}
 	
-	@RequestMapping("/project/score/add")
+	@RequestMapping(value=PROJECT_SCORE_ADD)
 	public ModelAndView addProjectScore(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView view = new ModelAndView("redirect:/project/score");
 		String columnName = request.getParameter("column");
@@ -53,7 +54,7 @@ public class ScoreController {
 		return view;
 	}
 	
-	@RequestMapping("/project/score/change")
+	@RequestMapping(value=PROJECT_SCORE_CHANGE)
 	public Map<String, Object> changeProjectScore(HttpServletRequest request, HttpServletResponse response){
 		Map<String, Object> result = new HashMap<String, Object>();
 		try{
@@ -68,7 +69,7 @@ public class ScoreController {
 		return result;
 	}
 	
-	@RequestMapping("/project/score/delete")
+	@RequestMapping(value=PROJECT_SCORE_DELETE)
 	public ModelAndView deleteProjectScore(HttpServletRequest request, HttpServletResponse response){
 		ModelAndView view = new ModelAndView("redirect:/project/score");
 		int itemId = Integer.parseInt(request.getParameter("delete_item"));

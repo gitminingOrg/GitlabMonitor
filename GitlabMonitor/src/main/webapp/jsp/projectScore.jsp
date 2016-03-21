@@ -71,7 +71,7 @@
 
 <div class="container">
 <form id="addColumn" class="form-inline" action="/GitlabMonitor/project/score/add" method="POST" >
-	<input type="text" id="column" name="column" class="form-control" placeholder="new column name" required>
+	<input type="text" id="column" name="column" class="form-control" placeholder="new column name" onkeydown="if(event.keyCode==13)return false;"  required>
 	<input type="hidden" id="course_id" name="course_id" value="${course.id}">
 	<input type="hidden" id="course_name" name="course_name" value="${course.name}">
 	<button class="btn btn-primary" type="button" class="form-control" onclick="checkColumnName(document.getElementById('column').value)">add a column</button>

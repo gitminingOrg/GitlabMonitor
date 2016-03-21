@@ -10,17 +10,15 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.gitmining.monitor.bean.ProjectCommit;
 import org.gitmining.monitor.bean.Student;
 import org.gitmining.monitor.bean.StudentComment;
 import org.gitmining.monitor.bean.StudentCommit;
-import org.gitmining.monitor.bean.StudentEvent;
 import org.gitmining.monitor.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
+import static org.gitmining.monitor.util.URLMapping.*;
 @RestController
 public class StudentController {
 	@Autowired
@@ -28,7 +26,7 @@ public class StudentController {
 	public void setStudentService(StudentService studentService) {
 		this.studentService = studentService;
 	}
-	@RequestMapping(value="/student/commit/range")
+	@RequestMapping(value=STUDENT_COMMIT_RANGE)
 	public Map<String, Object> getStudentCommitItemRange(HttpServletRequest request,HttpServletResponse response){
 		String student = request.getParameter("student");
 		String dayStart = request.getParameter("dayStart");
@@ -54,13 +52,13 @@ public class StudentController {
 		return result;
 	}
 	
-	@RequestMapping(value="/student/comment")
+	@RequestMapping(value=STUDENT_COMMENT)
 	public List<StudentComment> getStudentComment(HttpServletRequest request,HttpServletResponse response){
 		String student = request.getParameter("student");
 		return studentService.getStudentComments(student);
 	}
 	
-	@RequestMapping(value="/student/comment/submit")
+	@RequestMapping(value=STUDENT_COMMENT_SUBMIT)
 	public Map<String,Object> getStudentCommentSubmit(HttpServletRequest request,HttpServletResponse response){
 		String student = request.getParameter("student");
 		String token = request.getParameter("token");
@@ -68,7 +66,7 @@ public class StudentController {
 		return studentService.insertStudentComments(student, token, words);
 	}
 	
-	@RequestMapping(value="/student/commit")
+	@RequestMapping(value=STUDENT_COMMIT)
 	public ModelAndView showStudentCommitPage(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView result = new ModelAndView("studentCommit");
 		String student = request.getParameter("student");
@@ -96,7 +94,7 @@ public class StudentController {
 		return result;
 	}
 	
-	@RequestMapping(value="/student/event")
+	@RequestMapping(value=STUDENT_EVENT)
 	public ModelAndView showStudentEventPage(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView result = new ModelAndView("studentEvent");
 		String student = request.getParameter("student");
@@ -106,12 +104,12 @@ public class StudentController {
 		return result;
 	}
 	
-	@RequestMapping(value="/student/event/range")
+	@RequestMapping(value=STUDENT_EVENT_RANGE)
 	public Map<String, List> getStudentEventItemRange(String student, String dayStart, String dayEnd){
 		return studentService.getStudentEventItem(student, dayStart, dayEnd);
 	}
 	
-	@RequestMapping(value="/student/summary")
+	@RequestMapping(value=STUDENT_SUMMARY)
 	public ModelAndView showAllStudentSummary(HttpServletRequest request,HttpServletResponse response){
 		String dayStart = request.getParameter("dayStart");
 		String dayEnd = request.getParameter("dayEnd");
@@ -148,7 +146,7 @@ public class StudentController {
 		return result;
 	}
 	
-	@RequestMapping(value="/student/summary/data")
+	@RequestMapping(value=STUDENT_SUMMARY_DATA)
 	public Map<String, Object> ProjectCommitSummaryData(HttpServletRequest request,HttpServletResponse respons){
 		Map<String, Object> result = new HashMap<String, Object>();
 		String dayStart = request.getParameter("dayStart");
