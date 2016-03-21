@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,6 +13,22 @@
 </head>
 <body>
 <%@ include file="nav.jsp" %>
+<div class="container">
+<h2>Student Summary</h2>
+<div class="btn-group" style="float:right;" role="group" aria-label="...">
+	  <button type="button" class="btn btn-primary" onclick="showInfoChart();">Time Range</button>
+	  <div class="btn-group" role="group">
+	    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	      Choose
+	      <span class="caret"></span>
+	    </button>
+	    <ul class="dropdown-menu">
+	      <li><a href="#" onclick="studentSummary(document.getElementById('formula').value,document.getElementById('filter').value,'year');">Recent Year</a></li>
+	      <li><a href="#" onclick="studentSummary(document.getElementById('formula').value,document.getElementById('filter').value,'month');">Recent Month</a></li>
+	      <li><a href="#" onclick="studentSummary(document.getElementById('formula').value,document.getElementById('filter').value,'week');">Recent Week</a></li>
+	    </ul>
+	  </div>
+</div>
 <form id="commitRange" class="form-inline" action="/GitlabMonitor/student/summary" method="POST" >
 	<input type="text" id="dayStart" class="form-control" name="dayStart" value="${dayStart}" placeholder="start day"/>
 	<input type="text" id="dayEnd" class="form-control" name="dayEnd" value="${dayEnd}" placeholder="end day"/>
