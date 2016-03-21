@@ -92,7 +92,7 @@
 		UPDATE 
 		courseItem
 		SET
-		removed = 1
+		removed = 1, name=concat(name,now())
 		WHERE
 		id =#{id}
 	</update>

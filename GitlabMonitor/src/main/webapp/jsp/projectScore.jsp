@@ -74,9 +74,9 @@
 	<input type="text" id="column" name="column" class="form-control" placeholder="new column name" required>
 	<input type="hidden" id="course_id" name="course_id" value="${course.id}">
 	<input type="hidden" id="course_name" name="course_name" value="${course.name}">
-	<button class="btn btn-primary" type="submit" class="form-control" >add a column</button>
+	<button class="btn btn-primary" type="button" class="form-control" onclick="checkColumnName(document.getElementById('column').value)">add a column</button>
 </form>
-
+<div id="mentionwords" style="display: none;font-weight: bold">Only suppor digits, letters and Chinese characters&nbsp;&nbsp;<button class="btn btn-warning" type="button" class="form-control" onclick="cancelDelete();">&nbsp;OK&nbsp;</button></div>
 <form id="deleteColumn" class="form-inline" style="display: none" action="/GitlabMonitor/project/score/delete" method="POST" >
 	<span id="warning_words" style="font-weight: bold">Are you sure to remove item named 'test1'?</span>
 	<input type="hidden" id="delete_item" name="delete_item">

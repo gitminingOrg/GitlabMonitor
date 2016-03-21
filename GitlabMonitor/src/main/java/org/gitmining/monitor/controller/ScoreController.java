@@ -38,7 +38,7 @@ public class ScoreController {
 	
 	@RequestMapping("/project/score/add")
 	public ModelAndView addProjectScore(HttpServletRequest request, HttpServletResponse response){
-		ModelAndView view = new ModelAndView("projectScore");
+		ModelAndView view = new ModelAndView("redirect:/project/score");
 		String columnName = request.getParameter("column");
 		int courseId = Integer.parseInt(request.getParameter("course_id"));
 		String courseName = request.getParameter("course_name");
@@ -70,7 +70,7 @@ public class ScoreController {
 	
 	@RequestMapping("/project/score/delete")
 	public ModelAndView deleteProjectScore(HttpServletRequest request, HttpServletResponse response){
-		ModelAndView view = new ModelAndView("projectScore");
+		ModelAndView view = new ModelAndView("redirect:/project/score");
 		int itemId = Integer.parseInt(request.getParameter("delete_item"));
 		scoreService.deleteCourseItem(itemId);
 		

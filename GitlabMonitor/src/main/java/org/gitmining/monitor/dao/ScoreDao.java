@@ -20,8 +20,13 @@ public class ScoreDao extends BaseDaoImpl {
 		return sqlSession.selectList("score.selectAllCourseNames");
 	}
 	public int insertCourseItem(CourseItem courseItem){
-		sqlSession.insert("score.insertNewCourseItem",courseItem);
-		return courseItem.getId();
+		try{
+			sqlSession.insert("score.insertNewCourseItem",courseItem);
+			return courseItem.getId();
+		}catch(Exception e){
+			return -1;
+		}
+		
 	}
 	
 	public List<Integer> getCourseProjectID(int courseId){

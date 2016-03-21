@@ -31,6 +31,9 @@ public class ScoreService {
 		courseItem.setCourse_id(courseId);
 		courseItem.setName(columnName);
 		int item_id = scoreDao.insertCourseItem(courseItem);
+		if(item_id == -1){
+			return false;
+		}
 		List<Integer> projectIds = scoreDao.getCourseProjectID(courseId);
 		List<Score> scores  = new ArrayList<Score>();
 		for (int projectId : projectIds) {
