@@ -3,10 +3,15 @@ package org.gitmining.monitor.service;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import javax.mail.Address;
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMailMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 @Service
 public class MailService {
@@ -23,6 +28,22 @@ public class MailService {
 			simpleMailMessage.setText(content);
 			simpleMailMessage.setSubject(title);
 			javaMailSender.send(simpleMailMessage);
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean sendHtmlMail(String to, String title, String content){
+		try{
+			MimeMessage mailMessage = javaMailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(mailMessage, true);
+			helper.setFrom("ch2_27@sina.com");
+			helper.setTo(to);
+			helper.setSubject(title);
+			helper.setText(content,true);
+			javaMailSender.send(mailMessage);
 			return true;
 		}catch(Exception e){
 			e.printStackTrace();
