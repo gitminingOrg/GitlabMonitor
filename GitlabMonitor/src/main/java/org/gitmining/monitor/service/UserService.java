@@ -20,8 +20,11 @@ public class UserService {
 	}
 
 	public int saveUser(User user) {
-		// TODO Auto-generated method stub
 		return userDao.updateUser(user);
+	}
+
+	public int changeUserStatus(User user) {
+		return userDao.updateUserStatus(user);
 	}
 
 }

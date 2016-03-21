@@ -18,4 +18,8 @@ public class UserDao extends BaseDaoImpl{
 		return sqlSession.update("user.updateUser", user);
 	}
 
+	public int updateUserStatus(User user) {
+		return sqlSession.update("user.updateUserStatus", user);
+	}
+
 }

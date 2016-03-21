@@ -14,8 +14,8 @@
 		<form-login login-processing-url="/login/check" login-page="/login" authentication-failure-url="/login?login_error=t"/>
 		<http-basic/>
 		<logout logout-url="/login/logout"/>
-		<intercept-url pattern="/student/**" access="ROLE_NORMAL"/>
-		<intercept-url pattern="/project/**" access="ROLE_NORMAL"/>
+		<intercept-url pattern="/student/**" access="ROLE_NORMAL,ROLE_ADMIN"/>
+		<intercept-url pattern="/project/**" access="ROLE_NORMAL,ROLE_ADMIN"/>
 		<intercept-url pattern="/admin/**" access="ROLE_ADMIN"/>
 <!-- 		<intercept-url pattern="/login**" filters="none"/> -->
 <!-- 		<intercept-url pattern="/static**" filters="none"/> -->
@@ -26,9 +26,17 @@
 		<user name="normal" password="normal" authorities="ROLE_NORMAL" />
 		<user name="admin" password="admin" authorities="ROLE_ADMIN" />
 	</user-service>
+	
+ 	<jdbc-user-service id="JDBCUserService" 
+		data-source-ref="dataSource"
+		users-by-username-query=
+			"select name, password, true from user where name=?"
+		authorities-by-username-query=
+			"select name, role from user where name=?"
+		/>
 
 	<authentication-manager>
-		<authentication-provider user-service-ref="userService1" />
+		<authentication-provider user-service-ref="JDBCUserService" />
 	</authentication-manager>
 
 </beans:beans>

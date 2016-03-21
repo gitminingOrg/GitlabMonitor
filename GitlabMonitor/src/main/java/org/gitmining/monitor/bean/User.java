@@ -5,8 +5,8 @@ import javax.validation.constraints.Size;
 
 public class User {
 	private int id;
-	@Size(min=3, max=20, message="name must be between 3 and 20 character long.")
-	@Pattern(regexp="^[a-zA-Z0-9]+$", message="name must be alphanumeric with no spaces")
+	@Size(min=3, max=20, message="Name must be between 3 and 20 character long.")
+	@Pattern(regexp="^[a-zA-Z0-9]+$", message="Name must be alphanumeric with no spaces")
 	private String name;
 	@Size(min=6, max=20, message="The password must be at least 6 character long.")
 	private String password;

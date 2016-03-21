@@ -26,19 +26,19 @@
 			<h2 class="form-signin-heading">Please Register</h2>
 			<table cellspacing="0">
 				<tr>
-					<th align="right"><sf:label path="name">Name</sf:label></th>
+					<th style="float: right"><sf:label path="name">Name:&nbsp;&nbsp;</sf:label></th>
 					<td><sf:input path="name" type="text" class="form-control" placeholder="name" />
 						<sf:errors path="name" cssClass="error" />
 					</td>
 				</tr>
 				<tr>
-					<th align="right"><sf:label path="email" >Email address</sf:label></th>
+					<th style="float: right"><sf:label path="email" >Email address:&nbsp;&nbsp;</sf:label></th>
 					<td><sf:input path="email" type="email" class="form-control" placeholder="email" /> 
 						<sf:errors path="email" cssClass="error" />
 					</td>
 				</tr>
 				<tr>
-					<th align="right"><sf:label path="password" >Password</sf:label></th>
+					<th style="float: right"><sf:label path="password" >Password:&nbsp;&nbsp;</sf:label></th>
 					<td><sf:password path="password" class="form-control" placeholder="password" />
 						<sf:errors path="password" cssClass="error" />
 					</td>

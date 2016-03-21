@@ -5,5 +5,6 @@
 		<mapper resource="org/gitmining/monitor/mapper/student.xml" />
 		<mapper resource="org/gitmining/monitor/mapper/project.xml" />
 		<mapper resource="org/gitmining/monitor/mapper/score.xml" />
+		<mapper resource="org/gitmining/monitor/mapper/user.xml" />
 	</mappers>
 </configuration>

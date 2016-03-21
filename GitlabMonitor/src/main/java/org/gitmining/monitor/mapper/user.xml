@@ -13,15 +13,29 @@
 </resultMap>
 	
 	<insert id="insertNewUser" parameterType="org.gitmining.monitor.bean.User" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO user(name,password,email) VALUES(#{name},#{password},#{email});
+		INSERT INTO user(name,password,email, status, token) VALUES(#{name},#{password},#{email},#{status},#{token});
 	</insert>
 	
  	<select id="selectUserByName" resultMap="user">
 		SELECT * FROM user WHERE name = #{name};
 	</select>
 	
+	<select id="selectUnActivatedUser" resultMap="user">
+		SELECT * FROM user WHERE status in {0, 1};
+	</select>
+	
+	<update id="updateUser" parameterType="org.gitmining.monitor.bean.User" >
+		UPDATE user
+		SET
+		
+	</update>
+	
 	<update id="updateUserStatus" parameterType="org.gitmining.monitor.bean.User" >
-		UPDATE user()
+		UPDATE 
+		user
+		SET
+		status = #{status}
+		where id = #{id};
 	</update>
 	
 </mapper>

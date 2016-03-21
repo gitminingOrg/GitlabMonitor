@@ -30,13 +30,6 @@ public class AuthenticController {
 		return view;
 	}
 	
-	@RequestMapping("/register1")
-	public ModelAndView showSign(HttpServletRequest request,HttpServletResponse response){
-		ModelAndView view = new ModelAndView();
-		view.setViewName("register1");
-		return view;
-	}
-	
 	@RequestMapping("/register")
 	public String showSign(Model model) {
 		model.addAttribute(new User());
@@ -50,48 +43,36 @@ public class AuthenticController {
 			return "register";
 		}
 		if(userService.getUserByName(user.getName()) != null) {
-			bindingResult.rejectValue("name", "this name exists");
+			bindingResult.rejectValue("name", "validate.name.exist", "this name exists");
 			return "register";
 		}
 		String token = generateToken(20);
 		user.setToken(token);
 		user.setStatus(0);
-//		userService.newUser(user);
+		userService.newUser(user);
 		return "redirect:/activation/" + user.getName();
 	}
 	
 	@RequestMapping(value="/activation/{name}")
 	public String activateUser(@PathVariable String name, Model model) {
-//		User user = userService.getUserByName(name);
-//		//发送邮件
-//		String toEmail = user.getEmail();
-//		String title = "GitlabMonitor验证邮箱登陆";
-//		String content = "请点击一下连接进行认证"
-//						+"<a href=\""
-//						+"http://localhost:8080/GitlabMonitor/activationEmail"
-//						+ user.getName() + "/"
-//						+ user.getToken()
-//						+ "\">点击</a>";
-		
-		User user = new User();
-		user.setName(name);
+		User user = userService.getUserByName(name);
 		//发送邮件
-		String toEmail = "604865895@qq.com";
-		String title = "GitlabMonitor验证邮箱";
-		String content = "请点击一下连接进行认证"
+		String toEmail = user.getEmail();
+		String title = "GitlabMonitor验证邮箱登陆";
+		String content = "复制以下网址到浏览器进行验证"
 						+"<a href=\""
-						+"http://localhost:8080/GitlabMonitor/activationEmail"+"/"
-						+ name + "/"
-						+ generateToken(20)
+						+"http://localhost:8080/GitlabMonitor/activationEmail" + "/"
+						+ user.getName() + "/"
+						+ user.getToken()
 						+ "\">点击</a>";
+		
 		mailService.sendMail(toEmail, title, content);
-//		model.addAttribute(user);
+		model.addAttribute(user);
 		return "activation";
 	}
 	
 	@RequestMapping(value="/activationEmail/{name}/{token}")
 	public String activateUserEmail(@PathVariable String name, @PathVariable String token, Model model) {
-		System.out.println("jixufangwen");
 		User user = userService.getUserByName(name);
 		if(user == null) {
 			model.addAttribute("noName", "用户名不存在");
@@ -101,10 +82,23 @@ public class AuthenticController {
 			model.addAttribute("activationFail", "邮箱验证失败");
 			return "activation";
 		}
-		int status = user.getStatus() + 1;
+		int status = user.getStatus();
+		if(status == 0 || status == 1) status = 1;
+		else status = 3;
 		user.setStatus(status);
-		userService.saveUser(user);
+		userService.changeUserStatus(user);
 		return "activation";
+	}
+	
+	@RequestMapping(value="/admin/activation/{name}")
+	public String adminActivateUser(@PathVariable String name, Model model) {
+		User user = userService.getUserByName(name);
+		int status = user.getStatus();
+		if(status == 0 || status == 2) status = 2;
+		else status = 3;
+		user.setStatus(status);
+		userService.changeUserStatus(user);
+		return "adminActivationSuccess";
 	}
 	
 	//生成随机Token
