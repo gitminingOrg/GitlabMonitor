@@ -3,6 +3,8 @@ package org.gitmining.monitor.bean;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 public class User {
 	private int id;
 	@Size(min=3, max=20, message="Name must be between 3 and 20 character long.")
@@ -14,6 +16,7 @@ public class User {
 	private String email;
 	private String token;
 	private String school;
+	@NotBlank(message="Please choose one role")
 	private String role;
 	// 状态：激活需要管理员和邮箱认证，0：均未认证；1：邮箱认证管理员未认证；2：邮箱未认证管理员认证；3：均已认证
 	private int status;

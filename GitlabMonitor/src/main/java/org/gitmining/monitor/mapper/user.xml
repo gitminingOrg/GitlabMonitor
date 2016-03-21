@@ -13,7 +13,8 @@
 </resultMap>
 	
 	<insert id="insertNewUser" parameterType="org.gitmining.monitor.bean.User" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO user(name,password,email, status, token) VALUES(#{name},#{password},#{email},#{status},#{token});
+		INSERT INTO user(name,password,email, status, token, role) 
+		VALUES(#{name},#{password},#{email},#{status},#{token}, #{role});
 	</insert>
 	
  	<select id="selectUserByName" resultMap="user">
@@ -25,8 +26,7 @@
 	</select>
 	
 	<update id="updateUser" parameterType="org.gitmining.monitor.bean.User" >
-		UPDATE user
-		SET
+		
 		
 	</update>
 	

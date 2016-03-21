@@ -59,15 +59,18 @@ public class AuthenticController {
 		//发送邮件
 		String toEmail = user.getEmail();
 		String title = "GitlabMonitor验证邮箱登陆";
-		String content = "复制以下网址到浏览器进行验证"
+		//http://www.gitmining.net
+		String content = "Click "
 						+"<a href=\""
 						+"http://localhost:8080/GitlabMonitor/activationEmail" + "/"
 						+ user.getName() + "/"
 						+ user.getToken()
-						+ "\">点击</a>";
-		
-		mailService.sendMail(toEmail, title, content);
+						+ "\">here</a> to activate your email(if not works, you can copy the link to your browser)";
+		String content2 = "<a href=\""
+				+"http://www.gitmining.net" + "\">点击</a>";
+		mailService.sendHtmlMail(toEmail, title, content);
 		model.addAttribute(user);
+		model.addAttribute("emailSend", "activation email has been send, please check it.");
 		return "activation";
 	}
 	
@@ -75,11 +78,14 @@ public class AuthenticController {
 	public String activateUserEmail(@PathVariable String name, @PathVariable String token, Model model) {
 		User user = userService.getUserByName(name);
 		if(user == null) {
-			model.addAttribute("noName", "用户名不存在");
+//			System.out.println("noName");
+			model.addAttribute("noName", "no such user");
 			return "activation";
 		}
+		model.addAttribute("user", user);
 		if(!user.getToken().equals(token)){
-			model.addAttribute("activationFail", "邮箱验证失败");
+//			System.out.println("EmailActivationFail");
+			model.addAttribute("emailActivationFail", "email activation fail");
 			return "activation";
 		}
 		int status = user.getStatus();
@@ -87,6 +93,7 @@ public class AuthenticController {
 		else status = 3;
 		user.setStatus(status);
 		userService.changeUserStatus(user);
+		model.addAttribute("emailActivationSuccess", "email activation success");
 		return "activation";
 	}
 	

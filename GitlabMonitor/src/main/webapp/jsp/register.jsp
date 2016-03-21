@@ -42,7 +42,19 @@
 					<td><sf:password path="password" class="form-control" placeholder="password" />
 						<sf:errors path="password" cssClass="error" />
 					</td>
-				</tr>			
+				</tr>	
+				<tr>
+					<th style="float:right"><sf:label path="role">Identity:&nbsp;&nbsp;</sf:label>
+					<td>
+					<sf:select path="role" class="form-control">
+					<sf:option value="" label="--choose--"></sf:option>
+					<sf:option value="ROLE_NORMAL" label="teacher"></sf:option>	
+					<sf:option value="ROLE_NORMAL" label="assistant"></sf:option>
+					<sf:option value="ROLE_ADMIN" label="administrator"></sf:option>
+					</sf:select>
+					<sf:errors path="role" cssClass="error" />
+					</td>
+				</tr>		
 			</table>
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
 			</fieldset>
