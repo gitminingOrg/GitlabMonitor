@@ -108,8 +108,12 @@ function studentCommit(student,startDay,endDay){
 			            data: data.java_file
 			        },]
 			    });
-				$("#dayStart").val(data.dayStart);
-				$("#dayEnd").val(data.dayEnd);
+				if(data.dayStart){
+					$("#dayStart").val(data.dayStart);
+					$("#dayEnd").val(data.dayEnd);
+				}
+				
+				
 			}});	
 }
 

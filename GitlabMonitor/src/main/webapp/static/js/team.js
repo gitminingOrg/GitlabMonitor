@@ -107,6 +107,7 @@ function chooseTeam(team_name,team_id){
 	$("#dailyChart").show();
 	$("#dailyChart").highcharts().reflow();
 	$("#team").val(team_name);
+	$("#commitRange").submit();
 }
 function projectCommit(projectId,startDay,endDay){
 //	var url1 = "/GitlabMonitor/project/comment"

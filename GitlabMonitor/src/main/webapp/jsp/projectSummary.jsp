@@ -72,7 +72,7 @@
 	<input type="text" id="dayStart" class="form-control" name="dayStart" value="${dayStart}" placeholder="start day"/>
 	<input type="text" id="dayEnd" class="form-control" name="dayEnd" value="${dayEnd}" placeholder="end day"/>
 
-	<input type="submit" class="btn btn-primary " value="filter">
+	<input type="submit" class="btn btn-primary " value="&nbsp;&nbsp;GO !&nbsp;&nbsp;">
 	<br />
 	<div class="input-group">
  			<span class="input-group-addon" id="basic-addon1">FORMULA</span>

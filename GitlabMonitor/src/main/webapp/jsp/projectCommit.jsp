@@ -73,8 +73,8 @@
 	<form id="commitRange" class="form-inline" method="POST" action="/GitlabMonitor/project/commit">
 		<input type="hidden" id="projectId" name="projectId" value="${projectId}" />
 		<input type="text" class="form-control" readonly="readonly" id="team" name="team" placeholder="team name" value="${team}" onclick="showChooseTeam()"/>
-		<input type="text" class="form-control" id="dayStart" name="dayStart" value="${dayStart}" placeholder="start day"/>
-		<input type="text" class="form-control" id="dayEnd" name="dayEnd" value="${dayEnd}" placeholder="end day"/>
+		<input type="text" class="form-control" id="dayStart" name="dayStart" readonly="readonly" value="${dayStart}" placeholder="start day"/>
+		<input type="text" class="form-control" id="dayEnd" name="dayEnd" readonly="readonly" value="${dayEnd}" placeholder="end day"/>
 		<input type="submit" class="btn btn-primary" value="search">
 	<%-- 	<a href="/GitlabMonitor/project/team?team=${team}" class="btn btn-success">Member Detail</a> --%>
 	</form>
@@ -85,11 +85,12 @@
 		<form id="chooseTeamForm" class="form-inline">
 			<input type="text" id="possible_name" class="form-control" style="width:300px;" placeholder="Type a substring your team name contains" id="teamlike">
 			<input type="button" class="btn btn-primary" value="Search Team" onclick="searchTeams(document.getElementById('possible_name').value)" >
+			<input type="button" class="btn btn-default" value="Cancel" onclick="cancelChooseTeam()">
 		</form>
 		
 		<div id="satisfieldTeams">
 		</div>
-		<input type="button" class="btn btn-default" value="Cancel" onclick="cancelChooseTeam()">
+		
 	</div>
 	<div id="dailyChart"></div>
 	<div id="memberChart" style="display:none"></div>

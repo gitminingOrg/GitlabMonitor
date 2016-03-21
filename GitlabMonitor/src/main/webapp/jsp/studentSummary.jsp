@@ -69,37 +69,16 @@
 <form id="commitRange" class="form-inline" action="/GitlabMonitor/student/summary" method="POST" >
 	<input type="text" id="dayStart" class="form-control" name="dayStart" value="${dayStart}" placeholder="start day"/>
 	<input type="text" id="dayEnd" class="form-control" name="dayEnd" value="${dayEnd}" placeholder="end day"/>
-	<select class="form-control" name="commitOrder">
-		  <option value ="commit_count">commit_count</option>
-		  <option value="add_line">add_line</option>
-		  <option value="delete_line">delete_line</option>
-		  <option value ="java_file">java_file</option>
-		  <option value="total_add">total_add</option>
-		  <option value="total_delete">total_delete</option>
-		  <option value="student">name</option>
-	</select>
-	<select class="form-control" name="eventOrder">
-		  <option value ="total">total</option>
-		  <option value="push">push</option>
-		  <option value="issue">issue</option>
-		  <option value ="comment">comment</option>
-		  <option value="create">create</option>
-		  <option value="student">name</option>
-	</select>
-	<select class="form-control" name="method">
-		  <option value ="desc">desc</option>
-		  <option value ="asc">asc</option>
-	</select>
-		<input type="submit" class="btn btn-primary" value="filter">
+		<input type="submit" class="btn btn-primary" value="&nbsp;&nbsp;GO !&nbsp;&nbsp;">
 		<br />
 		<div class="input-group">
-  			<span class="input-group-addon" id="basic-addon1">formula</span>
+  			<span class="input-group-addon" id="basic-addon1">FORMULA</span>
   			<input type="text" id="formula" class="form-control" style="width:500px;" name="formula" value="${formula}" placeholder="support: +-*/%^() commit_count add_line delete_line java_file total_add total_delete and regular numbers"/>
 		</div>
 		<br />
 		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon2">filter</span>
-			<input type="text" id="filter" class="form-control" style="width:520px;" name="filter" value="${filter}" placeholder="commit_count>3;add_line<10;delete_line>100"/>
+			<span class="input-group-addon" id="basic-addon2">FILTER&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+			<input type="text" id="filter" class="form-control" style="width:500px;" name="filter" value="${filter}" placeholder="commit_count>3;add_line<10;delete_line>100"/>
 		</div>
 </form>
 

@@ -69,11 +69,11 @@
 	    </ul>
 	  </div>
 	</div>
-	<form id="commitRange" class="form-inline">
-		<input type="text" id="student" class="form-control" value="${student}" placeholder="student name"/>
-		<input type="text" id="dayStart" name="dayStart" class="form-control" value="${dayStart}" placeholder="start day"/>
-		<input type="text" id="dayEnd" name="dayEnd" class="form-control" value="${dayEnd}" placeholder="end day"/>
-		<input type="button" class="btn btn-primary" value="search" onclick="studentCommit(document.getElementById('student').value,document.getElementById('dayStart').value,document.getElementById('dayEnd').value);">
+	<form id="commitRange" class="form-inline" action="/GitlabMonitor/student/commit">
+		<input type="text" id="student" name="student" class="form-control" value="${student}" placeholder="student name"/>
+		<input type="text" class="form-control" id="dayStart" name="dayStart" readonly="readonly" value="${dayStart}" placeholder="start day"/>
+		<input type="text" class="form-control" id="dayEnd" name="dayEnd" readonly="readonly" value="${dayEnd}" placeholder="end day"/>
+		<input type="submit" class="btn btn-primary" value="search">
 	</form>
 	<br />
 	<div id="user"></div>
