@@ -25,7 +25,8 @@ public class TestController {
 	
 	@RequestMapping("/test")
 	public String test(){
-		updateDataService.testUpdateData();
+		//updateDataService.testUpdateData();
+		mailService.sendHtmlMail("630346810@qq.com", "tryHtml", "<body><a href=\"https://www.baidu.com/\">Hello Html Email</a></body>");
 		//mailService.sendUpdateSuccessMail();
 		return "ok";
 	}
