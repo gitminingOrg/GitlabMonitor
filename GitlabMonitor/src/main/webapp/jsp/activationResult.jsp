@@ -13,6 +13,8 @@
 <link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap-datepicker3.standalone.min.css">
 </head>
 <body>
+<div class="container">
+	<h3>
 	<c:if test="${emailSend != null}">
 		${emailSend }
 	</c:if>
@@ -33,6 +35,42 @@
 		Please <a href="/GitlabMonitor/login">login</a> now.
 		</c:if>
 	</c:if>
+	</h3>
+	<c:if test="${user != null}">
+	<h3>Activate status</h3>
+	<table class="table table-striped table-bordered">
+		<thead>
+		<tr>
+		<th>name</th>
+		<th>email</th>
+		<th>role</th>
+		<th>emailActivated</th>
+		<th>adminActivated</th>
+		</tr>
+		</thead>
+		<tbody id="activatebody">
+		<tr>
+			<!-- <th><a href="/GitlabMonitor/admin/user?name=${user.name}">${user.name}</a></th> -->
+			<th>${user.name}</th>
+			<th>${user.email}</th>
+			<th>${user.role}</th>
+			<th>
+				<c:if test="${user.status == 0 or user.status == 2}">no</c:if>
+				<c:if test="${user.status == 1 or user.status == 3}">yes</c:if>
+			</th>
+			<th>
+				<c:if test="${user.status == 0 or user.status == 1}">no</c:if>
+				<c:if test="${user.status == 2 or user.status == 3}">yes</c:if>
+			</th>
+			</tr>	
+		</tbody>
+	</table>
+	</c:if>
 	
+<footer>
+<p>&copy; ise 2016</p>
+</footer>
+</div>
+
 </body>
 </html>

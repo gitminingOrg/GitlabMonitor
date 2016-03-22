@@ -85,9 +85,10 @@ public class AuthenticController {
 			model.addAttribute("noName", "no such user");
 			return "activationResult";
 		}
-		model.addAttribute("user", user);
+		
 		if(!user.getToken().equals(token)){
 //			System.out.println("EmailActivationFail");
+			model.addAttribute("user", user);
 			model.addAttribute("emailActivationFail", "email activation fail");
 			return "activationResult";
 		}
@@ -97,6 +98,7 @@ public class AuthenticController {
 		user.setStatus(status);
 		userService.changeUserStatus(user);
 		model.addAttribute("emailActivationSuccess", "email activation success");
+		model.addAttribute("user", user);
 		return "activationResult";
 	}
 	
