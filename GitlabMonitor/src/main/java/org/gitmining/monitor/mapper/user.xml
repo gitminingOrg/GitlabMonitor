@@ -22,7 +22,7 @@
 	</select>
 	
 	<select id="selectUnactivatedUsers" resultMap="user">
-		SELECT * FROM user WHERE status in {0, 1};
+		SELECT * FROM user WHERE status in (0, 1);
 	</select>
 	
 	<select id="selectUsers" parameterType="org.gitmining.monitor.bean.User" resultMap="user">
