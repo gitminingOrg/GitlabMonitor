@@ -28,7 +28,7 @@
 	<select id="selectUsers" parameterType="org.gitmining.monitor.bean.User" resultMap="user">
 		SELECT * FROM user
 		WHERE 1 = 1
-		<if test="status != null">
+		<if test="status != null and status != -1">
 			and status = #{status}
 		</if>
 	</select>

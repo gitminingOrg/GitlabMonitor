@@ -103,14 +103,19 @@ public class AuthenticController {
 		return "activationResult";
 	}
 	
-	@RequestMapping(value="/admin/activation/{name}")
-	public String adminActivateUser(@PathVariable String name, Model model) {
+	@RequestMapping(value="/admin/activation/{name}/{from}")
+	public String adminActivateUser(@PathVariable String name,
+									@PathVariable String from, Model model) {
 		User user = userService.getUserByName(name);
 		int status = user.getStatus();
 		if(status == 0 || status == 2) status = 2;
 		else status = 3;
 		user.setStatus(status);
 		userService.changeUserStatus(user);
+		
+		if(from.equals("userManage") ) {
+			return "redirect:/admin/users";
+		} 
 		return "redirect:/admin/unactivatedUsers";
 	}
 	
@@ -125,6 +130,7 @@ public class AuthenticController {
 	@RequestMapping(value="/admin/users")
 	public String getUsers(HttpServletRequest request, Model model) {
 		User user = new User();
+		user.setStatus(-1);
 		
 		List<User> users = userService.getUsers(user);
 		model.addAttribute("users", users);

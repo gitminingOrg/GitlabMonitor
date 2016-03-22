@@ -39,7 +39,7 @@
 				<c:if test="${user.status == 1 }">yes</c:if>
 			</th>
 			<th>no</th>
-			<th><a href="/GitlabMonitor/admin/activation/${user.name }">activate</a></th>
+			<th><a href="/GitlabMonitor/admin/activation/${user.name }/userActivation">activate</a></th>
 		</tr>
 	</c:forEach>	
 	</tbody>

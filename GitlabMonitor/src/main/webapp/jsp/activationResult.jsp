@@ -13,6 +13,7 @@
 <link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap-datepicker3.standalone.min.css">
 </head>
 <body>
+<%@ include file="nav.jsp" %>
 <div class="container">
 	<h3>
 	<c:if test="${emailSend != null}">
