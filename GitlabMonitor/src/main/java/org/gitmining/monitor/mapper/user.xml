@@ -38,4 +38,8 @@
 		where id = #{id};
 	</update>
 	
+	<select id="selectUserByEmail" resultMap="user">
+		SELECT * FROM user WHERE email = #{email};
+	</select>
+	
 </mapper>

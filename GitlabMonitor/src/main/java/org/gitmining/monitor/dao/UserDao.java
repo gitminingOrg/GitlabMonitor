@@ -13,6 +13,10 @@ public class UserDao extends BaseDaoImpl{
 	public User getUserByName(String name) {
 		return sqlSession.selectOne("user.selectUserByName", name);
 	}
+	
+	public User getUserByEmail(String email) {
+		return sqlSession.selectOne("user.selectUserByName", email);
+	}
 
 	public int updateUser(User user) {
 		return sqlSession.update("user.updateUser", user);
@@ -21,5 +25,4 @@ public class UserDao extends BaseDaoImpl{
 	public int updateUserStatus(User user) {
 		return sqlSession.update("user.updateUserStatus", user);
 	}
-
 }

@@ -18,6 +18,10 @@ public class UserService {
 	public User getUserByName(String name) {
 		return userDao.getUserByName(name);
 	}
+	
+	public User getUserByEmail(String email) {
+		return userDao.getUserByEmail(email);
+	}
 
 	public int saveUser(User user) {
 		return userDao.updateUser(user);
@@ -25,6 +29,19 @@ public class UserService {
 
 	public int changeUserStatus(User user) {
 		return userDao.updateUserStatus(user);
+	}
+	
+	public boolean checkUserNotExist(String item, String value){
+		User user = null;
+		if(item.equals("name")){
+			user = userDao.getUserByName(value);
+		}else if(item.equals("email")){
+			user = userDao.getUserByEmail(value);
+		}
+		if(user != null){
+			return false;
+		}
+		return true;
 	}
 
 }

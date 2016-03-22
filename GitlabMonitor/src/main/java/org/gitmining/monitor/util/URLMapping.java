@@ -103,4 +103,8 @@ public class URLMapping {
 	 */
 	@Deprecated
 	public static final String STUDENT_COMMENT_SUBMIT = "/student/comment/submit";
+	/**
+	 * check whether username or email exists
+	 */
+	public static final String CHECK_RRGISTER_ITEM = "/register/check";
 }
