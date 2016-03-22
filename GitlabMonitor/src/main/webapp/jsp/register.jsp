@@ -60,13 +60,13 @@
 			</table> -->
 			<sf:input path="name" type="text" class="form-control" id="name" placeholder="name" onblur="checkUser('name',document.getElementById('name').value);"/>
 			<div id="nameok" style="display: none"><i class="checkmark icon"></i>name verify ok!</div>
-			<div id="namefail" style="display: none"><i class="remove icon">already exists!</i></div>
+			<div id="namefail" style="display: none"><i class="remove icon"></i>already exists!</div>
 			<input type="hidden" id="nameCheck" value="wrong">
 			<sf:errors path="name" cssClass="error" />
 			<br/>
 			<sf:input path="email" type="email" class="form-control" placeholder="email" id="email" onblur="checkUser('email',document.getElementById('email').value);"/>
 			<div id="emailok" style="display: none"><i class="checkmark icon"></i>email verify ok !</div>
-			<div id="emailfail" style="display: none"><i class="remove icon">already exists !</i></div>
+			<div id="emailfail" style="display: none"><i class="remove icon"></i>already exists !</div>
 			<input type="hidden" id="emailCheck" value="wrong">
 			<sf:errors path="email" cssClass="error" />
 			<br/>
@@ -76,7 +76,7 @@
 			<sf:password id="repeatPassword" path="password" class="form-control" placeholder="password" onblur="checkUser('repeatPassword',document.getElementById('repeatPassword').value);"/>
 			<input type="hidden" id="repeatPasswordCheck" value="wrong">
 			<div id="repeatPasswordok" style="display: none"><i class="checkmark icon"></i>password verify ok !</div>
-			<div id="repeatPasswordfail" style="display: none"><i class="remove icon">please make sure!</i></div>
+			<div id="repeatPasswordfail" style="display: none"><i class="remove icon"></i>please make sure!</div>
 			<br/>
 			<sf:select path="role" class="form-control">
 			<sf:option value="" label="--choose identity--"></sf:option>
