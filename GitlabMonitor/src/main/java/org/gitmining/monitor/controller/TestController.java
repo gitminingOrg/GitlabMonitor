@@ -4,12 +4,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.gitmining.monitor.crawlerdao.StudentCrawlerDao;
 import org.gitmining.monitor.dao.ScoreDao;
 import org.gitmining.monitor.dao.StudentDao;
 import org.gitmining.monitor.service.MailService;
 import org.gitmining.monitor.service.UpdateDataService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,12 +27,21 @@ public class TestController {
 	public UpdateDataService updateDataService;
 	@Autowired
 	public MailService mailService;
+	@Qualifier(value="executor")
+	@Autowired
+	public ThreadPoolTaskExecutor executor;
 	
 	@RequestMapping("/test")
 	public String test(){
-		//updateDataService.testUpdateData();
-		mailService.sendHtmlMail("630346810@qq.com", "tryHtml", "<body><a href=\"https://www.baidu.com/\">Hello Html Email</a></body>");
 		//mailService.sendUpdateSuccessMail();
+		for (int i = 0; i < 30; i++) {
+			executor.execute(new Runnable() {
+				public void run() {
+					// TODO Auto-generated method stub
+					System.out.println(Thread.currentThread().getName());
+				}
+			});
+		}
 		return "ok";
 	}
 	@Autowired
@@ -47,9 +61,9 @@ public class TestController {
 	}
 	
 	@RequestMapping("/relation")
-	public String getRelation(){
-		String day = "2016-03-16";
-		int projectid = 16;
+	public String getRelation(HttpServletRequest request,HttpServletResponse response){
+		String day = request.getParameter("endDay");
+		int projectid = Integer.parseInt(request.getParameter("projectID"));
 		StudentCrawlerDao studentCrawlerDao = new StudentCrawlerDao();
 		List<String> members = studentCrawlerDao.getTeamMemberByProjectID(projectid);
 		Map<String, Integer> memberMap = new HashMap<String, Integer>();
@@ -67,8 +81,10 @@ public class TestController {
 		
 		for(int i = 0 ; i < members.size() - 1; i ++){
 			for(int j = i + 1 ; j < members.size() ; j ++){
-				links = links + "{source: " + memberMap.get(members.get(i)) + ",target: " + memberMap.get(members.get(j)) + "},";
-				width = width + studentCrawlerDao.getRelationByFile(members.get(i), members.get(j), projectid) + ",";
+				if(studentCrawlerDao.getRelationByFile(members.get(i), members.get(j), projectid , day) != 0){
+					links = links + "{source: " + memberMap.get(members.get(i)) + ",target: " + memberMap.get(members.get(j)) + "},";
+					width = width + studentCrawlerDao.getRelationByFile(members.get(i), members.get(j), projectid , day) + ",";
+				}
 			}
 		}
 		links = links.substring(0, links.length() - 1) + "]";
@@ -76,6 +92,7 @@ public class TestController {
 		
 		result = "{" + nodes + "," + links + "," + width + "}";
 		
+		System.out.println(result);
 		return result;
 	}
 }

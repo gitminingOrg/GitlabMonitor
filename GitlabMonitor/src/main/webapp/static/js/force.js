@@ -121,6 +121,7 @@ function force(div,width,height,fdata) {
 	              .charge(-3000)
 	              .friction(0.6)
 	              .gravity(0.6)
+	              .linkDistance(200)
 	              .size([width,height])
 	              .start();
 
