@@ -8,6 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css"
 	href="/GitlabMonitor/static/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/semantic.min.css">
 <link rel="stylesheet"
 	href="/GitlabMonitor/static/js/jquery/css/ui-lightness/jquery-ui-1.9.1.custom.css"
 	type="text/css" charset="utf-8">
@@ -21,7 +22,7 @@
 	</div>
 	
 	<div class="col-md-4">
-		<sf:form class="form-signin" method="post" modelAttribute="user" action="/GitlabMonitor/register/add">
+		<sf:form class="form-signin" id="registerForm" method="post" modelAttribute="user" action="/GitlabMonitor/register/add">
 			<fieldset>
 			<h2 class="form-signin-heading">Please Register</h2>
 			<!-- <table cellspacing="1">
@@ -57,10 +58,16 @@
 				</tr>
 				<tr>		
 			</table> -->
-			<sf:input path="name" type="text" class="form-control" placeholder="name" />
+			<sf:input path="name" type="text" class="form-control" id="name" placeholder="name" onblur="checkUser('name',document.getElementById('name').value);"/>
+			<div id="nameok" style="display: none"><i class="checkmark icon"></i>name verify ok!</div>
+			<div id="namefail" style="display: none"><i class="remove icon">already exists!</i></div>
+			<input type="hidden" id="nameCheck" value="wrong">
 			<sf:errors path="name" cssClass="error" />
 			<br/>
-			<sf:input path="email" type="email" class="form-control" placeholder="email" /> 
+			<sf:input path="email" type="email" class="form-control" placeholder="email" id="email" onblur="checkUser('email',document.getElementById('email').value);"/>
+			<div id="emailok" style="display: none"><i class="checkmark icon"></i>email verify ok !</div>
+			<div id="emailfail" style="display: none"><i class="remove icon">already exists !</i></div>
+			<input type="hidden" id="emailCheck" value="wrong">
 			<sf:errors path="email" cssClass="error" />
 			<br/>
 			<sf:password path="password" class="form-control" placeholder="password" />
@@ -74,7 +81,7 @@
 			</sf:select>
 			<sf:errors path="role" cssClass="error" />
 			<br/>
-			<button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+			<button class="btn btn-lg btn-primary btn-block" type="button" onclick="tryRegister();">Register</button>
 			</fieldset>
 		</sf:form>
 	</div>
@@ -86,4 +93,5 @@
 </body>
 <script src="/GitlabMonitor/static/js/library/bootstrap.min.js"></script>
 <script src="/GitlabMonitor/static/js/library/jquery-1.11.3.js"></script>
+<script src="/GitlabMonitor/static/js/user.js"></script>
 </html>
