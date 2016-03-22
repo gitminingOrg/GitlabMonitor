@@ -109,13 +109,14 @@ public class AuthenticController {
 		else status = 3;
 		user.setStatus(status);
 		userService.changeUserStatus(user);
-		return "userActivation";
+		return "redirect:/admin/unactivatedUsers";
 	}
 	
 	@RequestMapping(value="/admin/unactivatedUsers")
 	public String getUnactivatedUsers(HttpServletRequest request, Model model) {
 		List<User> users = userService.getUnactivatedUsers();
-		model.addAttribute(users);
+//		System.out.println(users.size());
+		model.addAttribute("users", users);
 		return "userActivation";
 	}
 	
@@ -124,7 +125,7 @@ public class AuthenticController {
 		User user = new User();
 		
 		List<User> users = userService.getUsers(user);
-		model.addAttribute(users);
+		model.addAttribute("users", users);
 		return "userManage";
 	}
 	//生成随机Token
