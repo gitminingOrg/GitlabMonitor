@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AuthenticController {
@@ -129,29 +130,6 @@ public class AuthenticController {
 		model.addAttribute("users", users);
 		return "userManage";
 	}
-	
-	@RequestMapping(value=URLMapping.CHECK_RRGISTER_ITEM)
-	public ResultMap checkRegisterItem(HttpServletRequest request,HttpServletResponse response){
-		ResultMap resultMap = new ResultMap();
-		String item = request.getParameter("item");
-		String value = request.getParameter("value");
-		if(value == null || item == null || value.length() == 0 || !(item.equals("name") || item.equals("email"))){
-			resultMap.setStatus(ResultMap.FAIL_STATUS);
-			resultMap.setInfo("unsupported request!");
-		}else{
-			boolean valid = userService.checkUserNotExist(item, value);
-			if(!valid){
-				resultMap.setStatus(ResultMap.FAIL_STATUS);
-				resultMap.setInfo(item + " already exists, please change");
-			}else{
-				resultMap.setStatus(ResultMap.SUCCESS_STATUS);
-				resultMap.setInfo("ok");
-			}
-		}
-		return resultMap;
-	}
-	
-	
 	//生成随机Token
 	private String generateToken(int length) {
 	    String base = "abcdefghijklmnopqrstuvwxyz0123456789";   
