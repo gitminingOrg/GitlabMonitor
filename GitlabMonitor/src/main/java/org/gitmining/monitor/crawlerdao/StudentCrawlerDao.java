@@ -263,14 +263,16 @@ public class StudentCrawlerDao extends BasicDao{
 		return result;
 	}
 	
-	public int getRelationByFile(String authorA,String authorB,int projectID){
+	public int getRelationByFile(String authorA,String authorB,int projectID,String day){
 		int result = 0;
 		try {
-			PreparedStatement ps = conn.prepareStatement("select COUNT(*) number from (select DISTINCT filename from `commit`,file where author_name=? and projectid=? and id = sha) A,(select DISTINCT filename from `commit`,file where author_name=? and projectid =? and id = sha) B WHERE A.filename = B.filename");
+			PreparedStatement ps = conn.prepareStatement("select COUNT(*) number from (select DISTINCT filename from `commit`,file where author_name=? and projectid=? and id = sha and day<=?) A,(select DISTINCT filename from `commit`,file where author_name=? and projectid =? and id = sha and day<=?) B WHERE A.filename = B.filename");
 			ps.setString(1, authorA);
 			ps.setInt(2, projectID);
-			ps.setString(3, authorB);
-			ps.setInt(4, projectID);
+			ps.setString(3, day);
+			ps.setString(4, authorB);
+			ps.setInt(5, projectID);
+			ps.setString(6, day);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				result = rs.getInt("number");

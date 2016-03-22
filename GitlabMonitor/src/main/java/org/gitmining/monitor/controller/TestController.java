@@ -29,7 +29,7 @@ public class TestController {
 	@RequestMapping("/test")
 	public String test(){
 		//updateDataService.testUpdateData();
-		mailService.sendHtmlMail("630346810@qq.com", "tryHtml", "<body><a href=\"https://www.baidu.com/\">Hello Html Email</a></body>");
+		mailService.sendMail("630346810@qq.com", "tryHtml", "<body><a href=\"https://www.baidu.com/\">Hello Html Email</a></body>");
 		//mailService.sendUpdateSuccessMail();
 		return "ok";
 	}
@@ -70,9 +70,9 @@ public class TestController {
 		
 		for(int i = 0 ; i < members.size() - 1; i ++){
 			for(int j = i + 1 ; j < members.size() ; j ++){
-				if(studentCrawlerDao.getRelationByFile(members.get(i), members.get(j), projectid) != 0){
+				if(studentCrawlerDao.getRelationByFile(members.get(i), members.get(j), projectid , day) != 0){
 					links = links + "{source: " + memberMap.get(members.get(i)) + ",target: " + memberMap.get(members.get(j)) + "},";
-					width = width + studentCrawlerDao.getRelationByFile(members.get(i), members.get(j), projectid) + ",";
+					width = width + studentCrawlerDao.getRelationByFile(members.get(i), members.get(j), projectid , day) + ",";
 				}
 			}
 		}
@@ -81,6 +81,7 @@ public class TestController {
 		
 		result = "{" + nodes + "," + links + "," + width + "}";
 		
+		System.out.println(result);
 		return result;
 	}
 }
