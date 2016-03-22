@@ -21,8 +21,16 @@
 		SELECT * FROM user WHERE name = #{name};
 	</select>
 	
-	<select id="selectUnActivatedUser" resultMap="user">
+	<select id="selectUnactivatedUsers" resultMap="user">
 		SELECT * FROM user WHERE status in {0, 1};
+	</select>
+	
+	<select id="selectUsers" parameterType="org.gitmining.monitor.bean.User" resultMap="user">
+		SELECT * FROM user
+		WHERE 1 = 1
+		<if test="status != null">
+			and status = #{status}
+		</if>
 	</select>
 	
 	<update id="updateUser" parameterType="org.gitmining.monitor.bean.User" >

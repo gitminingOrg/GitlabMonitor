@@ -1,5 +1,7 @@
 package org.gitmining.monitor.service;
 
+import java.util.List;
+
 import org.gitmining.monitor.bean.User;
 import org.gitmining.monitor.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,14 @@ public class UserService {
 
 	public int changeUserStatus(User user) {
 		return userDao.updateUserStatus(user);
+	}
+
+	public List<User> getUnactivatedUsers() {
+		return userDao.selectUnactivatedUsers();
+	}
+
+	public List<User> getUsers(User user) {
+		return userDao.selectUsers(user);
 	}
 
 }

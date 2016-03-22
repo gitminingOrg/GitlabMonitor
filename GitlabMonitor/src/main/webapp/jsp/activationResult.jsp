@@ -5,7 +5,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Activate Result</title>
+<link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/semantic.min.css">
+<link rel="stylesheet" href="/GitlabMonitor/static/js/jquery/css/ui-lightness/jquery-ui-1.9.1.custom.css" type="text/css" charset="utf-8">
+<link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap-datepicker3.min.css">
+<link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap-datepicker3.standalone.min.css">
 </head>
 <body>
 	<c:if test="${emailSend != null}">
@@ -24,8 +29,8 @@
 		</c:if>
 		<c:if test="${user.status == 3}">
 		And you have been activated by administrator.<br/>
-		Now, you can using GitlabMonitor now.
-		<a href="/GitlabMonitor/login">login</a>
+		Now, you can using GitlabMonitor now.<br/>
+		Please <a href="/GitlabMonitor/login">login</a> now.
 		</c:if>
 	</c:if>
 	

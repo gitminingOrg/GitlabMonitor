@@ -36,12 +36,27 @@
             <li><a href="/GitlabMonitor/project/score">Project Score</a></li>
           </ul>
         </li>
+        <sec:authorize access="hasRole('ROLE_ADMIN')">
+        <li class="dropdown">
+        	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+        	<ul class="dropdown-menu">
+        		<li><a href="/GitlabMonitor/admin/users">User Manage</a></li>
+        		<li role="separator" class="divider"></li>
+        		<li><a href="/GitlabMonitor/admin/unactivatedUsers">User Activate</a></li>
+        	</ul>
+        </li>
+        </sec:authorize>  
       </ul>
       <ul class="nav navbar-nav navbar-right">
      	<c:if test="${authentication != 'anonymousUser'}">
      		<li><a href="#">${authentication.username}</a></li>
      	</c:if>
-        <li><a href="/GitlabMonitor/login/logout">Logout</a></li>
+     	<sec:authorize access="isAuthenticated()">
+        	<li><a href="/GitlabMonitor/login/logout">Logout</a></li>
+        </sec:authorize>
+        <sec:authorize access="isAnonymous()">
+        	<li><a href="/GitlabMonitor/login">Login</a></li>
+        </sec:authorize>
         <li><a href="#">Help</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->

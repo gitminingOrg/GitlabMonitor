@@ -24,7 +24,7 @@
 		<sf:form class="form-signin" method="post" modelAttribute="user" action="/GitlabMonitor/register/add">
 			<fieldset>
 			<h2 class="form-signin-heading">Please Register</h2>
-			<table cellspacing="0">
+			<!-- <table cellspacing="1">
 				<tr>
 					<th style="float: right"><sf:label path="name">Name:&nbsp;&nbsp;</sf:label></th>
 					<td><sf:input path="name" type="text" class="form-control" placeholder="name" />
@@ -54,8 +54,26 @@
 					</sf:select>
 					<sf:errors path="role" cssClass="error" />
 					</td>
-				</tr>		
-			</table>
+				</tr>
+				<tr>		
+			</table> -->
+			<sf:input path="name" type="text" class="form-control" placeholder="name" />
+			<sf:errors path="name" cssClass="error" />
+			<br/>
+			<sf:input path="email" type="email" class="form-control" placeholder="email" /> 
+			<sf:errors path="email" cssClass="error" />
+			<br/>
+			<sf:password path="password" class="form-control" placeholder="password" />
+			<sf:errors path="password" cssClass="error" />
+			<br/>
+			<sf:select path="role" class="form-control">
+			<sf:option value="" label="--choose identity--"></sf:option>
+			<sf:option value="ROLE_NORMAL" label="teacher"></sf:option>	
+			<sf:option value="ROLE_NORMAL" label="assistant"></sf:option>
+			<sf:option value="ROLE_ADMIN" label="administrator"></sf:option>
+			</sf:select>
+			<sf:errors path="role" cssClass="error" />
+			<br/>
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
 			</fieldset>
 		</sf:form>

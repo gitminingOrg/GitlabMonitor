@@ -1,5 +1,6 @@
 package org.gitmining.monitor.controller;
 
+import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -71,7 +72,7 @@ public class AuthenticController {
 		mailService.sendHtmlMail(toEmail, title, content);
 		model.addAttribute(user);
 		model.addAttribute("emailSend", "activation email has been send, please check it.");
-		return "activation";
+		return "activationResult";
 	}
 	
 	@RequestMapping(value="/activationEmail/{name}/{token}")
@@ -80,13 +81,13 @@ public class AuthenticController {
 		if(user == null) {
 //			System.out.println("noName");
 			model.addAttribute("noName", "no such user");
-			return "activation";
+			return "activationResult";
 		}
 		model.addAttribute("user", user);
 		if(!user.getToken().equals(token)){
 //			System.out.println("EmailActivationFail");
 			model.addAttribute("emailActivationFail", "email activation fail");
-			return "activation";
+			return "activationResult";
 		}
 		int status = user.getStatus();
 		if(status == 0 || status == 1) status = 1;
@@ -94,7 +95,7 @@ public class AuthenticController {
 		user.setStatus(status);
 		userService.changeUserStatus(user);
 		model.addAttribute("emailActivationSuccess", "email activation success");
-		return "activation";
+		return "activationResult";
 	}
 	
 	@RequestMapping(value="/admin/activation/{name}")
@@ -105,7 +106,23 @@ public class AuthenticController {
 		else status = 3;
 		user.setStatus(status);
 		userService.changeUserStatus(user);
-		return "adminActivationSuccess";
+		return "userActivation";
+	}
+	
+	@RequestMapping(value="/admin/unactivatedUsers")
+	public String getUnactivatedUsers(HttpServletRequest request, Model model) {
+		List<User> users = userService.getUnactivatedUsers();
+		model.addAttribute(users);
+		return "userActivation";
+	}
+	
+	@RequestMapping(value="/admin/users")
+	public String getUsers(HttpServletRequest request, Model model) {
+		User user = new User();
+		
+		List<User> users = userService.getUsers(user);
+		model.addAttribute(users);
+		return "userManage";
 	}
 	
 	//生成随机Token

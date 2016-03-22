@@ -79,6 +79,7 @@
 			(#{item.project_id},#{item.item_id},#{item.score})
 		</foreach>
 	</insert>
+	
 	<update id="updateProjectItemScore" parameterType="org.gitmining.monitor.bean.Score">
 		UPDATE 
 		courseScore 
