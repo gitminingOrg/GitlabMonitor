@@ -115,7 +115,7 @@ public class StudentCrawlerDao extends BasicDao{
 		List<Integer> ids = new ArrayList<Integer>();
 		List<String> student = new ArrayList<String>();
 		try {
-			PreparedStatement ps = conn.prepareStatement("SELECT groupproject.id,student.`name` FROM groupproject,team,student WHERE student.team = team.`name` and team.id = groupid");
+			PreparedStatement ps = conn.prepareStatement("SELECT groupproject.id,teamstudent.`name` FROM groupproject,team,teamstudent WHERE teamstudent.team = team.`name` and team.id = groupid");
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				ids.add(rs.getInt("id"));

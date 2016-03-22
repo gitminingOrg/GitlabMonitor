@@ -67,11 +67,11 @@ public class StudentCrawler {
 		//groupProjectCrawler.crawlGroupProject();
 		//branchCrawler.crawlBranch();
 		//commitCrawler.crawlCommit();
-		//commitStatistic.countProjectCommit();
-		//commitStatistic.countStudentCommit();
+		commitStatistic.countProjectCommit();
+		commitStatistic.countStudentCommit();
 		
-		StudentCrawler studentCrawler = new StudentCrawler();
-		studentCrawler.crawlFile();
+		//StudentCrawler studentCrawler = new StudentCrawler();
+		//studentCrawler.crawlFile();
 	}
 	
 	public void crawlFile(){

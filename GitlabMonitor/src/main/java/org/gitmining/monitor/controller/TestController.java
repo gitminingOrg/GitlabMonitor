@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.gitmining.monitor.crawlerdao.StudentCrawlerDao;
 import org.gitmining.monitor.dao.ScoreDao;
 import org.gitmining.monitor.dao.StudentDao;
@@ -47,9 +50,9 @@ public class TestController {
 	}
 	
 	@RequestMapping("/relation")
-	public String getRelation(){
-		String day = "2016-03-16";
-		int projectid = 16;
+	public String getRelation(HttpServletRequest request,HttpServletResponse response){
+		String day = request.getParameter("endDay");
+		int projectid = Integer.parseInt(request.getParameter("projectID"));
 		StudentCrawlerDao studentCrawlerDao = new StudentCrawlerDao();
 		List<String> members = studentCrawlerDao.getTeamMemberByProjectID(projectid);
 		Map<String, Integer> memberMap = new HashMap<String, Integer>();
@@ -67,8 +70,10 @@ public class TestController {
 		
 		for(int i = 0 ; i < members.size() - 1; i ++){
 			for(int j = i + 1 ; j < members.size() ; j ++){
-				links = links + "{source: " + memberMap.get(members.get(i)) + ",target: " + memberMap.get(members.get(j)) + "},";
-				width = width + studentCrawlerDao.getRelationByFile(members.get(i), members.get(j), projectid) + ",";
+				if(studentCrawlerDao.getRelationByFile(members.get(i), members.get(j), projectid) != 0){
+					links = links + "{source: " + memberMap.get(members.get(i)) + ",target: " + memberMap.get(members.get(j)) + "},";
+					width = width + studentCrawlerDao.getRelationByFile(members.get(i), members.get(j), projectid) + ",";
+				}
 			}
 		}
 		links = links.substring(0, links.length() - 1) + "]";

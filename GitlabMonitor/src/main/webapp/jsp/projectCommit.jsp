@@ -9,6 +9,10 @@
 <link rel="stylesheet" href="/GitlabMonitor/static/js/jquery/css/ui-lightness/jquery-ui-1.9.1.custom.css" type="text/css" charset="utf-8">
 <link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap-datepicker3.min.css">
 <link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap-datepicker3.standalone.min.css">
+<script type="text/javascript" src="/GitlabMonitor/static/js/force.js"></script>
+<script type="text/javascript" src="/GitlabMonitor/static/js/d3.min.js"></script>
+<script type="text/javascript" src="/GitlabMonitor/static/js/jquery-1.11.1.min.js" ></script>
+<script type="text/javascript" src="/GitlabMonitor/static/js/jquery-ui.min.js" ></script>
 </head>
 <body>
 <%@ include file="nav.jsp" %>
@@ -55,7 +59,16 @@
 	</div>
 	<div id="dailyChart"></div>
 	<div id="memberChart" style="display:none"></div>
-	<div id="infoChart" style="display:none"></div>
+	<div id="infoChart" style="display:none">
+		<script>
+			var endDay = document.getElementById('dayEnd').value;
+			var projectID = "${projectId}";
+			var sdata = {endDay:endDay,projectID:projectID}
+			$.post("/GitlabMonitor/relation",sdata,function(data){
+				force("#infoChart",1150,400,data);
+			})
+		</script>
+	</div>
 </div>
 <br />
 <div class="container">
