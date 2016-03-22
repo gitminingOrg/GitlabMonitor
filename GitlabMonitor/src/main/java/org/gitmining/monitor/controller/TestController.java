@@ -10,6 +10,8 @@ import org.gitmining.monitor.dao.StudentDao;
 import org.gitmining.monitor.service.MailService;
 import org.gitmining.monitor.service.UpdateDataService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,12 +24,23 @@ public class TestController {
 	public UpdateDataService updateDataService;
 	@Autowired
 	public MailService mailService;
+	@Qualifier(value="executor")
+	@Autowired
+	public ThreadPoolTaskExecutor executor;
 	
 	@RequestMapping("/test")
 	public String test(){
 		//updateDataService.testUpdateData();
-		mailService.sendHtmlMail("630346810@qq.com", "tryHtml", "<body><a href=\"https://www.baidu.com/\">Hello Html Email</a></body>");
+		//mailService.sendHtmlMail("630346810@qq.com", "tryHtml", "<body><a href=\"https://www.baidu.com/\">Hello Html Email</a></body>");
 		//mailService.sendUpdateSuccessMail();
+		for (int i = 0; i < 30; i++) {
+			executor.execute(new Runnable() {
+				public void run() {
+					// TODO Auto-generated method stub
+					System.out.println(Thread.currentThread().getName());
+				}
+			});
+		}
 		return "ok";
 	}
 	@Autowired
