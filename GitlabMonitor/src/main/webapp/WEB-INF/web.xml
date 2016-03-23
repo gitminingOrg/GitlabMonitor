@@ -10,6 +10,7 @@
           classpath:monitor-config.xml
           classpath:task.xml
           classpath:monitor-secure.xml
+          classpath:monitor-message.xml
       </param-value>
 	</context-param>
 	<listener>
