@@ -63,7 +63,7 @@ public class AuthenticController {
 		//http://www.gitmining.net
 		String content = "Click "
 						+"<a href=\""
-						+"http://localhost:8080/GitlabMonitor/activationEmail" + "/"
+						+"http://www.gitmining.net/GitlabMonitor/activationEmail" + "/"
 						+ user.getName() + "/"
 						+ user.getToken()
 						+ "\">here</a> to activate your email(if not works, you can copy the link to your browser)";
