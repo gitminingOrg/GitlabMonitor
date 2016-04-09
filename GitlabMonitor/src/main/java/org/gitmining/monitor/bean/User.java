@@ -15,7 +15,7 @@ public class User {
 	@Pattern(regexp="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}", message="Invalid email address.")
 	private String email;
 	private String token;
-	private String school;
+	private int school_id;
 	@NotBlank(message="Please choose one role")
 	private String role;
 	// 状态：激活需要管理员和邮箱认证，0：均未认证；1：邮箱认证管理员未认证；2：邮箱未认证管理员认证；3：均已认证
@@ -51,11 +51,11 @@ public class User {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	public String getSchool() {
-		return school;
+	public int getSchool_id() {
+		return school_id;
 	}
-	public void setSchool(String school) {
-		this.school = school;
+	public void setSchool_id(int school_id) {
+		this.school_id = school_id;
 	}
 	public String getRole() {
 		return role;
@@ -69,4 +69,5 @@ public class User {
 	public void setStatus(int status) {
 		this.status = status;
 	}
+	
 }

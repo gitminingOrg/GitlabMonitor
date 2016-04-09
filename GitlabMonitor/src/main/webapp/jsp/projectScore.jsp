@@ -51,6 +51,8 @@
 	<input type="hidden" id="course_id" name="course_id" value="${course.id}">
 	<input type="hidden" id="course_name" name="course_name" value="${course.name}">
 	<button class="btn btn-primary" type="button" class="form-control" onclick="checkColumnName(document.getElementById('column').value)">add a column</button>
+	<button id="showButton" class="btn btn-primary" type="button" class="form-control" onclick="showStatistics('${course.name}')">show statistics</button>
+	<button id="scoreButton" style="display: none" class="btn btn-primary" type="button" class="form-control" onclick="showScoreTable()">show scores</button>
 </form>
 <div id="mentionwords" style="display: none;font-weight: bold">Only suppor digits, letters and Chinese characters&nbsp;&nbsp;<button class="btn btn-warning" type="button" class="form-control" onclick="cancelDelete();">&nbsp;OK&nbsp;</button></div>
 <form id="deleteColumn" class="form-inline" style="display: none" action="/GitlabMonitor/project/score/delete" method="POST" >
@@ -62,21 +64,39 @@
 <!-- <div class="row"> -->
 <!-- 	<div class="col-md-9"> -->
 		<br />
+		<div id="scoreTable">
 		<table class="table table-striped table-bordered">
 		<thead><tr> 
 		<th>project</th>
-		<c:forEach items="${itemScores}" var="item"><th onclick="show_remove('${item.name}','${item.id}');">${item.name}&nbsp;&nbsp;<i class="remove circle icon"></i></th></c:forEach>
-		</tr></thead>
+		<c:forEach items="${items}" var="item"><th>${item.name}&nbsp;<i class="angle left icon" onmouseover="javascript:overLeft(this);" onmouseout="javascript:outLeft(this);"></i>
+		<i class="remove icon" onmouseover="javascript:overRemove(this);" onmouseout="javascript:outRemove(this);" onclick="show_remove('${item.name}','${item.id}');"></i></th></c:forEach>
+		<th>result</th>
+		</tr>
+		</thead>
 		<tbody id="commit_body">
-			<c:forEach items="${projects}" var="project" varStatus="outloop">
-			<tr><th>${project.name}</th>
-			<c:forEach items="${itemScores}" var="item">
-				<th onclick="showText('${item.id}','${project.id}');"><div id="ID${item.id}L${project.id}">${item.scores[outloop.index].score}</div><input onblur="changeScore('${item.id}','${project.id}',document.getElementById('ID${item.id}T${project.id}').value);" id="ID${item.id}T${project.id}" style="display: none" type="text" value="${item.scores[outloop.index].score}"></th>
+<%-- 		<c:forEach items="${projects}" var="project" varStatus="outloop"> --%>
+<%-- 			<tr><th>${project.name}</th> --%>
+<%-- 			<c:forEach items="${itemScores}" var="item"> --%>
+<%-- 				<th onclick="showText('${item.id}','${project.id}');"><div id="ID${item.id}L${project.id}">${item.scores[outloop.index].score}</div><input onblur="changeScore('${item.id}','${project.id}',document.getElementById('ID${item.id}T${project.id}').value);" id="ID${item.id}T${project.id}" style="display: none" type="text" value="${item.scores[outloop.index].score}"></th> --%>
+<%-- 			</c:forEach> --%>
+<!-- 			</tr> -->
+<%-- 		</c:forEach> --%>
+		
+		<c:forEach items="${teamScores}" var="teamScore" varStatus="outloop">
+			<tr><th>${teamScore.project_name}</th>
+			<c:forEach items="${teamScore.scores}" var="teamscore">
+				<th onclick="showText('${teamscore.item_id}','${teamscore.project_id}');"><div id="ID${teamscore.item_id}L${teamscore.project_id}">${teamscore.score}</div><input onblur="changeScore('${teamscore.item_id}','${teamscore.project_id}',document.getElementById('ID${teamscore.item_id}T${teamscore.project_id}').value);" id="ID${teamscore.item_id}T${teamscore.project_id}" style="display: none" type="text" value="${teamscore.score}"></th>
 			</c:forEach>
+			<th>0</th>
 			</tr>
 		</c:forEach>
 		</tbody>
 		</table>
+		</div>
+		<div id="statistics" style="display: none">
+			<div id="statisticsTable"></div>
+			<div id="statisticsChart"></div>
+		</div>
 <!-- 	</div> -->	
 <!-- 	<div class="col-md-3" id="grid" style="display:none"> -->
 <!-- 		<table class="table table-striped table-bordered"> -->
@@ -89,14 +109,15 @@
 <!-- 		</table> -->
 <!-- 		<button class="btn btn-primary" type="button" onclick="showButton();">submit</button> -->
 <!-- 	</div> -->
-<!-- </div> -->
 	<hr />
 	<footer>
         <p>&copy; ise 2016</p>
     </footer>
 </div>
 </body>
- <script src="/GitlabMonitor/static/js/library/jquery-1.11.3.js"></script>
+  <script src="/GitlabMonitor/static/js/library/jquery-1.11.3.js"></script>
+ <script src="/GitlabMonitor/static/js/library/highcharts.js"></script>
+ <script src="/GitlabMonitor/static/js/library/highcharts-3d.js"></script>
  <script src="/GitlabMonitor/static/js/library/bootstrap.min.js"></script>
  <script src="/GitlabMonitor/static/js/library/semantic.min.js"></script>
  <script src="/GitlabMonitor/static/js/score.js"></script> 

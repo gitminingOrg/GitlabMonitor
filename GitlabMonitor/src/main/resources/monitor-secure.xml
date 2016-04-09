@@ -39,4 +39,5 @@
 		<authentication-provider user-service-ref="JDBCUserService" />
 	</authentication-manager>
 
+	<beans:bean id="webexpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
 </beans:beans>

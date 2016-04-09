@@ -1,6 +1,6 @@
 var student = $("#student").val();
-var startDay = $("#startDay").val();
-var endDay = $("#endDay").val();
+var startDay = $("#dayStart").val();
+var endDay = $("#dayEnd").val();
 
 $(document).ready(studentCommit(student,startDay,endDay));
 

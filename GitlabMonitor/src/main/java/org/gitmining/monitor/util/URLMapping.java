@@ -64,6 +64,10 @@ public class URLMapping {
 	 */
 	public static final String PROJECT_SCORE_DELETE = "/project/score/delete";
 	/**
+	 * statistics
+	 */
+	public static final String PROJECT_SCORE_STATISTICS = "/project/score/statistics";
+	/**
 	 * search team
 	 */
 	public static final String PROJECT_TEAM_SEARCH = "/project/team/search";
@@ -103,4 +107,8 @@ public class URLMapping {
 	 */
 	@Deprecated
 	public static final String STUDENT_COMMENT_SUBMIT = "/student/comment/submit";
+	/**
+	 * check whether username or email exists
+	 */
+	public static final String CHECK_RRGISTER_ITEM = "/register/check";
 }

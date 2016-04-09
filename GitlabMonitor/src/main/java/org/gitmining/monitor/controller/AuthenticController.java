@@ -1,5 +1,6 @@
 package org.gitmining.monitor.controller;
 
+import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,16 +63,16 @@ public class AuthenticController {
 		//http://www.gitmining.net
 		String content = "Click "
 						+"<a href=\""
-						+"http://localhost:8080/GitlabMonitor/activationEmail" + "/"
+						+"http://www.gitmining.net/GitlabMonitor/activationEmail" + "/"
 						+ user.getName() + "/"
 						+ user.getToken()
 						+ "\">here</a> to activate your email(if not works, you can copy the link to your browser)";
-		String content2 = "<a href=\""
-				+"http://www.gitmining.net" + "\">点击</a>";
+//		String content2 = "<a href=\""
+//				+"http://www.gitmining.net" + "\">点击</a>";
 		mailService.sendHtmlMail(toEmail, title, content);
 		model.addAttribute(user);
 		model.addAttribute("emailSend", "activation email has been send, please check it.");
-		return "activation";
+		return "activationResult";
 	}
 	
 	@RequestMapping(value="/activationEmail/{name}/{token}")
@@ -80,13 +81,14 @@ public class AuthenticController {
 		if(user == null) {
 //			System.out.println("noName");
 			model.addAttribute("noName", "no such user");
-			return "activation";
+			return "activationResult";
 		}
-		model.addAttribute("user", user);
+		
 		if(!user.getToken().equals(token)){
 //			System.out.println("EmailActivationFail");
+			model.addAttribute("user", user);
 			model.addAttribute("emailActivationFail", "email activation fail");
-			return "activation";
+			return "activationResult";
 		}
 		int status = user.getStatus();
 		if(status == 0 || status == 1) status = 1;
@@ -94,18 +96,42 @@ public class AuthenticController {
 		user.setStatus(status);
 		userService.changeUserStatus(user);
 		model.addAttribute("emailActivationSuccess", "email activation success");
-		return "activation";
+		model.addAttribute("user", user);
+		return "activationResult";
 	}
 	
-	@RequestMapping(value="/admin/activation/{name}")
-	public String adminActivateUser(@PathVariable String name, Model model) {
+	@RequestMapping(value="/admin/activation/{name}/{from}")
+	public String adminActivateUser(@PathVariable String name,
+									@PathVariable String from, Model model) {
 		User user = userService.getUserByName(name);
 		int status = user.getStatus();
 		if(status == 0 || status == 2) status = 2;
 		else status = 3;
 		user.setStatus(status);
 		userService.changeUserStatus(user);
-		return "adminActivationSuccess";
+		
+		if(from.equals("userManage") ) {
+			return "redirect:/admin/users";
+		} 
+		return "redirect:/admin/unactivatedUsers";
+	}
+	
+	@RequestMapping(value="/admin/unactivatedUsers")
+	public String getUnactivatedUsers(HttpServletRequest request, Model model) {
+		List<User> users = userService.getUnactivatedUsers();
+//		System.out.println(users.size());
+		model.addAttribute("users", users);
+		return "userActivation";
+	}
+	
+	@RequestMapping(value="/admin/users")
+	public String getUsers(HttpServletRequest request, Model model) {
+		User user = new User();
+		user.setStatus(-1);
+		
+		List<User> users = userService.getUsers(user);
+		model.addAttribute("users", users);
+		return "userManage";
 	}
 	
 	//生成随机Token

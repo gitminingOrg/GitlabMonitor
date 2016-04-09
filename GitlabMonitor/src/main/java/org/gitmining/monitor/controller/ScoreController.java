@@ -1,10 +1,8 @@
 package org.gitmining.monitor.controller;
 
-import static org.gitmining.monitor.util.URLMapping.PROJECT_SCORE;
-import static org.gitmining.monitor.util.URLMapping.PROJECT_SCORE_ADD;
-import static org.gitmining.monitor.util.URLMapping.PROJECT_SCORE_CHANGE;
-import static org.gitmining.monitor.util.URLMapping.PROJECT_SCORE_DELETE;
+import static org.gitmining.monitor.util.URLMapping.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,13 +10,21 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.gitmining.monitor.bean.CourseItem;
-import org.gitmining.monitor.bean.ProjectVO;
+import org.gitmining.monitor.bean.CourseTeamScore;
+import org.gitmining.monitor.bean.ItemStatistics;
+import org.gitmining.monitor.bean.ScoreRange;
+import org.gitmining.monitor.bean.SimpleItem;
 import org.gitmining.monitor.service.ScoreService;
+import org.gitmining.monitor.util.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 
 @RestController
 public class ScoreController {
@@ -35,10 +41,16 @@ public class ScoreController {
 		if(courseName == null){
 			courseName = "2016_nju_se_cseiii";
 		}
-		List<CourseItem> courseItems = scoreService.getCourseScore(courseName);
-		List<ProjectVO> projects = scoreService.getAllCourseGroupNames(courseName);
-		view.addObject("itemScores", courseItems);
-		view.addObject("projects", projects);
+//		List<CourseItem> courseItems = scoreService.getCourseScore(courseName);
+//		List<ProjectVO> projects = scoreService.getAllCourseGroupNames(courseName);
+//		view.addObject("itemScores", courseItems);
+//		view.addObject("projects", projects);
+		
+		List<CourseTeamScore> teamScores = scoreService.getCourseTeamScores(courseName);
+		List<SimpleItem> items = scoreService.getActiveItemNames(courseName);
+		view.addObject("teamScores", teamScores);
+		view.addObject("items", items);
+		
 		view.addObject("course", scoreService.getCourseInfo(courseName));
 		view.addObject("courseNames", scoreService.getAllCourseNames());
 		view.addObject("course_name", courseName);
@@ -85,5 +97,24 @@ public class ScoreController {
 		}
 		view.addObject("course_name", courseName);
 		return view;
+	}
+	
+	@RequestMapping(value=PROJECT_SCORE_STATISTICS)
+	public ResultMap getScoreStatistics(HttpServletRequest request, HttpServletResponse response){
+		String courseName = request.getParameter("courseName");
+		List<ItemStatistics> itemStatistics = scoreService.getCourseItemStatistics(courseName);
+		List<ScoreRange> scoreRanges = new ArrayList<ScoreRange>();
+		JsonParser parser = new JsonParser();
+		Gson gson = new Gson();
+		for (int i = 0; i < itemStatistics.size(); i++) {
+			ScoreRange scoreRange = gson.fromJson(itemStatistics.get(i).getScore_range(), ScoreRange.class);
+			scoreRanges.add(scoreRange);
+		}
+
+		ResultMap resultMap = new ResultMap();
+		resultMap.setStatus(ResultMap.SUCCESS_STATUS);
+		resultMap.add("scoreRanges", scoreRanges);
+		resultMap.add("statisticsList", itemStatistics);
+		return resultMap;
 	}
 }

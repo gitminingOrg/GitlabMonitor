@@ -1,6 +1,6 @@
 var projectId = $("#projectId").val();
-var startDay = $("#startDay").val();
-var endDay = $("#endDay").val();
+var startDay = $("#dayStart").val();
+var endDay = $("#dayEnd").val();
 
 $(document).ready(projectCommit(projectId,startDay,endDay));
 
@@ -238,7 +238,10 @@ function projectCommit(projectId,startDay,endDay){
 			            name: data.stu3,
 			            data: data.data3
 			        }]
-			    });}
+			    });
+				$("#dayStart").val(startDay);
+				$("#dayEnd").val(endDay);	
+			}
 			});
 }
 
