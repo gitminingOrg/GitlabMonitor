@@ -4,10 +4,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.gitmining.monitor.bean.Commit;
 import org.gitmining.monitor.bean.ProjectCommit;
 import org.gitmining.monitor.bean.StudentCommit;
 import org.gitmining.monitor.crawlerdao.ProjectCrawlerDao;
@@ -88,6 +90,54 @@ public class CommitStatistic {
 			projectCrawlerDao = new ProjectCrawlerDao();
 			projectCrawlerDao.updateLog(GetDate.getCurrentDate());
 			e.printStackTrace();
+		}
+	}
+	
+	public void countDayHourMap(){
+		ProjectCrawlerDao projectCrawlerDao = new ProjectCrawlerDao();
+		List<Commit> commits = projectCrawlerDao.getCommits();
+		Map<String, Map<String, Integer>> map = new HashMap<String, Map<String,Integer>>();
+		String[] days = {"Su","Mo","Tu","We","Th","Fr","Sa"};
+		String[] hours = {"00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"};
+		
+		//initial
+		for(int i = 0 ; i < days.length ; i ++){
+			Map<String, Integer> hoursInitial = new HashMap<String, Integer>();
+			for(int j = 0 ; j < hours.length ; j ++){
+				hoursInitial.put(hours[j], 0);
+			}
+			map.put(days[i], hoursInitial);
+		}
+		
+		for(int i = 0 ; i < commits.size() ; i ++){
+			Commit temp = commits.get(i);
+			
+			Calendar c = Calendar.getInstance(java.util.Locale.CHINA);
+			String[] sp = temp.getDay().split("T")[0].split("-");
+			c.set(Calendar.YEAR,Integer.parseInt(sp[0]));
+			c.set(Calendar.MONTH,Integer.parseInt(sp[1])-1);
+			c.set(Calendar.DATE,Integer.parseInt(sp[2]));
+
+			int wd = c.get(Calendar.DAY_OF_WEEK);
+			String x = "";
+			switch(wd){
+			case 1:x="Su";break;
+			case 2:x="Mo";break;
+			case 3:x="Tu";break;
+			case 4:x="We";break;
+			case 5:x="Th";break;
+			case 6:x="Fr";break;
+			case 7:x="Sa";break;
+			}
+			
+			String hour = temp.getDay().split("T")[1].split(":")[0];
+			map.get(x).put(hour, map.get(x).get(hour) + 1);
+		}
+		
+		for(String key : map.keySet()){
+			for(String hourKey : map.get(key).keySet()){
+				projectCrawlerDao.insertDayHour(key, hourKey, map.get(key).get(hourKey));
+			}
 		}
 	}
 }

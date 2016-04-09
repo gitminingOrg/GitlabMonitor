@@ -26,7 +26,7 @@ public class CommitCrawler {
 		List<Project> projectInfo = projectCrawlerDao.getGroupProject();
 		List<String> date = projectCrawlerDao.getDate();
 		Map<String, Integer> dataMap = new HashMap<String, Integer>();
-		for(int i = 0 ; i < date.size() - 2 ; i ++){
+		for(int i = 0 ; i < date.size(); i ++){
 			dataMap.put(date.get(i), 1);
 		}
 		boolean judgement = true;
@@ -41,6 +41,7 @@ public class CommitCrawler {
 				BufferedReader reader = null;
 				String response = "";
 				int responseCode = 200;
+				judgement = true;
 				
 				try {
 					responseCode = urlConnection.getResponseCode();
@@ -51,7 +52,7 @@ public class CommitCrawler {
 							JsonArray jsonArray = new JsonParser().parse(response)
 									.getAsJsonArray();
 							for(int i = 0 ; i < jsonArray.size() ; i ++){
-								if(!projectCrawlerDao.findCommit(projectInfo.get(m).getId(), jsonArray.get(i).getAsJsonObject().get("id").getAsString()) && !jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[0].equals("2016-03-18") && !jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[0].equals("2016-03-19")){
+								if(!projectCrawlerDao.findCommit(projectInfo.get(m).getId(), jsonArray.get(i).getAsJsonObject().get("id").getAsString()) && !jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[0].equals(GetDate.getCurrentDate()) && !dataMap.containsKey(jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[0])){
 									String commitURL = "http://114.55.35.12/" + projectInfo.get(m).getPath() + "/commit/" + jsonArray.get(i).getAsJsonObject().get("id").getAsString() + "?private_token=" + GetTokenInfo.getToken();
 									urlConnection = GetURLConnection.getUrlConnection(commitURL);
 									reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),"utf-8"));
@@ -72,21 +73,21 @@ public class CommitCrawler {
 									String day = jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[0];
 									int projectID = projectInfo.get(m).getId();
 									
-									System.out.println(projectInfo.get(m).getId() + ":" + jsonArray.get(i).getAsJsonObject().get("id").getAsString());
+									System.out.println(day + ":" + projectInfo.get(m).getId() + ":" + jsonArray.get(i).getAsJsonObject().get("id").getAsString());
 									projectCrawlerDao.insertCommit(id, author_name, author_email, day, add_line, delete_line, file, projectID);
-								}/*else if(dataMap.containsKey(jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[0])){
+								}else if(dataMap.containsKey(jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[0])){
 									judgement = false;
 									break;
-								}*/
+								}
 							}
-							/*if(judgement){*/
+							if(judgement){
 								index ++;
 								urlConnection = GetURLConnection.getUrlConnection(root + index);
 								reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),"utf-8"));
 								response = reader.readLine();
-							/*}else{
+							}else{
 								break;
-							}*/
+							}
 						}
 					}
 				} catch (IOException e) {
