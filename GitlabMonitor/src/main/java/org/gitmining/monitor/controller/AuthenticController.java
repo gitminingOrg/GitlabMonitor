@@ -10,15 +10,12 @@ import javax.validation.Valid;
 import org.gitmining.monitor.bean.User;
 import org.gitmining.monitor.service.MailService;
 import org.gitmining.monitor.service.UserService;
-import org.gitmining.monitor.util.ResultMap;
-import org.gitmining.monitor.util.URLMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AuthenticController {
@@ -70,8 +67,8 @@ public class AuthenticController {
 						+ user.getName() + "/"
 						+ user.getToken()
 						+ "\">here</a> to activate your email(if not works, you can copy the link to your browser)";
-		String content2 = "<a href=\""
-				+"http://www.gitmining.net" + "\">点击</a>";
+//		String content2 = "<a href=\""
+//				+"http://www.gitmining.net" + "\">点击</a>";
 		mailService.sendHtmlMail(toEmail, title, content);
 		model.addAttribute(user);
 		model.addAttribute("emailSend", "activation email has been send, please check it.");
@@ -136,6 +133,7 @@ public class AuthenticController {
 		model.addAttribute("users", users);
 		return "userManage";
 	}
+	
 	//生成随机Token
 	private String generateToken(int length) {
 	    String base = "abcdefghijklmnopqrstuvwxyz0123456789";   
