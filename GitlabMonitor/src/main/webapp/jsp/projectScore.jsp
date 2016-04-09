@@ -94,7 +94,8 @@
 		</table>
 		</div>
 		<div id="statistics" style="display: none">
-			
+			<div id="statisticsTable"></div>
+			<div id="statisticsChart"></div>
 		</div>
 <!-- 	</div> -->	
 <!-- 	<div class="col-md-3" id="grid" style="display:none"> -->
@@ -114,7 +115,9 @@
     </footer>
 </div>
 </body>
- <script src="/GitlabMonitor/static/js/library/jquery-1.11.3.js"></script>
+  <script src="/GitlabMonitor/static/js/library/jquery-1.11.3.js"></script>
+ <script src="/GitlabMonitor/static/js/library/highcharts.js"></script>
+ <script src="/GitlabMonitor/static/js/library/highcharts-3d.js"></script>
  <script src="/GitlabMonitor/static/js/library/bootstrap.min.js"></script>
  <script src="/GitlabMonitor/static/js/library/semantic.min.js"></script>
  <script src="/GitlabMonitor/static/js/score.js"></script> 

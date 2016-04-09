@@ -16,10 +16,13 @@ import org.gitmining.monitor.bean.CourseTeamScore;
 import org.gitmining.monitor.bean.ItemStatistics;
 import org.gitmining.monitor.bean.ProjectVO;
 import org.gitmining.monitor.bean.Score;
+import org.gitmining.monitor.bean.ScoreRange;
 import org.gitmining.monitor.bean.SimpleItem;
 import org.gitmining.monitor.dao.ScoreDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.google.gson.Gson;
 
 @Service
 public class ScoreService {
@@ -138,6 +141,7 @@ public class ScoreService {
 	public ItemStatistics updateItemStatistics(CourseItem courseItem){
 		List<Score> scores = courseItem.getScores();
 		int size = scores.size();
+		System.out.println(size);
 		Collections.sort(scores, new Comparator<Score>() {
 			public int compare(Score o1, Score o2) {
 				// TODO Auto-generated method stub
@@ -151,12 +155,26 @@ public class ScoreService {
 		double range = scores.get(size-1).getScore() - scores.get(0).getScore();
 		
 		int sum = 0;
+		double variance = 0;
+		ScoreRange scoreRange = new ScoreRange(courseItem.getName());
+		int[] bounds = boundsOfScoreRange(scores);
+		int index = 0;
+		int count = 0;
+		
 		for (Score score : scores) {
 			sum+=score.getScore();
+			while(score.getScore() > bounds[index]){
+				scoreRange.setValue(index, count);
+				index++;
+				count=0;
+			}
+			count++;
 		}
-		double average = 1.0 * sum / size;
+		scoreRange.setValue(index, count);
 		
-		double variance = 0;
+		Gson gson = new Gson();
+		String scoreRangeString = gson.toJson(scoreRange);
+		double average = 1.0 * sum / size;
 		for (Score score : scores) {
 			variance+=(score.getScore()-average)*(score.getScore()-average)*1.0/size;
 		}
@@ -170,10 +188,21 @@ public class ScoreService {
 		itemStatistics.setUpper_quartile(q2);
 		itemStatistics.setVariance(variance);
 		itemStatistics.setItem_name(courseItem.getName());
+		itemStatistics.setScore_range(scoreRangeString);
 		Date date = Calendar.getInstance().getTime();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		itemStatistics.setTime(sdf.format(date));
 		scoreDao.insertItemStatistics(itemStatistics);
 		return itemStatistics;
+	}
+	
+	public int[] boundsOfScoreRange(List<Score> ascScores){
+		int[] bounds10 = {1,2,3,4,5,6,7,8,9,10};
+		int[] bounds100 = {10,20,30,40,50,60,70,80,90,100};
+		if(ascScores.get(ascScores.size()-1).getScore()>10){
+			return bounds100;
+		}else{
+			return bounds10;
+		}
 	}
 }

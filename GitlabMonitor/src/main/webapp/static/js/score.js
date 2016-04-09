@@ -73,7 +73,7 @@ function showStatistics(courseName){
 	$("#showButton").hide();
 	$("#scoreButton").show();
 	$("#scoreTable").hide();
-	$("#statistics").html('<p>calculating......</p>');
+	$("#statisticsTable").html('<p>calculating......</p>');
 	var url = "/GitlabMonitor/project/score/statistics"
 		$.ajax(url,{
 			type : 'POST',
@@ -95,7 +95,40 @@ function showStatistics(courseName){
 					table+="</tbody></table>"
 					
 				}
-				$("#statistics").html(table);
+				$("#statisticsTable").html(table);
+			    $('#statisticsChart').highcharts({
+			        title: {
+			            text: 'Score Range',
+			            x: -20 //center
+			        },
+			        subtitle: {
+			            text: 'Source: Gitlab.com',
+			            x: -20
+			        },
+			        xAxis: {
+			            categories: ['0-1', '2', '3', '4', '5', '6','7', '8', '9', '10']
+			        },
+			        yAxis: {
+			            title: {
+			                text: 'Score'
+			            },
+			            plotLines: [{
+			                value: 0,
+			                width: 1,
+			                color: '#808080'
+			            }]
+			        },
+			        tooltip: {
+			            valueSuffix: 'Score of 10'
+			        },
+			        legend: {
+			            layout: 'vertical',
+			            align: 'right',
+			            verticalAlign: 'middle',
+			            borderWidth: 0
+			        },
+			        series: data.content.scoreRanges
+			    });
 			}
 		});
 	

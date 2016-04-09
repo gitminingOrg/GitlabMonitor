@@ -2,6 +2,7 @@ package org.gitmining.monitor.controller;
 
 import static org.gitmining.monitor.util.URLMapping.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.gitmining.monitor.bean.CourseTeamScore;
 import org.gitmining.monitor.bean.ItemStatistics;
+import org.gitmining.monitor.bean.ScoreRange;
 import org.gitmining.monitor.bean.SimpleItem;
 import org.gitmining.monitor.service.ScoreService;
 import org.gitmining.monitor.util.ResultMap;
@@ -19,6 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
 
 @RestController
 public class ScoreController {
@@ -97,8 +103,17 @@ public class ScoreController {
 	public ResultMap getScoreStatistics(HttpServletRequest request, HttpServletResponse response){
 		String courseName = request.getParameter("courseName");
 		List<ItemStatistics> itemStatistics = scoreService.getCourseItemStatistics(courseName);
+		List<ScoreRange> scoreRanges = new ArrayList<ScoreRange>();
+		JsonParser parser = new JsonParser();
+		Gson gson = new Gson();
+		for (int i = 0; i < itemStatistics.size(); i++) {
+			ScoreRange scoreRange = gson.fromJson(itemStatistics.get(i).getScore_range(), ScoreRange.class);
+			scoreRanges.add(scoreRange);
+		}
+
 		ResultMap resultMap = new ResultMap();
 		resultMap.setStatus(ResultMap.SUCCESS_STATUS);
+		resultMap.add("scoreRanges", scoreRanges);
 		resultMap.add("statisticsList", itemStatistics);
 		return resultMap;
 	}

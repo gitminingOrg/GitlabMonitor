@@ -9,6 +9,7 @@ public class ItemStatistics {
 	private double median=0;
 	private double upper_quartile=0;
 	private double lower_quartile=0;
+	private String score_range="{}";
 	private String time;
 	public int getItem_id() {
 		return item_id;
@@ -64,6 +65,12 @@ public class ItemStatistics {
 	}
 	public void setTime(String time) {
 		this.time = time;
+	}
+	public String getScore_range() {
+		return score_range;
+	}
+	public void setScore_range(String score_range) {
+		this.score_range = score_range;
 	}
 	
 }

@@ -195,7 +195,7 @@
 	
 	<select id="selectItemStatisticsById" resultMap="itemStatistics">
 		select 
-		item_id,i.name AS course_name,average,range,variance,median,upper_quartile,lower_quartile,time 
+		item_id,i.name AS course_name,average,range,variance,median,upper_quartile,lower_quartile,score_range,time 
 		from 
 		itemStatistics is, courseItem i
 		where
@@ -218,7 +218,7 @@
 	
 	<select id="selectItemStatisticsByCourseName" resultMap="itemStatistics">
 		select 
-		item_id,i.name AS item_name,average,`range`,variance,median,upper_quartile,lower_quartile,s.time AS time 
+		item_id,i.name AS item_name,average,`range`,variance,median,upper_quartile,lower_quartile,score_range,s.time AS time 
 		from 
 		itemStatistics s, courseItem i, course c 
 		where
@@ -227,7 +227,7 @@
 	
 	<select id="selectItemStatisticsByCourseNameNotModify" resultMap="itemStatistics">
 		select 
-		item_id,i.name AS item_name,average,`range`,variance,median,upper_quartile,lower_quartile,s.time AS time 
+		item_id,i.name AS item_name,average,`range`,variance,median,upper_quartile,lower_quartile,score_range,s.time AS time 
 		from 
 		itemStatistics s, courseItem i, course c 
 		where
@@ -237,7 +237,7 @@
 	<insert id="insertItemStatistics" parameterType="org.gitmining.monitor.bean.ItemStatistics">
 		REPLACE INTO 
 		itemStatistics
-		VALUES(#{item_id},#{average},#{range},#{variance},#{median},#{upper_quartile},#{lower_quartile},#{time});
+		VALUES(#{item_id},#{average},#{range},#{variance},#{median},#{upper_quartile},#{lower_quartile},#{score_range},#{time});
 	</insert>
 	
 	<update id="updateItemStatistics" parameterType="org.gitmining.monitor.bean.ItemStatistics">
@@ -264,6 +264,9 @@
 		</if>
 		<if test="time != null">
 			time=#{time},
+		</if>
+		<if test="score_range != null">
+			score_range=#{score_range},
 		</if>
 		item_id=#{item_id}
 		WHERE
