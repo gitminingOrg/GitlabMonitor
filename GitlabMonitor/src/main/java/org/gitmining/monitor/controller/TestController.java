@@ -3,6 +3,11 @@ package org.gitmining.monitor.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CompletionService;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorCompletionService;
+import java.util.concurrent.Future;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +16,7 @@ import org.gitmining.monitor.crawlerdao.StudentCrawlerDao;
 import org.gitmining.monitor.dao.ScoreDao;
 import org.gitmining.monitor.dao.StudentDao;
 import org.gitmining.monitor.service.MailService;
+import org.gitmining.monitor.service.ScoreService;
 import org.gitmining.monitor.service.UpdateDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,6 +30,8 @@ public class TestController {
 	@Autowired
 	public StudentDao studentDao;
 	@Autowired
+	ScoreService scoreService;
+	@Autowired
 	public UpdateDataService updateDataService;
 	@Autowired
 	public MailService mailService;
@@ -31,32 +39,58 @@ public class TestController {
 	@Autowired
 	public ThreadPoolTaskExecutor executor;
 	
+	
+//	@RequestMapping("/test")
+//	public String test(){
+//		//mailService.sendUpdateSuccessMail();
+//		for (int i = 0; i < 30; i++) {
+//			executor.execute(new Runnable() {
+//				public void run() {
+//					// TODO Auto-generated method stub
+//					System.out.println(Thread.currentThread().getName());
+//				}
+//			});
+//		}
+//		return "ok";
+//	}
+	@Autowired
+	public ScoreDao scoreDao;
 	@RequestMapping("/test")
-	public String test(){
+	public Object test(HttpServletRequest request, HttpServletResponse response){
+		//updateDataService.testUpdateData();
 		//mailService.sendUpdateSuccessMail();
-		for (int i = 0; i < 30; i++) {
-			executor.execute(new Runnable() {
-				public void run() {
+		int id = Integer.parseInt(request.getParameter("id"));
+		return scoreService.updateItemStatistics(id);
+	}
+	
+	@RequestMapping("/try")
+	public ModelAndView tryTable() throws Exception{
+		//updateDataService.testUpdateData();
+		CompletionService<Integer> completionService = new ExecutorCompletionService<Integer>(executor);
+		List<Integer> list = new CopyOnWriteArrayList<Integer>();
+		list.add(1);
+		list.add(11);
+		list.add(111);
+		list.add(1111);
+		list.add(11111);
+		for (final Integer integer : list) {
+			completionService.submit(new Callable<Integer>() {	
+				public Integer call() throws Exception {
 					// TODO Auto-generated method stub
-					System.out.println(Thread.currentThread().getName());
+					
+					return integer;
 				}
 			});
 		}
-		return "ok";
-	}
-	@Autowired
-	public ScoreDao scoreDao;
-	//@RequestMapping("/test")
-	/*public Object test(){
-		//updateDataService.testUpdateData();
-		//mailService.sendUpdateSuccessMail();
-		return scoreDao.getCourseProjects("2016_nju_se_cseiii");
-	}*/
-	
-	@RequestMapping("/try")
-	public ModelAndView tryTable(){
-		//updateDataService.testUpdateData();
-		ModelAndView view = new ModelAndView("tryjsp");
+		
+		for (int i = 0; i < list.size(); i++) {
+			Future<Integer> f = completionService.take();
+			int result = f.get();
+			System.out.println(result);
+		}
+		
+		
+		ModelAndView view = new ModelAndView("tryTable");
 		return view;
 	}
 	

@@ -5,6 +5,40 @@
 		<result property="id" column="item_id" />
 		<result property="name" column="name" />
 		<result property="course_id" column="course_id" />
+		<result property="last_modify" column="last_modify" />	
+		
+		<collection property="scores" ofType="org.gitmining.monitor.bean.Score">
+			<result property="id" column="score_id" />
+			<result property="project_id" column="project_id" />
+			<result property="project_name" column="project_name" />
+			<result property="item_id" column="item_id" />
+			<result property="score" column="score" />
+		</collection>	
+	</resultMap>
+	
+	<resultMap type="org.gitmining.monitor.bean.ItemStatistics" id="itemStatistics">
+		<result property="item_id" column="item_id" />
+		<result property="item_name" column="item_name" />
+		<result property="average" column="average" />
+		<result property="range" column="range" />	
+		<result property="variance" column="variance" />
+		<result property="median" column="median" />
+		<result property="mode" column="mode" />	
+		<result property="upper_quartile" column="upper_quartile" />
+		<result property="lower_quartile" column="lower_quartile" />
+		<result property="time" column="time" />
+	</resultMap>
+	
+	<resultMap type="org.gitmining.monitor.bean.SimpleItem" id="simpleItem">
+		<result property="id" column="item_id" />
+		<result property="name" column="name" />
+		<result property="course_id" column="course_id" />	
+	</resultMap>
+	
+	<resultMap type="org.gitmining.monitor.bean.CourseTeamScore" id="courseTeamScore">
+		<result property="course_id" column="course_id" />
+		<result property="project_id" column="project_id" />
+		<result property="project_name" column="project_name" />
 		
 		<collection property="scores" ofType="org.gitmining.monitor.bean.Score">
 			<result property="id" column="score_id" />
@@ -32,6 +66,57 @@
 		<result property="endtime" column="endtime"/>
 		<result property="teachers" column="teachers"/>
 	</resultMap>
+	
+	<select id="selectCourseTeamScoreByCourseName" resultMap="courseTeamScore">
+		SELECT 	
+		i.course_id AS course_id,
+		s.id AS  score_id,
+		s.project_id AS project_id,
+		s.item_id AS item_id,
+		s.score AS score,
+		g.name AS project_name
+		FROM
+		courseItem i,courseScore s,groupproject g
+		WHERE i.id = s.item_id AND s.project_id = g.id AND i.removed = 0 AND i.course_id 
+		IN 
+		(SELECT id FROM course WHERE name=#{name}) order by project_id asc, item_id asc;
+	</select>
+	
+	<update id="updateItemLastModify" parameterType="org.gitmining.monitor.bean.CourseItem">
+		UPDATE 
+		courseItem
+		SET
+		last_modify=#{last_modify}
+		WHERE
+		id=#{id}	
+	</update>
+	
+	<select id="selectAllActiveItemsByCourseName" resultMap="simpleItem">
+		SELECT 
+		i.name AS name,
+		i.id AS id,
+		c.id AS course_id
+		FROM 
+		course c , courseItem i
+		WHERE
+		c.name = #{name} and c.id = i.course_id and i.removed = 0;
+	</select>
+	
+	<select id="selectCourseItemByCourseNameModify" resultMap="courseItem">
+		SELECT 
+		i.id AS item_id,
+		i.name AS name,
+		i.course_id AS course_id,
+		s.id AS  score_id,
+		s.project_id AS project_id,
+		s.score AS score,
+		g.name AS project_name
+		FROM
+		courseItem i,courseScore s,groupproject g, itemStatistics st
+		WHERE i.id = s.item_id AND s.project_id = g.id AND i.removed = 0 AND i.id = st.item_id AND i.last_modify &gt; st.time AND i.course_id 
+		IN 
+		(SELECT id FROM course WHERE name=#{name}) order by project_id asc;
+	</select>
 	
 	<select id="selectCourseItemByCourseName" resultMap="courseItem">
 		SELECT 
@@ -65,7 +150,7 @@
 		course
 	</select>
 	<insert id="insertNewCourseItem" parameterType="org.gitmining.monitor.bean.CourseItem" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO courseItem(name,course_id) VALUES(#{name},#{course_id});
+		INSERT INTO courseItem(name,course_id,last_modify) VALUES(#{name},#{course_id},#{last_modify});
 	</insert>
 	
 	<select id="selectCourseProject" resultType="Integer">
@@ -107,4 +192,81 @@
 		id
 		IN(select cc.project_id from courseChoose cc, course c where cc.course_id = c.id and c.name = #{name}) order by g.id asc
 	</select>
+	
+	<select id="selectItemStatisticsById" resultMap="itemStatistics">
+		select 
+		item_id,i.name AS course_name,average,range,variance,median,upper_quartile,lower_quartile,time 
+		from 
+		itemStatistics is, courseItem i
+		where
+		is.item_id = i.id AND item_id=#{id}; 
+	</select>
+	
+	<select id="selectItemByItemId" resultMap="courseItem">
+		SELECT 
+		i.id AS item_id,
+		i.name AS name,
+		i.course_id AS course_id,
+		s.id AS  score_id,
+		s.project_id AS project_id,
+		s.score AS score,
+		g.name AS project_name
+		FROM
+		courseItem i,courseScore s,groupproject g
+		WHERE i.id = s.item_id AND s.project_id = g.id AND i.removed = 0 AND i.id=#{item_id};
+	</select>
+	
+	<select id="selectItemStatisticsByCourseName" resultMap="itemStatistics">
+		select 
+		item_id,i.name AS item_name,average,`range`,variance,median,upper_quartile,lower_quartile,s.time AS time 
+		from 
+		itemStatistics s, courseItem i, course c 
+		where
+		s.item_id = i.id and i.course_id = c.id and c.name = #{coureName};
+	</select>
+	
+	<select id="selectItemStatisticsByCourseNameNotModify" resultMap="itemStatistics">
+		select 
+		item_id,i.name AS item_name,average,`range`,variance,median,upper_quartile,lower_quartile,s.time AS time 
+		from 
+		itemStatistics s, courseItem i, course c 
+		where
+		s.item_id = i.id and i.course_id = c.id and c.name = #{coureName} and s.time &gt;= i.last_modify;
+	</select>
+	
+	<insert id="insertItemStatistics" parameterType="org.gitmining.monitor.bean.ItemStatistics">
+		REPLACE INTO 
+		itemStatistics
+		VALUES(#{item_id},#{average},#{range},#{variance},#{median},#{upper_quartile},#{lower_quartile},#{time});
+	</insert>
+	
+	<update id="updateItemStatistics" parameterType="org.gitmining.monitor.bean.ItemStatistics">
+		UPDATE
+		itemStatistics
+		SET
+		<if test="average != null">
+			average=#{average},
+		</if>
+		<if test="range != null">
+			`range`=#{range},
+		</if>
+		<if test="variance != null">
+			variance=#{variance},
+		</if>
+		<if test="median != null">
+			median=#{median},
+		</if>
+		<if test="upper_quartile != null">
+			upper_quartile=#{upper_quartile},
+		</if>
+		<if test="lower_quartile != null">
+			lower_quartile=#{lower_quartile},
+		</if>
+		<if test="time != null">
+			time=#{time},
+		</if>
+		item_id=#{item_id}
+		WHERE
+		item_id=#{item_id};
+	</update>
 </mapper>

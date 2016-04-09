@@ -23,6 +23,22 @@ function show_remove(name,id){
 	$("#addColumn").hide();
 }
 
+function overRemove(obj){
+	$(obj).removeClass().addClass("remove circle icon");
+}
+
+function outRemove(obj){
+	$(obj).removeClass().addClass("remove icon");
+}
+
+function overLeft(obj){
+	$(obj).removeClass().addClass("angle double left icon");
+}
+
+function outLeft(obj){
+	$(obj).removeClass().addClass("angle left icon");
+}
+
 function showGrid(){
 	$("#grid").show();
 	$("#button").hide();
@@ -43,6 +59,46 @@ function showText(item_id,project_id){
 function removeItem(item_id){
 	var form = $("#form"+item_id);
 	form.submit();
+}
+
+function showScoreTable(courseName){
+	$("#statistics").hide();
+	$("#showButton").show();
+	$("#scoreButton").hide();
+	$("#scoreTable").show();
+}
+
+function showStatistics(courseName){
+	$("#statistics").show();
+	$("#showButton").hide();
+	$("#scoreButton").show();
+	$("#scoreTable").hide();
+	$("#statistics").html('<p>calculating......</p>');
+	var url = "/GitlabMonitor/project/score/statistics"
+		$.ajax(url,{
+			type : 'POST',
+			data : {
+				"courseName" : courseName,
+			},
+			success : function(data, textStatus){
+				if(data.status == 0){
+					var statisticsList = data.content.statisticsList;
+					var table = "<h3>Statistics</h3><table class=\"table table-striped table-bordered\">";
+					table+="<thead><tr><th>item</th><th>average</th>";
+					table+="<th>range</th><th>variance</th><th>median</th>" +
+							"<th>upper_quartile</th><th>lower_quartile</th></tr></thead><tbody>";
+					for(var i=0;i<statisticsList.length;i++){
+						table+="<tr><th>"+statisticsList[i].item_name+"</th><th>"+statisticsList[i].average+"</th>" +
+								"<th>"+statisticsList[i].range+"</th><th>"+statisticsList[i].variance+"</th>" +
+								"<th>"+statisticsList[i].median+"</th><th>"+statisticsList[i].upper_quartile+"</th><th>"+statisticsList[i].lower_quartile+"</th></tr>"
+					}
+					table+="</tbody></table>"
+					
+				}
+				$("#statistics").html(table);
+			}
+		});
+	
 }
 
 function changeScore(item_id,project_id,score){
