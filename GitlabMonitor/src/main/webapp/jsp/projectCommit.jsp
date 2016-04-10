@@ -20,9 +20,10 @@
 <div id="content" class="container">
 	<h2>Project Detail</h2>
 	<div class="btn-group" style="float:right;" role="group" aria-label="...">
-	  <button type="button" class="btn btn-default" onclick="showDailyChart();">Project Commit</button>
-	  <button type="button" class="btn btn-default" onclick="showMemberChart();">Member Commit</button>
-	  <button type="button" class="btn btn-default" onclick="showInfoChart();">Member Relationship</button>
+	  <button type="button" class="btn btn-default" onclick="showDailyChart();">Commits Info</button>
+	  <button type="button" class="btn btn-default" onclick="showMemberChart();">Member Commits</button>
+	  <button type="button" class="btn btn-default" onclick="showInfoChart();">Relationship</button>
+	  <button type="button" class="btn btn-default" onclick="showHeatChart();">Work Time</button>
 	  <div class="btn-group" role="group">
 	    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	      Time Range
@@ -68,6 +69,8 @@
 				force("#infoChart",1150,400,data);
 			})
 		</script>
+	</div>
+	<div id="heatChart" style="display:none">
 	</div>
 </div>
 <br />

@@ -8,6 +8,7 @@ function showDailyChart(){
 	$("#memberChart").hide();
 	$("#infoChart").hide();
 	$("#chooseTeam").hide();
+	$("#heatChart").hide();
 	$("#dailyChart").show();
 	$("#dailyChart").highcharts().reflow();
 }
@@ -16,6 +17,7 @@ function showMemberChart(){
 	$("#dailyChart").hide();
 	$("#infoChart").hide();
 	$("#chooseTeam").hide();
+	$("#heatChart").hide();
 	$("#memberChart").show();
 	$("#memberChart").highcharts().reflow();
 }
@@ -23,8 +25,17 @@ function showMemberChart(){
 function showInfoChart(){
 	$("#dailyChart").hide();
 	$("#memberChart").hide();
+	$("#heatChart").hide();
 	$("#chooseTeam").hide();
 	$("#infoChart").show();
+}
+
+function showHeatChart(){
+	$("#dailyChart").hide();
+	$("#memberChart").hide();
+	$("#chooseTeam").hide();
+	$("#infoChart").hide();
+	$("#heatChart").show();
 }
 
 function showChooseTeam(){
@@ -33,6 +44,7 @@ function showChooseTeam(){
 	$("#dailyChart").hide();
 	$("#memberChart").hide();
 	$("#infoChart").hide();
+	$("#heatChart").hide();
 	$("#chooseTeam").show();
 }
 
@@ -40,6 +52,7 @@ function cancelChooseTeam(){
 	$("#memberChart").hide();
 	$("#infoChart").hide();
 	$("#chooseTeam").hide();
+	$("#heatChart").hide();
 	$("#dailyChart").show();
 	$("#dailyChart").highcharts().reflow();
 }
