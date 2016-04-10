@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.gitmining.monitor.bean.Branch;
+import org.gitmining.monitor.bean.Commit;
 import org.gitmining.monitor.bean.Project;
 import org.gitmining.monitor.bean.ProjectCommit;
 
@@ -77,7 +78,7 @@ public class ProjectCrawlerDao extends BasicDao {
 	public List<ProjectCommit> getProjectCommit(){
 		List<ProjectCommit> result = new ArrayList<ProjectCommit>();
 		try {
-			PreparedStatement ps = conn.prepareStatement("SELECT x.projectid,team.name team,x.day,x.commit_count,x.add_line,x.delete_line,x.file,SUM(y.commit_count) total_commit,SUM(y.add_line) total_add,SUM(y.delete_line) total_delete from (SELECT projectid,day,count(*) commit_count,SUM(add_line) add_line,SUM(delete_line) delete_line,SUM(file) file from `commit` GROUP BY projectid,day) x,(SELECT projectid,day,count(*) commit_count,SUM(add_line) add_line,SUM(delete_line) delete_line,SUM(file) file from `commit` GROUP BY projectid,day) y , groupproject , team WHERE x.projectid = y.projectid and x.day >= y.day and x.projectid = groupproject.id and groupid = team.id GROUP BY x.projectid,x.day");
+			PreparedStatement ps = conn.prepareStatement("SELECT x.projectid,team.name team,SUBSTR(x.day , 1 , 10) day,x.commit_count,x.add_line,x.delete_line,x.file,SUM(y.commit_count) total_commit,SUM(y.add_line) total_add,SUM(y.delete_line) total_delete from (SELECT projectid,day,count(*) commit_count,SUM(add_line) add_line,SUM(delete_line) delete_line,SUM(file) file from `commit` GROUP BY projectid,SUBSTR(day , 1 , 10)) x,(SELECT projectid,day,count(*) commit_count,SUM(add_line) add_line,SUM(delete_line) delete_line,SUM(file) file from `commit` GROUP BY projectid,SUBSTR(day , 1 , 10)) y , groupproject , team WHERE x.projectid = y.projectid and SUBSTR(x.day , 1 , 10) >= SUBSTR(y.day , 1 , 10) and x.projectid = groupproject.id and groupid = team.id GROUP BY x.projectid,SUBSTR(x.day , 1 , 10)");
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				ProjectCommit projectCommit = new ProjectCommit();
@@ -361,5 +362,43 @@ public class ProjectCrawlerDao extends BasicDao {
 		}
 		
 		return result;
+	}
+	
+	public List<Commit> getCommits(){
+		List<Commit> result = new ArrayList<Commit>();
+		try {
+			PreparedStatement ps = conn.prepareStatement("select * from commit");
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				Commit commit = new Commit();
+				commit.setID(rs.getString("id"));
+				commit.setAuthor_name(rs.getString("author_name"));
+				commit.setAuthor_email(rs.getString("author_email"));
+				commit.setDay(rs.getString("day"));
+				commit.setAdd_line(rs.getInt("add_line"));
+				commit.setDelete_line(rs.getInt("delete_line"));
+				commit.setFile(rs.getInt("file"));
+				commit.setProjectID(rs.getInt("projectid"));
+				
+				result.add(commit);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return result;
+	}
+	
+	public void insertDayHour(String day, String hour, int value){
+		try {
+			PreparedStatement ps = conn.prepareStatement("insert into dayhour(day,hour,value) values(?,?,?)");
+			ps.setString(1, day);
+			ps.setString(2, hour);
+			ps.setInt(3, value);
+			ps.execute();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 }

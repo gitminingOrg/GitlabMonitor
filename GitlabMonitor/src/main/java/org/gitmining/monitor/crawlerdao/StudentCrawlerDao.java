@@ -63,7 +63,7 @@ public class StudentCrawlerDao extends BasicDao{
 	public List<StudentCommit> getStudentCommit(){
 		List<StudentCommit> result = new ArrayList<StudentCommit>();
 		try {
-			PreparedStatement ps = conn.prepareStatement("SELECT x.projectid,x.author_name,x.day,x.commit_count,x.add_line,x.delete_line,x.file,SUM(y.commit_count) total_commit,SUM(y.add_line) total_add,SUM(y.delete_line) total_delete  from (SELECT author_name,projectid,day,count(*) commit_count,SUM(add_line) add_line,SUM(delete_line) delete_line,SUM(file) file from `commit` GROUP BY projectid,day,author_name) x,(SELECT author_name,projectid,day,count(*) commit_count,SUM(add_line) add_line,SUM(delete_line) delete_line,SUM(file) file from `commit` GROUP BY projectid,day,author_name) y WHERE x.projectid = y.projectid and x.author_name = y.author_name and x.day >= y.day GROUP BY x.projectid,x.day,x.author_name");
+			PreparedStatement ps = conn.prepareStatement("SELECT x.projectid,x.author_name,SUBSTR(x.day , 1 , 10) day,x.commit_count,x.add_line,x.delete_line,x.file,SUM(y.commit_count) total_commit,SUM(y.add_line) total_add,SUM(y.delete_line) total_delete from (SELECT author_name,projectid,day,count(*) commit_count,SUM(add_line) add_line,SUM(delete_line) delete_line,SUM(file) file from `commit` GROUP BY projectid,SUBSTR(day , 1 , 10),author_name) x,(SELECT author_name,projectid,day,count(*) commit_count,SUM(add_line) add_line,SUM(delete_line) delete_line,SUM(file) file from `commit` GROUP BY projectid,SUBSTR(day , 1 , 10),author_name) y WHERE x.projectid = y.projectid and x.author_name = y.author_name and SUBSTR(x.day , 1 , 10) >= SUBSTR(y.day , 1 , 10) GROUP BY x.projectid,SUBSTR(x.day , 1 , 10),x.author_name");
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				StudentCommit studentCommit = new StudentCommit();
@@ -174,7 +174,7 @@ public class StudentCrawlerDao extends BasicDao{
 	public boolean findStudent(int memberID,String memberName,String team){
 		boolean result = false;
 		try {
-			PreparedStatement ps = conn.prepareStatement("SELECT * from student where id=? and name=? and team=?");
+			PreparedStatement ps = conn.prepareStatement("SELECT * from teamstudent where id=? and name=? and team=?");
 			ps.setInt(1, memberID);
 			ps.setString(2, memberName);
 			ps.setString(3, team);

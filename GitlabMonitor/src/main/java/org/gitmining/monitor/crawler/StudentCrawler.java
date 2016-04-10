@@ -61,17 +61,20 @@ public class StudentCrawler {
 		GroupProjectCrawler groupProjectCrawler = new GroupProjectCrawler();
 		BranchCrawler branchCrawler = new BranchCrawler();
 		CommitCrawler commitCrawler = new CommitCrawler();
+		FileCrawler fileCrawler = new FileCrawler();
 		CommitStatistic commitStatistic = new CommitStatistic();
 		
 		//groupCrawler.crawlGroup();
 		//groupProjectCrawler.crawlGroupProject();
 		//branchCrawler.crawlBranch();
 		//commitCrawler.crawlCommit();
-		commitStatistic.countProjectCommit();
-		commitStatistic.countStudentCommit();
+		//fileCrawler.crawlFile();
+		//commitStatistic.countProjectCommit();
+		//commitStatistic.countStudentCommit();
+		//commitStatistic.countDayHourMap();
 		
 		//StudentCrawler studentCrawler = new StudentCrawler();
-		//studentCrawler.crawlFile();
+		//studentCrawler.crawlCommit();
 	}
 	
 	public void crawlFile(){
@@ -96,14 +99,14 @@ public class StudentCrawler {
 						JsonArray jsonArray = new JsonParser().parse(response)
 								.getAsJsonArray();
 						for(int i = 0 ; i < jsonArray.size() ; i ++){
-							if(!jsonArray.get(i).getAsJsonObject().get("data").isJsonNull() && !jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[0].equals("2016-03-18") && !jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[0].equals("2016-03-19") && !(jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[0].equals("2016-03-17") && Integer.parseInt(jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[1].split(":")[0]) >= 16)){
+							if(!jsonArray.get(i).getAsJsonObject().get("data").isJsonNull()){
 								JsonArray aa = jsonArray.get(i).getAsJsonObject().get("data").getAsJsonObject().get("commits").getAsJsonArray();
 								for(int j = 0 ; j < aa.size() ; j ++){
 									if(!list.contains(aa.get(j).getAsJsonObject().get("id").getAsString())){
 										list.add(aa.get(j).getAsJsonObject().get("id").getAsString());
-										if(!projectCrawlerDao.findCommitBySha(aa.get(j).getAsJsonObject().get("id").getAsString())){
+										/*if(!projectCrawlerDao.findCommitBySha(aa.get(j).getAsJsonObject().get("id").getAsString())){
 											System.err.println(projects.get(m).getId() + ":" + aa.get(j).getAsJsonObject().get("id").getAsString());
-										}
+										}*/
 										
 										JsonArray addList = aa.get(j).getAsJsonObject().get("added").getAsJsonArray();
 										JsonArray modifyList = aa.get(j).getAsJsonObject().get("modified").getAsJsonArray();
@@ -118,6 +121,7 @@ public class StudentCrawler {
 										for(int n = 0 ; n < removeList.size() ; n ++){
 											projectCrawlerDao.insertFile(aa.get(j).getAsJsonObject().get("id").getAsString(), removeList.get(n).getAsString(), "code");
 										}
+										System.out.println(projects.get(m).getId() + ":" + aa.get(j).getAsJsonObject().get("id") + ":" + jsonArray.get(i).getAsJsonObject().get("created_at").getAsString());
 									}
 								}
 							}
@@ -148,13 +152,13 @@ public class StudentCrawler {
 		boolean judgement = true;
 		
 		
-		//for(int m = 0 ; m < projectInfo.size() ; m ++){
-			//List<Branch> branches = projectCrawlerDao.getBranchByProjectID(projectInfo.get(m).getId());
-			List<Branch> branches = projectCrawlerDao.getBranchByProjectID(108);
+		for(int m = 0 ; m < projectInfo.size() ; m ++){
+			List<Branch> branches = projectCrawlerDao.getBranchByProjectID(projectInfo.get(m).getId());
+			//List<Branch> branches = projectCrawlerDao.getBranchByProjectID(108);
 			for(int n = 0 ; n < branches.size() ; n ++){
 				int index = 0;
-				//String root = "http://114.55.35.12/api/v3/projects/" + projectInfo.get(m).getId() + "/repository/commits?private_token=BzkEVfK_jwk2ytzdx5-h&ref_name=" + branches.get(n).getBranchName() + "&page=";
-				String root = "http://114.55.35.12/api/v3/projects/" + 108 + "/repository/commits?private_token=BzkEVfK_jwk2ytzdx5-h&ref_name=" + branches.get(n).getBranchName() + "&page=";
+				String root = "http://114.55.35.12/api/v3/projects/" + projectInfo.get(m).getId() + "/repository/commits?private_token=BzkEVfK_jwk2ytzdx5-h&ref_name=" + branches.get(n).getBranchName() + "&page=";
+				//String root = "http://114.55.35.12/api/v3/projects/" + 108 + "/repository/commits?private_token=BzkEVfK_jwk2ytzdx5-h&ref_name=" + branches.get(n).getBranchName() + "&page=";
 				HttpURLConnection urlConnection = GetURLConnection.getUrlConnection(root + index);
 				BufferedReader reader = null;
 				String response = "";
@@ -169,10 +173,11 @@ public class StudentCrawler {
 							JsonArray jsonArray = new JsonParser().parse(response)
 									.getAsJsonArray();
 							for(int i = 0 ; i < jsonArray.size() ; i ++){
-								//if(!projectCrawlerDao.findCommit(projectInfo.get(m).getId(), jsonArray.get(i).getAsJsonObject().get("id").getAsString())){
-								if(!projectCrawlerDao.findCommit(108, jsonArray.get(i).getAsJsonObject().get("id").getAsString()) && !jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[0].equals("2016-03-18") && !jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[0].equals("2016-03-19")){
-									//String commitURL = "http://114.55.35.12/" + projectInfo.get(m).getPath() + "/commit/" + jsonArray.get(i).getAsJsonObject().get("id").getAsString() + "?private_token=" + GetTokenInfo.getToken();
-									String commitURL = "http://114.55.35.12/" + "141250183_cseiii_AnyQuant/AnyQuent" + "/commit/" + jsonArray.get(i).getAsJsonObject().get("id").getAsString() + "?private_token=" + GetTokenInfo.getToken();
+								if(!projectCrawlerDao.findCommit(projectInfo.get(m).getId(), jsonArray.get(i).getAsJsonObject().get("id").getAsString()) && !jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[0].equals(GetDate.getCurrentDate())){
+								//if(!projectCrawlerDao.findCommit(108, jsonArray.get(i).getAsJsonObject().get("id").getAsString()) && !jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[0].equals("2016-03-18") && !jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[0].equals("2016-03-19")){
+									String commitURL = "http://114.55.35.12/" + projectInfo.get(m).getPath() + "/commit/" + jsonArray.get(i).getAsJsonObject().get("id").getAsString() + "?private_token=" + GetTokenInfo.getToken();
+									//String commitURL = "http://114.55.35.12/" + "141250183_cseiii_AnyQuant/AnyQuent" + "/commit/" + jsonArray.get(i).getAsJsonObject().get("id").getAsString() + "?private_token=" + GetTokenInfo.getToken();
+									if(!commitURL.equals("http://114.55.35.12/141250007_cseiii_GitMining/GitMining/commit/2e5ff3655d8f4bd51920ea690434897aa52200c6?private_token=BzkEVfK_jwk2ytzdx5-h")){
 									urlConnection = GetURLConnection.getUrlConnection(commitURL);
 									reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),"utf-8"));
 									String page = "";
@@ -189,26 +194,27 @@ public class StudentCrawler {
 									String id = jsonArray.get(i).getAsJsonObject().get("id").getAsString();
 									String author_name = jsonArray.get(i).getAsJsonObject().get("author_name").getAsString();
 									String author_email = jsonArray.get(i).getAsJsonObject().get("author_email").getAsString();
-									String day = jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[0];
-									//int projectID = projectInfo.get(m).getId();
-									int projectID = 108;
+									String day = jsonArray.get(i).getAsJsonObject().get("created_at").getAsString();
+									int projectID = projectInfo.get(m).getId();
+									//int projectID = 108;
 									
-									//System.out.println(projectInfo.get(m).getId() + ":" + jsonArray.get(i).getAsJsonObject().get("id").getAsString());
-									System.out.println(108 + ":" + jsonArray.get(i).getAsJsonObject().get("id").getAsString());
+									System.out.println(day + ":" + projectInfo.get(m).getId() + ":" + jsonArray.get(i).getAsJsonObject().get("id").getAsString());
+									//System.out.println(108 + ":" + jsonArray.get(i).getAsJsonObject().get("id").getAsString());
 									projectCrawlerDao.insertCommit(id, author_name, author_email, day, add_line, delete_line, file, projectID);
+									}
 								}/*else if(dataMap.containsKey(jsonArray.get(i).getAsJsonObject().get("created_at").getAsString().split("T")[0])){
 									judgement = false;
 									break;
 								}*/
 							}
-							/*if(judgement){*/
+							if(judgement){
 								index ++;
 								urlConnection = GetURLConnection.getUrlConnection(root + index);
 								reader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),"utf-8"));
 								response = reader.readLine();
-							/*}else{
+							}else{
 								break;
-							}*/
+							}
 						}
 					}
 				} catch (IOException e) {
@@ -217,7 +223,7 @@ public class StudentCrawler {
 					e.printStackTrace();
 				}
 			}
-		//}
+		}
 	}
 }
 
@@ -294,3 +300,6 @@ for(int i = 0 ; i < ids.size() ; i ++){
 136:b38d9e01f07387466d5cd22ccef538326578b8fb
 136:cf1c8173a9a29c69273aec4bb2d76c8a44a2a575
   */
+
+
+//http://114.55.35.12/141250007_cseiii_GitMining/GitMining/commit/2e5ff3655d8f4bd51920ea690434897aa52200c6?private_token=BzkEVfK_jwk2ytzdx5-h
