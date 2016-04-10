@@ -10,9 +10,11 @@
 <link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap-datepicker3.min.css">
 <link rel="stylesheet" type="text/css" href="/GitlabMonitor/static/css/bootstrap-datepicker3.standalone.min.css">
 <script type="text/javascript" src="/GitlabMonitor/static/js/force.js"></script>
+<script type="text/javascript" src="/GitlabMonitor/static/js/heatchart.js"></script>
 <script type="text/javascript" src="/GitlabMonitor/static/js/d3.min.js"></script>
 <script type="text/javascript" src="/GitlabMonitor/static/js/jquery-1.11.1.min.js" ></script>
 <script type="text/javascript" src="/GitlabMonitor/static/js/jquery-ui.min.js" ></script>
+
 </head>
 <body>
 <%@ include file="nav.jsp" %>
@@ -71,6 +73,13 @@
 		</script>
 	</div>
 	<div id="heatChart" style="display:none">
+		<script>
+			var projectID = "${projectId}";
+			var sdata = {projectID:projectID}
+			$.post("/GitlabMonitor/dayhour",sdata,function(data){
+				heatchart(data);
+			})
+		</script>
 	</div>
 </div>
 <br />

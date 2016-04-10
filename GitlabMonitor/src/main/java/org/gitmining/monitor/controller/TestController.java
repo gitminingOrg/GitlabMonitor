@@ -134,8 +134,9 @@ public class TestController {
 	
 	@RequestMapping("/dayhour")
 	public String getDayHour(HttpServletRequest request,HttpServletResponse response){
+		int projectid = Integer.parseInt(request.getParameter("projectID"));
 		ProjectCrawlerDao projectCrawlerDao = new ProjectCrawlerDao();
-		List<DayHour> dayHours = projectCrawlerDao.getDayHour();
+		List<DayHour> dayHours = projectCrawlerDao.getDayHourByProjectID(projectid);
 		
 		String result = "";
 		String day = "day: [";

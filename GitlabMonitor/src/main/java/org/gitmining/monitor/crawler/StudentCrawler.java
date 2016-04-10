@@ -71,10 +71,10 @@ public class StudentCrawler {
 		//fileCrawler.crawlFile();
 		//commitStatistic.countProjectCommit();
 		//commitStatistic.countStudentCommit();
-		//commitStatistic.countDayHourMap();
+		commitStatistic.countDayHourMap();
 		
-		StudentCrawler studentCrawler = new StudentCrawler();
-		studentCrawler.crawlFile();
+		//StudentCrawler studentCrawler = new StudentCrawler();
+		//studentCrawler.crawlFile();
 	}
 	
 	public void crawlFile(){

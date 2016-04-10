@@ -392,12 +392,13 @@ public class ProjectCrawlerDao extends BasicDao {
 		return result;
 	}
 	
-	public void insertDayHour(int day, int hour, int value){
+	public void insertDayHour(int day, int hour, int value , int projectID){
 		try {
-			PreparedStatement ps = conn.prepareStatement("insert into dayhour(day,hour,value) values(?,?,?)");
+			PreparedStatement ps = conn.prepareStatement("insert into dayhour(day,hour,value,projectid) values(?,?,?,?)");
 			ps.setInt(1, day);
 			ps.setInt(2, hour);
 			ps.setInt(3, value);
+			ps.setInt(4, projectID);
 			ps.execute();
 			
 		} catch (Exception e) {
@@ -405,18 +406,46 @@ public class ProjectCrawlerDao extends BasicDao {
 		}
 	}
 	
-	public List<DayHour> getDayHour(){
+	public List<DayHour> getDayHourByProjectID(int projectID){
 		List<DayHour> result = new ArrayList<DayHour>();
 		try {
-			PreparedStatement ps = conn.prepareStatement("select * from dayhour order by day,hour asc");
+			PreparedStatement ps = conn.prepareStatement("select * from dayhour where projectid=? order by day,hour asc");
+			ps.setInt(1, projectID);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
 				DayHour dayHour = new DayHour();
 				dayHour.setDay(rs.getInt("day"));
 				dayHour.setHour(rs.getInt("hour"));
 				dayHour.setValue(rs.getInt("value"));
+				dayHour.setProjectID(rs.getInt("projectid"));
 				
 				result.add(dayHour);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return result;
+	}
+	
+	public List<Commit> getCommitsByProjectID(int projectID){
+		List<Commit> result = new ArrayList<Commit>();
+		try {
+			PreparedStatement ps = conn.prepareStatement("select * from commit where projectid=?");
+			ps.setInt(1, projectID);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				Commit commit = new Commit();
+				commit.setID(rs.getString("id"));
+				commit.setAuthor_name(rs.getString("author_name"));
+				commit.setAuthor_email(rs.getString("author_email"));
+				commit.setDay(rs.getString("day"));
+				commit.setAdd_line(rs.getInt("add_line"));
+				commit.setDelete_line(rs.getInt("delete_line"));
+				commit.setFile(rs.getInt("file"));
+				commit.setProjectID(rs.getInt("projectid"));
+				
+				result.add(commit);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception

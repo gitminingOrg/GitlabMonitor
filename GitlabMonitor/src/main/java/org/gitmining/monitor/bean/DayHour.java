@@ -4,7 +4,14 @@ public class DayHour {
 	private int day;
 	private int hour;
 	private int value;
+	private int projectID;
 	
+	public int getProjectID() {
+		return projectID;
+	}
+	public void setProjectID(int projectID) {
+		this.projectID = projectID;
+	}
 	public int getDay() {
 		return day;
 	}
