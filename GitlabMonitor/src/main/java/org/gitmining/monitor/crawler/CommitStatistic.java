@@ -96,13 +96,13 @@ public class CommitStatistic {
 	public void countDayHourMap(){
 		ProjectCrawlerDao projectCrawlerDao = new ProjectCrawlerDao();
 		List<Commit> commits = projectCrawlerDao.getCommits();
-		Map<String, Map<String, Integer>> map = new HashMap<String, Map<String,Integer>>();
-		String[] days = {"Su","Mo","Tu","We","Th","Fr","Sa"};
-		String[] hours = {"00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"};
+		Map<Integer, Map<Integer, Integer>> map = new HashMap<Integer, Map<Integer,Integer>>();
+		int[] days = {1,2,3,4,5,6,7};
+		int[] hours = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};
 		
 		//initial
 		for(int i = 0 ; i < days.length ; i ++){
-			Map<String, Integer> hoursInitial = new HashMap<String, Integer>();
+			Map<Integer, Integer> hoursInitial = new HashMap<Integer, Integer>();
 			for(int j = 0 ; j < hours.length ; j ++){
 				hoursInitial.put(hours[j], 0);
 			}
@@ -119,23 +119,23 @@ public class CommitStatistic {
 			c.set(Calendar.DATE,Integer.parseInt(sp[2]));
 
 			int wd = c.get(Calendar.DAY_OF_WEEK);
-			String x = "";
+			int x = 0;
 			switch(wd){
-			case 1:x="Su";break;
-			case 2:x="Mo";break;
-			case 3:x="Tu";break;
-			case 4:x="We";break;
-			case 5:x="Th";break;
-			case 6:x="Fr";break;
-			case 7:x="Sa";break;
+			case 1:x=7;break;
+			case 2:x=1;break;
+			case 3:x=2;break;
+			case 4:x=3;break;
+			case 5:x=4;break;
+			case 6:x=5;break;
+			case 7:x=6;break;
 			}
 			
-			String hour = temp.getDay().split("T")[1].split(":")[0];
+			int hour = Integer.parseInt(temp.getDay().split("T")[1].split(":")[0]);
 			map.get(x).put(hour, map.get(x).get(hour) + 1);
 		}
 		
-		for(String key : map.keySet()){
-			for(String hourKey : map.get(key).keySet()){
+		for(int key : map.keySet()){
+			for(int hourKey : map.get(key).keySet()){
 				projectCrawlerDao.insertDayHour(key, hourKey, map.get(key).get(hourKey));
 			}
 		}

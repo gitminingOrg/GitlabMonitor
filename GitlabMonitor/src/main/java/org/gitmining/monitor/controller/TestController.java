@@ -12,6 +12,8 @@ import java.util.concurrent.Future;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.gitmining.monitor.bean.DayHour;
+import org.gitmining.monitor.crawlerdao.ProjectCrawlerDao;
 import org.gitmining.monitor.crawlerdao.StudentCrawlerDao;
 import org.gitmining.monitor.dao.ScoreDao;
 import org.gitmining.monitor.dao.StudentDao;
@@ -125,6 +127,32 @@ public class TestController {
 		width = width.substring(0, width.length() - 1) + "]";
 		
 		result = "{" + nodes + "," + links + "," + width + "}";
+		
+		System.out.println(result);
+		return result;
+	}
+	
+	@RequestMapping("/dayhour")
+	public String getDayHour(HttpServletRequest request,HttpServletResponse response){
+		ProjectCrawlerDao projectCrawlerDao = new ProjectCrawlerDao();
+		List<DayHour> dayHours = projectCrawlerDao.getDayHour();
+		
+		String result = "";
+		String day = "day: [";
+		String hour = "hour: [";
+		String value = "value: [";
+		
+		for(int i = 0 ; i < dayHours.size(); i ++){
+			day = day + dayHours.get(i).getDay() + ","; 
+			hour = hour + dayHours.get(i).getHour() + ",";
+			value = value + dayHours.get(i).getValue() + ","; 
+		}
+		
+		day = day.substring(0, day.length() - 1) + "]";
+		hour = hour.substring(0, hour.length() - 1) + "]";
+		value = value.substring(0, value.length() - 1) + "]";
+		
+		result = "{" + day + "," + hour + "," + value + "}";
 		
 		System.out.println(result);
 		return result;

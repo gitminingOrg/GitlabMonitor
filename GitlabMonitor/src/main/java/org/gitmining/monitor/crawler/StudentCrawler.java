@@ -73,8 +73,8 @@ public class StudentCrawler {
 		//commitStatistic.countStudentCommit();
 		//commitStatistic.countDayHourMap();
 		
-		//StudentCrawler studentCrawler = new StudentCrawler();
-		//studentCrawler.crawlCommit();
+		StudentCrawler studentCrawler = new StudentCrawler();
+		studentCrawler.crawlFile();
 	}
 	
 	public void crawlFile(){
@@ -82,6 +82,7 @@ public class StudentCrawler {
 		List<Project> projects = projectCrawlerDao.getGroupProject();
 		
 		for(int m = 0 ; m < projects.size() ; m ++){
+			if(projects.get(m).getId() >= 38){
 			int index = 1;
 			String root = "http://114.55.35.12/api/v3/projects/" + projects.get(m).getId() + "/events?private_token=" + GetTokenInfo.getToken() + "&page=";
 			HttpURLConnection urlConnection = GetURLConnection.getUrlConnection(root + index);
@@ -138,6 +139,7 @@ public class StudentCrawler {
 				e.printStackTrace();
 			}
 			list.clear();
+		}
 		}
 	}
 	

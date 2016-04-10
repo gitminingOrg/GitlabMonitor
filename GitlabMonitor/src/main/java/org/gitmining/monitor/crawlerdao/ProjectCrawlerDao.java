@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.gitmining.monitor.bean.Branch;
 import org.gitmining.monitor.bean.Commit;
+import org.gitmining.monitor.bean.DayHour;
 import org.gitmining.monitor.bean.Project;
 import org.gitmining.monitor.bean.ProjectCommit;
 
@@ -329,6 +330,8 @@ public class ProjectCrawlerDao extends BasicDao {
 			ps.setString(3, type);
 			ps.execute();
 			
+			ps.close();
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -389,16 +392,36 @@ public class ProjectCrawlerDao extends BasicDao {
 		return result;
 	}
 	
-	public void insertDayHour(String day, String hour, int value){
+	public void insertDayHour(int day, int hour, int value){
 		try {
 			PreparedStatement ps = conn.prepareStatement("insert into dayhour(day,hour,value) values(?,?,?)");
-			ps.setString(1, day);
-			ps.setString(2, hour);
+			ps.setInt(1, day);
+			ps.setInt(2, hour);
 			ps.setInt(3, value);
 			ps.execute();
 			
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+	}
+	
+	public List<DayHour> getDayHour(){
+		List<DayHour> result = new ArrayList<DayHour>();
+		try {
+			PreparedStatement ps = conn.prepareStatement("select * from dayhour order by day,hour asc");
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				DayHour dayHour = new DayHour();
+				dayHour.setDay(rs.getInt("day"));
+				dayHour.setHour(rs.getInt("hour"));
+				dayHour.setValue(rs.getInt("value"));
+				
+				result.add(dayHour);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return result;
 	}
 }
