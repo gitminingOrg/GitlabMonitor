@@ -280,7 +280,8 @@ function projectCommit(projectId,startDay,endDay,timeRange){
 			            x: -20 //center
 			        },
 			        xAxis: {
-			            categories: data.day
+			            categories: data.day,
+			            plotBands: data.rangeColors
 			        },
 			        yAxis: {
 			            title: {

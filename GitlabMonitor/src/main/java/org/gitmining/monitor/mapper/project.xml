@@ -62,6 +62,25 @@
 		<result property="ucode" column="ucode" />
 	</resultMap>
 	
+	<resultMap type="org.gitmining.monitor.bean.DeadLine" id="deadline">
+		<result property="id" column="id" />
+		<result property="course_id" column="course_id" />
+		<result property="start_day" column="start_day" />
+		<result property="end_day" column="end_day" />
+		<result property="name" column="name" />
+	</resultMap>
+	
+	<select id="selectCourseDeadlineByProjectId" resultMap="deadline">
+		SELECT
+		id,course_id,start_day,end_day,name
+		FROM 
+		deadline
+		WHERE 
+		course_id
+		IN
+		(select course_id from courseChoose where project_id = #{project_id});
+	</select>
+	
 	<select id="selectAllCourses" resultType="String">
 		SELECT 
 		name

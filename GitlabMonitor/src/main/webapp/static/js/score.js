@@ -119,7 +119,7 @@ function showStatistics(courseName){
 			            }]
 			        },
 			        tooltip: {
-			            valueSuffix: 'Score of 10'
+			            valueSuffix: ' Groups'
 			        },
 			        legend: {
 			            layout: 'vertical',

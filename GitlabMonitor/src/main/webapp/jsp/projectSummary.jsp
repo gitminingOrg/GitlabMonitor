@@ -65,7 +65,7 @@
 	<i onclick="refreshTable(document.getElementById('dayStart').value,document.getElementById('dayEnd').value,'${formula}','${filter}','delete_line');" id="icondeleteline" class="pointing down icon" style="display: none"></i></th> 
 	
 	<th onmouseover="showIcon('javafile');" onmouseout="hideIcon('javafile');">
-	java_file
+	modified_file
 	<i onclick="refreshTable(document.getElementById('dayStart').value,document.getElementById('dayEnd').value,'${formula}','${filter}','java_file');" id="iconjavafile" class="pointing down icon" style="display: none"></i></th> 
 	
 	<th onmouseover="showIcon('totaladd');" onmouseout="hideIcon('totaladd');">

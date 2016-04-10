@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.gitmining.monitor.bean.CourseItem;
+import org.gitmining.monitor.bean.DeadLine;
 import org.gitmining.monitor.bean.ProjectComment;
 import org.gitmining.monitor.bean.ProjectCommit;
 import org.gitmining.monitor.bean.ProjectEvent;
@@ -68,7 +70,7 @@ public class ProjectDao extends BaseDaoImpl{
 	public List<ProjectVO> selectTeamProject(String team){
 		return sqlSession.selectList("project.selectTeamProject", team);
 	}
-	public List<String> selectProjectCommitItemRange(String item,int projectId, String startDay, String endDay){
+	public List<Integer> selectProjectCommitItemRange(String item,int projectId, String startDay, String endDay){
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("item", item);
 		params.put("projectId", projectId);
@@ -77,7 +79,7 @@ public class ProjectDao extends BaseDaoImpl{
 		return sqlSession.selectList("project.selectProjectCommitItemRange", params);
 	}
 	
-	public List<Integer> selectProjectCommitItemRangeDay(String item,int projectId, String startDay, String endDay){
+	public List<String> selectProjectCommitItemRangeDay(String item,int projectId, String startDay, String endDay){
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("item", item);
 		params.put("projectId", projectId);
@@ -135,5 +137,9 @@ public class ProjectDao extends BaseDaoImpl{
 	
 	public List<String> selectAllCourseNames(){
 		return sqlSession.selectList("project.selectAllCourses");
+	}
+	
+	public List<DeadLine> getProjectDeadLine(int projectId){
+		return sqlSession.selectList("project.selectCourseDeadlineByProjectId", projectId);
 	}
 }

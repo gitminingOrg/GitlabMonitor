@@ -1,16 +1,20 @@
 package org.gitmining.monitor.service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.gitmining.monitor.bean.DeadLine;
 import org.gitmining.monitor.bean.ProjectComment;
 import org.gitmining.monitor.bean.ProjectCommit;
 import org.gitmining.monitor.bean.ProjectEvent;
 import org.gitmining.monitor.bean.ProjectVO;
+import org.gitmining.monitor.bean.RangeColor;
 import org.gitmining.monitor.bean.Student;
 import org.gitmining.monitor.bean.StudentCommit;
 import org.gitmining.monitor.bean.TeamVO;
@@ -18,6 +22,7 @@ import org.gitmining.monitor.dao.ProjectDao;
 import org.gitmining.monitor.dao.StudentDao;
 import org.gitmining.monitor.util.FilterUtil;
 import org.gitmining.monitor.util.FormulaUtil;
+import org.gitmining.monitor.util.RandomColorGenerater;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -83,11 +88,15 @@ public class ProjectService {
 			endDay="2020-01-01";
 		}
 		Map<String, Object> result = new HashMap<String, Object>();
+		
 		result.put("commit_count", projectDao.selectProjectCommitItemRange("commit_count",projectId,startDay,endDay));
 		result.put("add_line", projectDao.selectProjectCommitItemRange("add_line",projectId,startDay,endDay));
 		result.put("delete_line", projectDao.selectProjectCommitItemRange("delete_line",projectId,startDay,endDay));
 		result.put("java_file", projectDao.selectProjectCommitItemRange("java_file",projectId,startDay,endDay));
-		result.put("day", projectDao.selectProjectCommitItemRangeDay("day",projectId,startDay,endDay));
+		
+		List<String> days =  projectDao.selectProjectCommitItemRangeDay("day",projectId,startDay,endDay);
+		result.put("day", days);
+		result.put("rangeColors", getRangeColors(days, projectId));
 		return result;
 	}
 	
@@ -263,5 +272,62 @@ public class ProjectService {
 	
 	public List<String> getAllCourses(){
 		return projectDao.selectAllCourseNames();
+	}
+	
+	public List<RangeColor> getRangeColors(List<String> days, int projectId){
+		List<RangeColor> rangeColors = new ArrayList<RangeColor>();
+		if(days.size() == 0){
+			return rangeColors;
+		}
+		
+		List<DeadLine> deadLines = projectDao.getProjectDeadLine(projectId);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		Date startDay=null;
+		Date endDay = null;
+		try {
+			System.out.println(days.get(0).toString());
+			startDay = sdf.parse(days.get(0));
+			endDay = sdf.parse(days.get(days.size()-1));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		long maxRange = (endDay.getTime() - startDay.getTime()) /1000 /60 /60 /24;
+		long startTime = startDay.getTime();
+		for (DeadLine deadLine : deadLines) {
+			try{
+				Date start = sdf.parse(deadLine.getStart_day());
+				Date end = sdf.parse(deadLine.getEnd_day());
+				int from = 0;
+				int to = 0;
+				if(start.before(startDay)){
+					from = 0;
+				}else if(start.after(endDay)){
+					continue;
+				}else{
+					from =(int) ((start.getTime() - startTime) /1000 /60 /60 /24);
+				}
+				
+				if(end.before(startDay)){
+					continue;
+				}else if(end.after(endDay)){
+					to = (int) maxRange;
+				}else{
+					to = (int) ((end.getTime() - startTime) /1000 /60 /60 /24);
+				}
+				
+				String color = RandomColorGenerater.getRandomColor();
+				RangeColor rangeColor = new RangeColor();
+				rangeColor.setColor(color);
+				rangeColor.setFrom(from);
+				rangeColor.setTo(to);
+				
+				rangeColors.add(rangeColor);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		return rangeColors;
 	}
 }
