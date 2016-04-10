@@ -68,7 +68,7 @@
 		<table class="table table-striped table-bordered">
 		<thead><tr> 
 		<th>project</th>
-		<c:forEach items="${items}" var="item"><th>${item.name}&nbsp;<i class="angle left icon" onmouseover="javascript:overLeft(this);" onmouseout="javascript:outLeft(this);"></i>
+		<c:forEach items="${items}" var="item"><th>${item.name}&nbsp;<i style="display: none" class="angle left icon" onmouseover="javascript:overLeft(this);" onmouseout="javascript:outLeft(this);"></i>
 		<i class="remove icon" onmouseover="javascript:overRemove(this);" onmouseout="javascript:outRemove(this);" onclick="show_remove('${item.name}','${item.id}');"></i></th></c:forEach>
 		<th>result</th>
 		</tr>
