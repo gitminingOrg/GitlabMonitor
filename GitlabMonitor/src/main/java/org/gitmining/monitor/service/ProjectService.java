@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.gitmining.monitor.bean.DeadLine;
+import org.gitmining.monitor.bean.MemberCommit;
 import org.gitmining.monitor.bean.ProjectComment;
 import org.gitmining.monitor.bean.ProjectCommit;
 import org.gitmining.monitor.bean.ProjectEvent;
@@ -23,6 +24,7 @@ import org.gitmining.monitor.dao.StudentDao;
 import org.gitmining.monitor.util.FilterUtil;
 import org.gitmining.monitor.util.FormulaUtil;
 import org.gitmining.monitor.util.RandomColorGenerater;
+import org.gitmining.monitor.util.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -243,20 +245,23 @@ public class ProjectService {
 		return projectDao.selectLikeTeams(team);
 	}
 	
-	public Map<String, Object> selectTeamStudentCommitRange(int projectId,String startDay, String endDay){
+	public ResultMap selectTeamStudentCommitRange(int projectId,String startDay, String endDay){
 		if(startDay==null){
 			startDay="2016-01-01";
 		}
 		if(endDay==null){
 			endDay="2020-01-01";
 		}
-		Map<String, Object> result = new HashMap<String, Object>();
+		ResultMap result = new ResultMap();
 		List<StudentCommit> commits = studentDao.selectTeamStudentCommitRange(startDay, endDay, projectId);
 		String[] statistics = {"commit_count","add_line","delete_line","java_file","total_commit","total_add","total_delete"};
-		result.put("statistics", statistics);
+		result.add("statistics", statistics);
+		
+		List<MemberCommit> memberCommits = new ArrayList<MemberCommit>();
 		for (int i = 0; i < commits.size(); i++) {
 			StudentCommit commit = commits.get(i);
-			result.put("stu"+i, commits.get(i).getStudent());
+			MemberCommit memberCommit = new MemberCommit();
+			memberCommit.setName(commits.get(i).getStudent());
 			List<Integer> data = new ArrayList<Integer>();
 			data.add(commit.getCommit_count());
 			data.add(commit.getAdd_line());
@@ -265,8 +270,11 @@ public class ProjectService {
 			data.add(commit.getTotal_commit());
 			data.add(commit.getTotal_add());
 			data.add(commit.getTotal_delete());
-			result.put("data"+i, data);
+			memberCommit.setData(data);
+			memberCommits.add(memberCommit);
 		}
+		result.add("memberCommits", memberCommits);
+		result.setStatus(ResultMap.SUCCESS_STATUS);
 		return result;
 	}
 	

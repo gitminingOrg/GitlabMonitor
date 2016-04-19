@@ -220,7 +220,7 @@ public class ProjectController {
 	
 	
 	@RequestMapping(value=PROJECT_TEAMMEMBER)
-	public Map<String, Object> selectTeamStudentCommitRange(HttpServletRequest request, HttpServletResponse response){
+	public ResultMap selectTeamStudentCommitRange(HttpServletRequest request, HttpServletResponse response){
 		String dayStart = request.getParameter("dayStart");
 		String dayEnd = request.getParameter("dayEnd");
 		String timeRange = request.getParameter("timeRange");
@@ -246,9 +246,9 @@ public class ProjectController {
 			dayEnd = sdf.format(Calendar.getInstance().getTime());
 		}
 		int projectId = Integer.parseInt(request.getParameter("projectId"));
-		Map<String, Object> result =  projectService.selectTeamStudentCommitRange(projectId, dayStart, dayEnd);
-		result.put("dayStart", dayStart);
-		result.put("dayEnd", dayEnd);
+		ResultMap result =  projectService.selectTeamStudentCommitRange(projectId, dayStart, dayEnd);
+		result.add("dayStart", dayStart);
+		result.add("dayEnd", dayEnd);
 		return result;
 	}
 	@RequestMapping(value=PROJECT_TEAM_SEARCH)

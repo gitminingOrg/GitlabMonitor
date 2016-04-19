@@ -213,7 +213,7 @@ function projectCommit(projectId,startDay,endDay){
 			            text: 'gitlab.com'
 			        },
 			        xAxis: {
-			            categories: data.statistics
+			            categories: data.content.statistics
 			        },
 			        yAxis: {
 			            min: 0,
@@ -235,22 +235,7 @@ function projectCommit(projectId,startDay,endDay){
 			                borderWidth: 0
 			            }
 			        },
-			        series: [{
-			            name: data.stu0,
-			            data: data.data0
-
-			        }, {
-			            name: data.stu1,
-			            data: data.data1
-
-			        }, {
-			            name: data.stu2,
-			            data: data.data2
-
-			        }, {
-			            name: data.stu3,
-			            data: data.data3
-			        }]
+			        series: data.content.memberCommits
 			    });
 				$("#dayStart").val(startDay);
 				$("#dayEnd").val(endDay);	
@@ -352,7 +337,7 @@ function projectCommit(projectId,startDay,endDay,timeRange){
 			            text: 'gitlab.com'
 			        },
 			        xAxis: {
-			            categories: data.statistics
+			            categories: data.content.statistics
 			        },
 			        yAxis: {
 			            min: 0,
@@ -374,25 +359,10 @@ function projectCommit(projectId,startDay,endDay,timeRange){
 			                borderWidth: 0
 			            }
 			        },
-			        series: [{
-			            name: data.stu0,
-			            data: data.data0
-
-			        }, {
-			            name: data.stu1,
-			            data: data.data1
-
-			        }, {
-			            name: data.stu2,
-			            data: data.data2
-
-			        }, {
-			            name: data.stu3,
-			            data: data.data3
-			        }]
+			        series: data.content.memberCommits
 			    });
-				$("#dayStart").val(data.dayStart);
-				$("#dayEnd").val(data.dayEnd);
+				$("#dayStart").val(data.content.dayStart);
+				$("#dayEnd").val(data.content.dayEnd);
 			}
 			});
 }
