@@ -27,6 +27,10 @@ public class UserDao extends BaseDaoImpl{
 	public int updateUserStatus(User user) {
 		return sqlSession.update("user.updateUserStatus", user);
 	}
+	
+	public int modifyUserByEmailToken(User user) {
+		return sqlSession.update("user.modifyUserByEmailToken", user);
+	}
 
 
 	public List<User> selectUnactivatedUsers() {

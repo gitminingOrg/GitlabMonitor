@@ -10,7 +10,7 @@
 <link rel="stylesheet"
 	href="/GitlabMonitor/static/js/jquery/css/ui-lightness/jquery-ui-1.9.1.custom.css"
 	type="text/css" charset="utf-8">
-<title>Gitlab Monitor Login</title>
+<title>Gitlab Monitor Login Forget</title>
 </head>
 <body>
 	<div class="container">
@@ -20,21 +20,13 @@
 	</div>
 	
 	<div class="col-md-4">
-		<s:url var="authUrl" value="/login/check"></s:url>
-		<form class="form-signin" method="post" action="${authUrl}">
-			<h2 class="form-signin-heading">Please sign in</h2>
+		<form class="form-signin" method="post" action="/GitlabMonitor/login/forget/email">
+			<h4 class="form-signin-heading">Type your registered email here:</h4>
 			<label for="inputEmail" class="sr-only" >Email address</label> 
-			<input type="text" id="inputEmail" class="form-control" name="j_username" placeholder="login name"> 
-			<label for="inputPassword" class="sr-only">Password</label> 
-			<input type="password" id="inputPassword" class="form-control" name="j_password" placeholder="Password" required>
-			<div class="checkbox">
-				<label> <input type="checkbox" value="remember-me">Remember me</label>
-			</div>
-			<button class="btn btn-lg btn-primary btn-block" type="submit">Signin</button>
-			<a href="/GitlabMonitor/login/forget" class="btn btn-lg btn-warning btn-block" >Forget Password</a>
+			<input type="text" id="inputEmail" class="form-control" name="email" placeholder="register email"> 
+			<button class="btn btn-info btn-block" type="submit">Send forget email</button>
+			
 		</form>
-		
-		<p> ${error} <p>
 	</div>
 	
 	<div class="col-md-4">

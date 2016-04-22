@@ -73,11 +73,11 @@
 			<sf:password id="password" path="password" class="form-control" placeholder="password" />
 			<sf:errors path="password" cssClass="error" />
 			<br/>
-			<sf:password id="repeatPassword" path="password" class="form-control" placeholder="password" onblur="checkUser('repeatPassword',document.getElementById('repeatPassword').value);"/>
-			<input type="hidden" id="repeatPasswordCheck" value="wrong">
-			<div id="repeatPasswordok" style="display: none"><i class="checkmark icon"></i>password verify ok !</div>
-			<div id="repeatPasswordfail" style="display: none"><i class="remove icon"></i>please make sure!</div>
-			<br/>
+<%-- 			<sf:password id="repeatPassword" path="password" class="form-control" placeholder="password" onblur="checkUser('repeatPassword',document.getElementById('repeatPassword').value);"/> --%>
+<!-- 			<input type="hidden" id="repeatPasswordCheck" value="wrong"> -->
+<!-- 			<div id="repeatPasswordok" style="display: none"><i class="checkmark icon"></i>password verify ok !</div> -->
+<!-- 			<div id="repeatPasswordfail" style="display: none"><i class="remove icon"></i>please make sure!</div> -->
+<!-- 			<br/> -->
 			<sf:select path="role" class="form-control">
 			<sf:option value="" label="--choose identity--"></sf:option>
 			<sf:option value="ROLE_NORMAL" label="teacher"></sf:option>	

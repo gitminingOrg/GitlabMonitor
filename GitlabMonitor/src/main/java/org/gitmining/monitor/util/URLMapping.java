@@ -111,4 +111,9 @@ public class URLMapping {
 	 * check whether username or email exists
 	 */
 	public static final String CHECK_RRGISTER_ITEM = "/register/check";
+	
+	public static final String LOGIN_FORGET = "/login/forget";
+	public static final String LOGIN_FORGET_EMAIL = "/login/forget/email";
+	public static final String LOGIN_RESET = "/login/reset";
+	public static final String LOGIN_PASSWORD_RESET = "/login/password/reset";
 }

@@ -33,6 +33,10 @@ public class UserService {
 		return userDao.updateUserStatus(user);
 	}
 	
+	public int modifyUserByEmailToken(User user){
+		return userDao.modifyUserByEmailToken(user);
+	}
+	
 	public boolean checkUserNotExist(String item, String value){
 		User user = null;
 		if(item.equals("name")){
@@ -44,6 +48,18 @@ public class UserService {
 			return false;
 		}
 		return true;
+	}
+	
+	
+	
+	public User getUserByItem(String item, String value){
+		User user = null;
+		if(item.equals("name")){
+			user = userDao.getUserByName(value);
+		}else if(item.equals("email")){
+			user = userDao.getUserByEmail(value);
+		}
+		return user;
 	}
 
 	public List<User> getUnactivatedUsers() {

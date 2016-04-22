@@ -46,6 +46,29 @@
 		where id = #{id};
 	</update>
 	
+	<update id="modifyUserByEmailToken" parameterType="org.gitmining.monitor.bean.User" >
+		UPDATE 
+		user
+		SET
+		<if test="name != null">
+			name=#{name},
+		</if>
+		<if test="password != null">
+			password=#{password},
+		</if>
+		<if test="school_id != null">
+			school_id=#{school_id},
+		</if>
+		<if test="name != null">
+			role=#{role},
+		</if>
+		<if test="status != null">
+			status=#{status},
+		</if>
+		token=#{token}
+		where token = #{token} AND email=#{email};
+	</update>
+	
 	<select id="selectUserByEmail" resultMap="user">
 		SELECT * FROM user WHERE email = #{email};
 	</select>
