@@ -88,14 +88,12 @@
 		course
 	</select>
 	
-	<select id="selectTeamInfo" resultMap="teamVO">
-		SELECT 
+	<select id="selectTeamInfo" resultMap="teamVO">SELECT 
 		id, name, path,description,web_url,ucode
-		FROM
+,homepage		FROM
 		team
 		WHERE
-		name = #{team}
-	</select>
+		name = #{team}</select>
 	
 	<select id="selectTeamLikeInfo" resultMap="teamVO">
 		SELECT 

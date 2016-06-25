@@ -8,6 +8,8 @@ public class TeamVO {
 	private String description;
 	private String web_url;
 	private String ucode;
+	private String homepage;
+	
 	public int getId() {
 		return id;
 	}
@@ -43,5 +45,11 @@ public class TeamVO {
 	}
 	public void setUcode(String ucode) {
 		this.ucode = ucode;
+	}
+	public String getHomepage(){
+		return homepage;
+	}
+	public void setHomepage(String homepage) {
+		this.homepage = homepage;
 	}
 }

@@ -338,4 +338,11 @@ public class ProjectService {
 		}
 		return rangeColors;
 	}
+	
+	public List<ProjectCommit> selectCourseProjectCommitRangeSort(String course,String
+			startDay, String endDay, String order, String method, String formula, String filter){
+				
+		
+		return null;
+	}
 }
