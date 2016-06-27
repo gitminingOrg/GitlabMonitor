@@ -15,8 +15,8 @@
 <%@ include file="nav.jsp" %>
 <div class="container">
 <h2>Project Summary</h2>
-<div class="btn-group" style="float:right;" role="group" aria-label="...">
-	  <button type="button" class="btn btn-primary" onclick="showInfoChart();">Time Range</button>
+<div class="btn-group" style="float:right;" role="group" aria-label="...">	  
+	  <button type="button" class="btn btn-primary">Time Range</button>
 	  <div class="btn-group" role="group">
 	    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	      Choose
@@ -32,7 +32,12 @@
 <form id="commitRange" class="form-inline" action="/GitlabMonitor/project/summary" method="POST" >
 	<input type="text" id="dayStart" class="form-control" name="dayStart" value="${dayStart}" placeholder="start day"/>
 	<input type="text" id="dayEnd" class="form-control" name="dayEnd" value="${dayEnd}" placeholder="end day"/>
-
+	<select name="course" class="form-control" id="course">
+		<option value='all' selected="selected">all courses</option>
+		<option value='2016_nju_se_cseiii'>2016_nju_se_cseiii</option>
+		<option value='2016_nju_se_gitmining'>2016_nju_se_gitmining</option>
+		<option value='top12'>top12</option>
+	</select>
 	<input type="submit" class="btn btn-primary " value="&nbsp;&nbsp;GO !&nbsp;&nbsp;">
 	<br />
 	<div class="input-group">

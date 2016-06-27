@@ -1,7 +1,14 @@
 package org.gitmining.monitor.controller;
 
+import static org.gitmining.monitor.util.URLMapping.PROJECT_COMMIT;
+import static org.gitmining.monitor.util.URLMapping.PROJECT_COMMIT_RANGE;
+import static org.gitmining.monitor.util.URLMapping.PROJECT_SUMMARY;
+import static org.gitmining.monitor.util.URLMapping.PROJECT_SUMMARY_DATA;
+import static org.gitmining.monitor.util.URLMapping.PROJECT_TEAM;
+import static org.gitmining.monitor.util.URLMapping.PROJECT_TEAMMEMBER;
+import static org.gitmining.monitor.util.URLMapping.PROJECT_TEAM_SEARCH;
+
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -10,8 +17,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.gitmining.monitor.bean.ProjectComment;
-import org.gitmining.monitor.bean.ProjectCommit;
 import org.gitmining.monitor.bean.ProjectVO;
 import org.gitmining.monitor.bean.Student;
 import org.gitmining.monitor.bean.TeamVO;
@@ -21,8 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
-import static org.gitmining.monitor.util.URLMapping.*;
 
 @RestController
 public class ProjectController {

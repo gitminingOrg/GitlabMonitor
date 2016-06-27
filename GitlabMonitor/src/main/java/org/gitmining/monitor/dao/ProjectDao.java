@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.gitmining.monitor.bean.CourseItem;
 import org.gitmining.monitor.bean.DeadLine;
 import org.gitmining.monitor.bean.ProjectComment;
 import org.gitmining.monitor.bean.ProjectCommit;
