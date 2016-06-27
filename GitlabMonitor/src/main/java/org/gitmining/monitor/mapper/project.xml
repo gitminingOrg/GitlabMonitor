@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="project">
 	<resultMap type="org.gitmining.monitor.bean.ProjectCommit" id="projectCommit">
-		<result property="id" column="id" />
 		<result property="team" column="team" />
 		<result property="name" column="name" />
 		<result property="day" column="day" />
@@ -89,8 +88,8 @@
 	</select>
 	
 	<select id="selectTeamInfo" resultMap="teamVO">SELECT 
-		id, name, path,description,web_url,ucode
-,homepage		FROM
+		id, name, path,description,web_url,ucode,homepage		
+		FROM
 		team
 		WHERE
 		name = #{team}</select>

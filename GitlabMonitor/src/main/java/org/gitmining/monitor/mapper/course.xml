@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="course">
+	<resultMap type="org.gitmining.monitor.bean.Course" id="course">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="school_id" column="school_id" />
+		<result property="starttime" column="starttime" />
+		<result property="endtime" column="endtime" />
+		<result property="teachers" column="teachers" />
+	</resultMap>
+	
+	<select id="selectAllCourses" resultMap="course">
+		SELECT 
+		id,name,school_id,starttime,endtime,teachers
+		FROM
+		course
+	</select>
+	
+	<insert id="insertCourse" parameterType="org.gitmining.monitor.bean.Course">
+		INSERT INTO
+		course(name,school_id,starttime,endtime,teachers)
+		VALUES(#{name},#{school_id},#{starttime},#{endtime},#{teachers})
+	</insert>
+	
+	<delete id="deleteCourse">
+		DELETE FROM
+		course
+		WHERE
+		id=#{id}
+	</delete>
+	
+	<select id="selectCourseById" resultMap="course">
+		SELECT 
+		id,name,school_id,starttime,endtime,teachers
+		FROM
+		course
+		WHERE
+		id=#{id}
+	</select>
+	<select id="selectCourseByName" resultMap="course">
+		SELECT 
+		id,name,school_id,starttime,endtime,teachers
+		FROM
+		course
+		WHERE
+		name=#{name}
+	</select>	
+	<insert id="insertCourseChoose" parameterType="java.util.Map">
+		INSERT INTO
+		courseChoose(project_id,course_id)
+		VALUES(#{project_id},#{course_id})
+	</insert>
+	
+	<delete id="deleteCourseChoose" parameterType="java.util.Map">
+		DELETE FROM
+		courseChoose
+		WHERE
+		project_id = #{project_id}
+		AND
+		course_id = #{course_id}
+	</delete>
+</mapper>

@@ -88,31 +88,6 @@ public class ProjectDao extends BaseDaoImpl{
 		return sqlSession.selectList("project.selectProjectCommitItemRangeDay", params);
 	}
 	
-	public List<ProjectEvent> selectProjectEventRange(String team, String startDay, String endDay){
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("team", team);
-		params.put("startDay", startDay);
-		params.put("endDay", endDay);
-		return sqlSession.selectList("project.selectProjectEventRange", params);
-	}
-	
-	public List<ProjectEvent> selectAllProjectEventRange(String startDay, String endDay){
-//		Map<String, Object> params = new HashMap<String, Object>();
-//		params.put("startDay", startDay);
-//		params.put("endDay", endDay);
-//		return sqlSession.selectList("project.selectAllProjectEventRange", params);
-		return selectAllProjectEventRangeSort(startDay, endDay, "total", "desc");
-	}
-	
-	public List<ProjectEvent> selectAllProjectEventRangeSort(String startDay, String endDay, String order, String method){
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("startDay", startDay);
-		params.put("endDay", endDay);
-		params.put("order", order);
-		params.put("method", method);
-		System.out.println(method);
-		return sqlSession.selectList("project.selectAllProjectEventRange", params);
-	}
 	
 	public List<Integer> selectProjectEventItemRange(String item,String team, String startDay, String endDay){
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -131,10 +106,7 @@ public class ProjectDao extends BaseDaoImpl{
 		params.put("endDay", endDay);
 		return sqlSession.selectList("project.selectProjectEventItemRangeDay", params);
 	}
-	public boolean insertProjectEvent(ProjectEvent projectEvent){
-		return sqlSession.insert("project.insertProjectEvent", projectEvent) == 1 ?true:false;
-	}
-	
+
 	public List<String> selectAllCourseNames(){
 		return sqlSession.selectList("project.selectAllCourses");
 	}
