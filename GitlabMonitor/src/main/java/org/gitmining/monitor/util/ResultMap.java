@@ -38,4 +38,7 @@ public class ResultMap {
 		content.put(name, data);
 		return true;
 	}
+	public Object get(String name){
+		return content.get(name);
+	}
 }

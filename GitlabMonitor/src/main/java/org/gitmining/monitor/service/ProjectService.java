@@ -46,40 +46,44 @@ public class ProjectService {
 		return projectDao.selectProjectComment(team);
 	}
 	
-	public Map<String, Object> insertProjectComments(String team, String token, String words){
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		HttpClientDeal deal = new HttpClientDeal();
-		if(!token.equals("adminliujia") && !deal.getHttpTokenStatus(token)){
-			resultMap.put("status", 0);
-			resultMap.put("reason", "token invalid");
-			
-		}else{
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			Calendar calendar = Calendar.getInstance();
-			String now = sdf.format(calendar.getTime());
-			calendar.add(Calendar.MINUTE, -5);
-			String minuteAgo = sdf.format(calendar.getTime());
-			System.out.println(minuteAgo);
-			if(words.length() > 150 || projectDao.selectProjectCommentCount(team, token, minuteAgo) >= 10){
-				resultMap.put("status", 0);
-				resultMap.put("reason", "why u have so many words to say?");
+	public ResultMap projectCommitByCourse(String course,String startDay, String endDay, String order, String method, String formula, String filter){
+		if(startDay==null){
+			startDay="2016-01-01";
+		}
+		if(endDay==null){
+			endDay="2020-01-01";
+		}
+		if(course != null && course.equalsIgnoreCase("all")){
+			course = null;
+		}
+		List<ProjectCommit> result = projectDao.selectCourseProjectCommitRangeSort(course,startDay, endDay, order, method);
+		Map<String, Integer> filterMap = FilterUtil.parseFilter(filter);
+		
+		for (int i=0; i<result.size(); i++) {
+			ProjectCommit projectCommit = result.get(i);
+			if(filterMap != null && !projectCommit.validate(filterMap)){
+				result.remove(projectCommit);
+				i--;
 			}else{
-				ProjectComment studentComment = new ProjectComment();
-				studentComment.setTeam(team);
-				studentComment.setToken(token);
-				studentComment.setWords(words);
-				studentComment.setTime(now);
-				boolean insert = projectDao.insertProjectComment(studentComment);
-				if(insert == false){
-					resultMap.put("status", 1);
-					resultMap.put("reason", "insert succeed");
-				}else{
-					resultMap.put("status", 1);
-					resultMap.put("reason", "insert succeed");
+				Map<String, Double> dict = new HashMap<String, Double>();
+				dict.put("add_line", (double) projectCommit.getAdd_line());
+				dict.put("delete_line", (double) projectCommit.getDelete_line());
+				dict.put("commit_count", (double) projectCommit.getCommit_count());
+				dict.put("java_file", (double) projectCommit.getJava_file());
+				dict.put("total_add", (double) projectCommit.getTotal_add());
+				dict.put("total_delete", (double) projectCommit.getTotal_delete());
+				dict.put("total_commit", (double) projectCommit.getTotal_commit());
+				if(formula != null && formula.trim().length() > 0){
+					formula = formula.replaceAll(" ", "");
+					projectCommit.setFormula(FormulaUtil.calFormula(formula, dict));
 				}
 			}
 			
 		}
+		
+		ResultMap resultMap = new ResultMap();
+		resultMap.setStatus(ResultMap.SUCCESS_STATUS);
+		resultMap.add("commits", result);
 		return resultMap;
 	}
 	public Map<String, Object> getProjectCommitItem(int projectId, String startDay, String endDay){
@@ -101,114 +105,6 @@ public class ProjectService {
 		result.put("rangeColors", getRangeColors(days, projectId));
 		return result;
 	}
-	
-	public Map<String, List> getProjectEventItem(String project, String startDay, String endDay){
-		if(startDay==null){
-			startDay="2016-01-01";
-		}
-		if(endDay==null){
-			endDay="2020-01-01";
-		}
-		Map<String, List> result = new HashMap<String, List>();
-		result.put("push", projectDao.selectProjectEventItemRange("push",project,startDay,endDay));
-		result.put("issue", projectDao.selectProjectEventItemRange("issue",project,startDay,endDay));
-		result.put("comment", projectDao.selectProjectEventItemRange("comment",project,startDay,endDay));
-		result.put("create", projectDao.selectProjectEventItemRange("create",project,startDay,endDay));
-		result.put("total", projectDao.selectProjectEventItemRange("total",project,startDay,endDay));
-		result.put("day", projectDao.selectProjectEventItemRangeDay("day",project,startDay,endDay));
-		return result;
-	}
-	
-	public List<ProjectCommit> selectAllProjectCommitRange(String startDay, String endDay, String formula,String filter){
-		if(startDay==null){
-			startDay="2016-01-01";
-		}
-		if(endDay==null){
-			endDay="2020-01-01";
-		}
-		List<ProjectCommit> result = projectDao.selectAllProjectCommitRange(startDay, endDay);
-		Map<String, Integer> filterMap = FilterUtil.parseFilter(filter);
-		
-		for (int i=0; i<result.size(); i++) {
-			ProjectCommit projectCommit = result.get(i);
-			if(filterMap != null && !projectCommit.validate(filterMap)){
-				result.remove(projectCommit);
-				i--;
-			}else{
-				Map<String, Double> dict = new HashMap<String, Double>();
-				dict.put("add_line", (double) projectCommit.getAdd_line());
-				dict.put("delete_line", (double) projectCommit.getDelete_line());
-				dict.put("commit_count", (double) projectCommit.getCommit_count());
-				dict.put("java_file", (double) projectCommit.getJava_file());
-				dict.put("total_add", (double) projectCommit.getTotal_add());
-				dict.put("total_delete", (double) projectCommit.getTotal_delete());
-				dict.put("total_commit", (double) projectCommit.getTotal_commit());
-				if(formula != null && formula.trim().length() > 0){
-					formula = formula.replaceAll(" ", "");
-					projectCommit.setFormula(FormulaUtil.calFormula(formula, dict));
-				}
-			}
-		}
-		
-		return result;
-	}
-	
-	public List<ProjectCommit> selectAllProjectCommitRangeSort(String startDay, String endDay, String order, String method, String formula, String filter){
-		if(startDay==null){
-			startDay="2016-01-01";
-		}
-		if(endDay==null){
-			endDay="2020-01-01";
-		}
-		List<ProjectCommit> result = projectDao.selectAllProjectCommitRangeSort(startDay, endDay, order, method);
-		Map<String, Integer> filterMap = FilterUtil.parseFilter(filter);
-		
-		for (int i=0; i<result.size(); i++) {
-			ProjectCommit projectCommit = result.get(i);
-			if(filterMap != null && !projectCommit.validate(filterMap)){
-				result.remove(projectCommit);
-				i--;
-			}else{
-				Map<String, Double> dict = new HashMap<String, Double>();
-				dict.put("add_line", (double) projectCommit.getAdd_line());
-				dict.put("delete_line", (double) projectCommit.getDelete_line());
-				dict.put("commit_count", (double) projectCommit.getCommit_count());
-				dict.put("java_file", (double) projectCommit.getJava_file());
-				dict.put("total_add", (double) projectCommit.getTotal_add());
-				dict.put("total_delete", (double) projectCommit.getTotal_delete());
-				dict.put("total_commit", (double) projectCommit.getTotal_commit());
-				if(formula != null && formula.trim().length() > 0){
-					formula = formula.replaceAll(" ", "");
-					projectCommit.setFormula(FormulaUtil.calFormula(formula, dict));
-				}
-			}
-			
-		}
-		return result;
-	}
-	
-	public List<ProjectEvent> selectAllProjectEventRange(String startDay, String endDay){
-		if(startDay==null){
-			startDay="2016-01-01";
-		}
-		if(endDay==null){
-			endDay="2020-01-01";
-		}
-		List<ProjectEvent> result = projectDao.selectAllProjectEventRange(startDay, endDay);
-		return result;
-	}
-	
-	public List<ProjectEvent> selectAllProjectEventRangeSort(String startDay, String endDay, String order, String method){
-		if(startDay==null){
-			startDay="2016-01-01";
-		}
-		if(endDay==null){
-			endDay="2020-01-01";
-		}
-		List<ProjectEvent> result = projectDao.selectAllProjectEventRangeSort(startDay, endDay, order, method);
-		return result;
-	}
-	
 	public List<Student> getTeamStudent(String team){
 		List<Student> students = new ArrayList<Student>();
 		if(team == null || team.length() == 0){

@@ -29,20 +29,6 @@ public class ProjectController {
 	@Autowired
 	private ProjectService projectService;
 	
-	@RequestMapping(value=PROJECT_COMMENT)
-	public List<ProjectComment> getProjectComment(HttpServletRequest request,HttpServletResponse response){
-		String team = request.getParameter("team");
-		return projectService.getProjectComments(team);
-	}
-	
-	@RequestMapping(value=PROJECT_COMMENT_SUBMIT)
-	public Map<String,Object> getProjectCommentSubmit(HttpServletRequest request,HttpServletResponse response){
-		String team = request.getParameter("team");
-		String token = request.getParameter("token");
-		String words = request.getParameter("sen");
-		return projectService.insertProjectComments(team, token, words);
-	}
-	
 	@RequestMapping(value=PROJECT_COMMIT_RANGE)
 	public Map<String, Object> getProjectCommitItemRange(HttpServletRequest request,HttpServletResponse response){
 		String dayStart = request.getParameter("dayStart");
@@ -109,15 +95,6 @@ public class ProjectController {
 		return result;
 	}
 	
-	@RequestMapping(value=PROJECT_EVENT)
-	public ModelAndView showProjectEventPage(HttpServletRequest request,HttpServletResponse response){
-		ModelAndView result = new ModelAndView("projectEvent");
-		String team = request.getParameter("team");
-		if(team != null){
-			result.addObject("team", team);
-		}
-		return result;
-	}
 	@RequestMapping(value=PROJECT_TEAM)
 	public ModelAndView showProjectTeamPage(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView result = new ModelAndView("projectMember");
@@ -127,13 +104,6 @@ public class ProjectController {
 		}
 		return result;
 	}
-	@RequestMapping(value=PROJECT_EVENT_RANGE)
-	public Map<String, List> getProjectEventItemRange(HttpServletRequest request,HttpServletResponse response){
-		String team = request.getParameter("team");
-		String dayStart = request.getParameter("dayStart");
-		String dayEnd = request.getParameter("dayEnd");
-		return projectService.getProjectEventItem(team, dayStart, dayEnd);
-	}
 	
 	@RequestMapping(value=PROJECT_SUMMARY_DATA)
 	public Map<String, Object> ProjectCommitSummaryData(HttpServletRequest request,HttpServletResponse respons){
@@ -141,7 +111,7 @@ public class ProjectController {
 		String dayStart = request.getParameter("dayStart");
 		String dayEnd = request.getParameter("dayEnd");
 		String commitOrder = request.getParameter("commitOrder");
-		//String eventOrder = request.getParameter("eventOrder");
+		String course = request.getParameter("course");
 		String formula = request.getParameter("formula");
 		String filter = request.getParameter("filter");
 		String timeRange = request.getParameter("range");
@@ -167,14 +137,8 @@ public class ProjectController {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			dayEnd = sdf.format(Calendar.getInstance().getTime());
 		}
-		List<ProjectCommit> commits = new ArrayList<ProjectCommit>();
-		if(commitOrder == null){
-			commits = projectService.selectAllProjectCommitRange(dayStart, dayEnd, formula, filter);
-		}else{
-			commits = projectService.selectAllProjectCommitRangeSort(dayStart, dayEnd,commitOrder,method, formula, filter);
-		}
-		
-		result.put("commits", commits);
+		ResultMap commitResult = projectService.projectCommitByCourse(course,dayStart, dayEnd,commitOrder,method, formula, filter);
+		result.put("commits", commitResult.get("commits"));
 		result.put("formula", formula);
 		result.put("filter", filter);
 		result.put("dayStart", dayStart);
@@ -187,7 +151,7 @@ public class ProjectController {
 		String dayStart = request.getParameter("dayStart");
 		String dayEnd = request.getParameter("dayEnd");
 		String commitOrder = request.getParameter("commitOrder");
-		//String eventOrder = request.getParameter("eventOrder");
+		String course = request.getParameter("course");
 		String formula = request.getParameter("formula");
 		String filter = request.getParameter("filter");
 		String method = request.getParameter("method");
@@ -198,19 +162,10 @@ public class ProjectController {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			dayEnd = sdf.format(Calendar.getInstance().getTime());
 		}
-		List<ProjectCommit> commits = new ArrayList<ProjectCommit>();
-		//List<ProjectEvent> events = new ArrayList<ProjectEvent>();
-		if(commitOrder == null){
-			commits = projectService.selectAllProjectCommitRange(dayStart, dayEnd, formula, filter);
-			//events = projectService.selectAllProjectEventRange(dayStart, dayEnd);
-		}else{
-			commits = projectService.selectAllProjectCommitRangeSort(dayStart, dayEnd,commitOrder,method, formula, filter);
-			//events = projectService.selectAllProjectEventRangeSort(dayStart, dayEnd,eventOrder,method);
-		}
-		
+		ResultMap commitResult = projectService.projectCommitByCourse(course,dayStart, dayEnd,commitOrder,method, formula, filter);
 		ModelAndView result = new ModelAndView("projectSummary");
 		
-		result.addObject("commits", commits);
+		result.addObject("commits", commitResult.get("commits"));
 		result.addObject("formula", formula);
 		result.addObject("filter", filter);
 		result.addObject("dayStart", dayStart);

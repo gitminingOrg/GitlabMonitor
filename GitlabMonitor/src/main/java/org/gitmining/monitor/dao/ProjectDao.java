@@ -42,22 +42,23 @@ public class ProjectDao extends BaseDaoImpl{
 		return sqlSession.selectList("project.selectProjectCommitRange", params);
 	}
 	
-	public List<ProjectCommit> selectAllProjectCommitRange(String startDay, String endDay){
-//		Map<String, Object> params = new HashMap<String, Object>();
-//		params.put("startDay", startDay);
-//		params.put("endDay", endDay);
-//		return sqlSession.selectList("project.selectAllProjectCommitRange", params);
-		return selectAllProjectCommitRangeSort(startDay, endDay, "commit_count", "desc");
-	}
-	
-	public List<ProjectCommit> selectAllProjectCommitRangeSort(String startDay, String endDay, String order, String method){
+	public List<ProjectCommit> selectCourseProjectCommitRangeSort(String course,String startDay, String endDay, String order, String method){
+		if(order == null || order.length() == 0){
+			order = "commit_count";
+		}
+		if(method == null || method.length() == 0){
+			method = "desc";
+		}
 		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("course", course);
 		params.put("startDay", startDay);
 		params.put("endDay", endDay);
 		params.put("order", order);
 		params.put("method", method);
 		return sqlSession.selectList("project.selectAllProjectCommitRange", params);
 	}
+	
+	
 	
 	public TeamVO selectTeamInfo(String team){
 		return sqlSession.selectOne("project.selectTeamInfo", team);

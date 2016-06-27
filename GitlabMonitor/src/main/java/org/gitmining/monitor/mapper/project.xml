@@ -153,7 +153,13 @@
 		max(total_commit) AS total_commit,max(total_add) AS total_add,max(total_delete) AS total_delete,team   
 		FROM   
 		projectCommit p, groupproject g  
-		WHERE  p.id = g.id AND `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} group by id 
+		WHERE
+		  
+		<if test="course != null">
+		p.id in (select project_id from courseChoose cc, course c where cc.course_id = c.id and c.name= #{course}) AND 
+		</if>
+		
+		p.id = g.id AND `day` &gt;= #{startDay} AND `day` &lt;= #{endDay} group by id 
 		<if test="order != null">
 		ORDER BY `${order}` ${method}
 		</if>
