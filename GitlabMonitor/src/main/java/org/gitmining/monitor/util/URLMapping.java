@@ -36,17 +36,6 @@ public class URLMapping {
 	 * get project team team data
 	 */
 	public static final String PROJECT_TEAMMEMBER = "/project/teammember";
-	
-	/**
-	 * get project comment data
-	 */
-	@Deprecated
-	public static final String PROJECT_COMMENT = "/project/comment";
-	/**
-	 * submit project comment
-	 */
-	@Deprecated
-	public static final String PROJECT_COMMENT_SUBMIT = "/project/comment/submit";
 	/**
 	 * show project score
 	 */
@@ -88,29 +77,14 @@ public class URLMapping {
 	 */
 	public static final String STUDENT_SUMMARY_DATA = "/student/summary/data";
 	/**
-	 * show student event page
-	 */
-	@Deprecated
-	public static final String STUDENT_EVENT = "/student/event";
-	/**
-	 * get student event data
-	 */
-	@Deprecated
-	public static final String STUDENT_EVENT_RANGE = "/student/event/range";
-	/**
-	 * get student comment data
-	 */
-	@Deprecated
-	public static final String STUDENT_COMMENT = "/student/comment";
-	/**
-	 * submit student comment
-	 */
-	@Deprecated
-	public static final String STUDENT_COMMENT_SUBMIT = "/student/comment/submit";
-	/**
 	 * check whether username or email exists
 	 */
 	public static final String CHECK_RRGISTER_ITEM = "/register/check";
+	
+	/**
+	 * show course manage homepage
+	 */
+	public static final String COURSE_HOMEPAGE = "/course/manage";
 	
 	public static final String LOGIN_FORGET = "/login/forget";
 	public static final String LOGIN_FORGET_EMAIL = "/login/forget/email";

@@ -36,6 +36,7 @@
             <li><a href="/GitlabMonitor/project/score">Project Score</a></li>
           </ul>
         </li>
+        <li><a href="/GitlabMonitor/course/manage">Course</a></li>
         <sec:authorize access="hasRole('ROLE_ADMIN')">
         <li class="dropdown">
         	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>

@@ -52,20 +52,6 @@ public class StudentController {
 		return result;
 	}
 	
-	@RequestMapping(value=STUDENT_COMMENT)
-	public List<StudentComment> getStudentComment(HttpServletRequest request,HttpServletResponse response){
-		String student = request.getParameter("student");
-		return studentService.getStudentComments(student);
-	}
-	
-	@RequestMapping(value=STUDENT_COMMENT_SUBMIT)
-	public Map<String,Object> getStudentCommentSubmit(HttpServletRequest request,HttpServletResponse response){
-		String student = request.getParameter("student");
-		String token = request.getParameter("token");
-		String words = request.getParameter("sen");
-		return studentService.insertStudentComments(student, token, words);
-	}
-	
 	@RequestMapping(value=STUDENT_COMMIT)
 	public ModelAndView showStudentCommitPage(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView result = new ModelAndView("studentCommit");
@@ -94,20 +80,6 @@ public class StudentController {
 		return result;
 	}
 	
-	@RequestMapping(value=STUDENT_EVENT)
-	public ModelAndView showStudentEventPage(HttpServletRequest request,HttpServletResponse response){
-		ModelAndView result = new ModelAndView("studentEvent");
-		String student = request.getParameter("student");
-		if(student != null){
-			result.addObject("student", student);
-		}
-		return result;
-	}
-	
-	@RequestMapping(value=STUDENT_EVENT_RANGE)
-	public Map<String, List> getStudentEventItemRange(String student, String dayStart, String dayEnd){
-		return studentService.getStudentEventItem(student, dayStart, dayEnd);
-	}
 	
 	@RequestMapping(value=STUDENT_SUMMARY)
 	public ModelAndView showAllStudentSummary(HttpServletRequest request,HttpServletResponse response){
