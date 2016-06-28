@@ -5,8 +5,22 @@ function show(){
 }
 
 function addCourse(){
-	var courseName = $("#courseName").val();
-	var dayStart = $("#dayStart").val();
-	var dayEnd = $("#dayEnd").val();
+	var name = $("#courseName").val();
+	var starttime = $("#dayStart").val();
+	var endtime = $("#dayEnd").val();
 	var teachers = $("#teachers").val();
+	
+	var url = "/GitlabMonitor/course/add";
+	$.ajax(url, {
+		type : 'POST',
+		data : {
+			"name" : name,
+			"starttime" : starttime,
+			"endtime" : endtime,
+			"teachers" : teachers
+		},
+		success : function(data, textStatus) {
+			
+		}
+	});
 }

@@ -86,6 +86,8 @@ public class URLMapping {
 	 */
 	public static final String COURSE_HOMEPAGE = "/course/manage";
 	
+	public static final String COURSE_ADD = "/course/add";
+	
 	public static final String LOGIN_FORGET = "/login/forget";
 	public static final String LOGIN_FORGET_EMAIL = "/login/forget/email";
 	public static final String LOGIN_RESET = "/login/reset";

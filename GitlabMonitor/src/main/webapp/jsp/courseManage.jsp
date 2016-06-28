@@ -58,7 +58,7 @@
     <div class="ui black deny button">
       Cancel
     </div>
-    <div class="ui positive right labeled icon button" onclick="addCourse">
+    <div class="ui positive right labeled icon button" onclick="addCourse()">
       Okay, just add.
       <i class="checkmark icon"></i>
     </div>
