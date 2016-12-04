@@ -40,22 +40,34 @@ public class MailService {
 		this.jmsTemplate = jmsTemplate;
 	}
 
+	/**
+	 * generating a sending email message, push it to activemq
+	 * @param to
+	 * @param title
+	 * @param content
+	 * @return
+	 */
 	public boolean sendMail(String to, String title, String content){
 		final MailBean mailBean = new MailBean("ch2_27@sina.com",to,title,content,MailBean.SIMPLE_MAIL);
 		jmsTemplate.send(new MessageCreator() {
 			public Message createMessage(Session session) throws JMSException {
-				// TODO Auto-generated method stub
 				return session.createObjectMessage(mailBean);
 			}
 		});
 		return true;
 	}
 	
+	/**
+	 * generating a sending HTML email message, push it to activemq
+	 * @param to
+	 * @param title
+	 * @param content
+	 * @return
+	 */
 	public boolean sendHtmlMail(String to, String title, String content){
 		final MailBean mailBean = new MailBean("ch2_27@sina.com",to,title,content,MailBean.HTML_MAIL);
 		jmsTemplate.send(new MessageCreator() {
 			public Message createMessage(Session session) throws JMSException {
-				// TODO Auto-generated method stub
 				return session.createObjectMessage(mailBean);
 			}
 		});

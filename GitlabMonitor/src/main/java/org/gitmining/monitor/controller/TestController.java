@@ -41,28 +41,15 @@ public class TestController {
 	@Autowired
 	public ThreadPoolTaskExecutor executor;
 	
-	
-//	@RequestMapping("/test")
-//	public String test(){
-//		//mailService.sendUpdateSuccessMail();
-//		for (int i = 0; i < 30; i++) {
-//			executor.execute(new Runnable() {
-//				public void run() {
-//					// TODO Auto-generated method stub
-//					System.out.println(Thread.currentThread().getName());
-//				}
-//			});
-//		}
-//		return "ok";
-//	}
+
 	@Autowired
 	public ScoreDao scoreDao;
 	@RequestMapping("/test")
-	public Object test(HttpServletRequest request, HttpServletResponse response){
+	public ModelAndView test(HttpServletRequest request, HttpServletResponse response){
 		//updateDataService.testUpdateData();
 		//mailService.sendUpdateSuccessMail();
-		int id = Integer.parseInt(request.getParameter("id"));
-		return scoreService.updateItemStatistics(id);
+		ModelAndView view = new ModelAndView("clock");
+		return view;
 	}
 	
 	@RequestMapping("/try")
@@ -79,7 +66,6 @@ public class TestController {
 			completionService.submit(new Callable<Integer>() {	
 				public Integer call() throws Exception {
 					// TODO Auto-generated method stub
-					
 					return integer;
 				}
 			});
@@ -96,6 +82,12 @@ public class TestController {
 		return view;
 	}
 	
+	/**
+	 * relationship chart data, zhaoyufeng can explain it
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping("/relation")
 	public String getRelation(HttpServletRequest request,HttpServletResponse response){
 		String day = request.getParameter("endDay");
@@ -132,6 +124,12 @@ public class TestController {
 		return result;
 	}
 	
+	/**
+	 * day hour -> working time heat map, zhaoyufeng can explain it
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping("/dayhour")
 	public String getDayHour(HttpServletRequest request,HttpServletResponse response){
 		int projectid = Integer.parseInt(request.getParameter("projectID"));

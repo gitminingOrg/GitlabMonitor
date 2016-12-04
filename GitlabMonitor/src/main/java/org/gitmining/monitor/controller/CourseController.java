@@ -20,6 +20,13 @@ import org.springframework.web.servlet.ModelAndView;
 public class CourseController {
 	@Autowired
 	CourseService courseService;
+	
+	/**
+	 * mapping to the course page,show all the courses included in our system
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(value=COURSE_HOMEPAGE)
 	public ModelAndView showCourseManage(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView view = new ModelAndView("courseManage");
@@ -28,6 +35,12 @@ public class CourseController {
 		return view;
 	}
 	
+	/**
+	 * add a new course
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(value=COURSE_ADD)
 	public ResultMap addCourse(HttpServletRequest request,HttpServletResponse response){
 		ResultMap resultMap = new ResultMap();

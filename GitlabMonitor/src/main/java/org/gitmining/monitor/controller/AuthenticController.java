@@ -24,6 +24,12 @@ public class AuthenticController {
 	@Autowired
 	private MailService mailService;
 	
+	/**
+	 * mapping to the login page
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping("/login")
 	public ModelAndView showLogin(HttpServletRequest request,HttpServletResponse response){
 		ModelAndView view = new ModelAndView();
@@ -54,6 +60,12 @@ public class AuthenticController {
 		return "redirect:/activation/" + user.getName();
 	}
 	
+	/**
+	 * activate a new registered account
+	 * @param name
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/activation/{name}")
 	public String activateUser(@PathVariable String name, Model model) {
 		User user = userService.getUserByName(name);
@@ -67,8 +79,6 @@ public class AuthenticController {
 						+ user.getName() + "/"
 						+ user.getToken()
 						+ "\">here</a> to activate your email(if not works, you can copy the link to your browser)";
-//		String content2 = "<a href=\""
-//				+"http://www.gitmining.net" + "\">点击</a>";
 		mailService.sendHtmlMail(toEmail, title, content);
 		model.addAttribute(user);
 		model.addAttribute("emailSend", "activation email has been send, please check it.");
@@ -79,13 +89,11 @@ public class AuthenticController {
 	public String activateUserEmail(@PathVariable String name, @PathVariable String token, Model model) {
 		User user = userService.getUserByName(name);
 		if(user == null) {
-//			System.out.println("noName");
 			model.addAttribute("noName", "no such user");
 			return "activationResult";
 		}
 		
 		if(!user.getToken().equals(token)){
-//			System.out.println("EmailActivationFail");
 			model.addAttribute("user", user);
 			model.addAttribute("emailActivationFail", "email activation fail");
 			return "activationResult";
@@ -100,6 +108,13 @@ public class AuthenticController {
 		return "activationResult";
 	}
 	
+	/**
+	 * after activating by email confirmed, we need to double confirm the account by a system admin
+	 * @param name
+	 * @param from
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/admin/activation/{name}/{from}")
 	public String adminActivateUser(@PathVariable String name,
 									@PathVariable String from, Model model) {
