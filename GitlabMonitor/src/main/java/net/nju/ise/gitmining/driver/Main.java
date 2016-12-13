@@ -1,10 +1,12 @@
 package net.nju.ise.gitmining.driver;
 
 import net.nju.ise.gitmining.enricher.Enricher;
+import net.nju.ise.gitmining.enricher.MaxOrMinEnricher;
 import net.nju.ise.gitmining.enricher.RankEnricher;
 import net.nju.ise.gitmining.enricher.RankingAnalysisEnricher;
 import net.nju.ise.gitmining.enricher.StringAppendEnricher;
 import net.nju.ise.gitmining.generator.TableGenerator;
+import net.nju.ise.gitmining.model.Constant;
 import net.nju.ise.gitmining.model.Table;
 
 public class Main {
@@ -27,6 +29,15 @@ public class Main {
 		
 		System.out.println(table.getTableDetail().size());
 		System.out.println(table.getRows().get(0).size());
+		
+		enricher = new MaxOrMinEnricher();
+		enricher.enrich(table, "cse3score", Constant.MAX);
+		enricher.enrich(table, "cse3score", Constant.MIN);
+		enricher.enrich(table, "cse2score", Constant.MAX);
+		enricher.enrich(table, "cse2score", Constant.MIN);
+		enricher.enrich(table, "cse1score", Constant.MAX);
+		enricher.enrich(table, "cse1score", Constant.MIN);
+		
 		enricher = new RankingAnalysisEnricher();
 		enricher.enrich(table);
 		TableGenerator.TableToCSV("b.csv", table);
