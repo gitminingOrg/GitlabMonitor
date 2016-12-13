@@ -56,5 +56,21 @@ public class TableDetail {
 	public int size(){
 		return columns.size();
 	}
+
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		for(int i=0; i<columns.size(); i++){
+			sb.append(columns.get(i));
+			if(i < columns.size() -1){
+				sb.append(Constant.COMMA);
+			}else{
+				sb.append(Constant.NEW_LINE);
+			}
+		}
+		return sb.toString();
+	}
+	
+	
 	
 }

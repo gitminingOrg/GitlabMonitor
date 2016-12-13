@@ -12,7 +12,8 @@ public class Row {
 	}
 	public Row(List<Object> values) {
 		super();
-		this.values = values;
+		this.values = new ArrayList<Object>();
+		this.values.addAll(values);
 	}
 
 	public <T> T getIndexValue(int index){
@@ -23,11 +24,15 @@ public class Row {
 	}
 	
 	public boolean setValue(int index, Object value){
-		if(values.size() <= index){
+		System.out.println(index + "  " + value);
+		if(values.size() < index){
+			System.out.println(index + " false " + value  +"  " + values.size());
 			return false;
 		}else if(values.size() == index){
+			System.out.println(index + " add " + value);
 			values.add(value);
 		}else{
+			System.out.println(index + " insert " + value);
 			values.set(index, value);
 		}
 		return true;		
@@ -42,5 +47,20 @@ public class Row {
 		List<Object> result = new ArrayList<Object>();
 		result.addAll(list);
 		return new Row(result);
+	}
+	
+	
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		for(int i=0; i<values.size(); i++){
+			sb.append(values.get(i));
+			if(i < values.size() -1){
+				sb.append(Constant.COMMA);
+			}else{
+				sb.append(Constant.NEW_LINE);
+			}
+		}
+		return sb.toString();
 	}
 }

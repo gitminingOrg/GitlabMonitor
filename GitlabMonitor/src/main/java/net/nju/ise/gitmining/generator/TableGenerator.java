@@ -1,7 +1,10 @@
 package net.nju.ise.gitmining.generator;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import net.nju.ise.gitmining.model.Row;
@@ -35,8 +38,19 @@ public class TableGenerator {
 	}
 	
 	
-	public void TableToCSV(String csvFilePath, Table table){
+	public static void TableToCSV(String csvFilePath, Table table){
+		File file = new File(csvFilePath);
+		StringBuffer sb = new StringBuffer();
+		sb.append(table.getTableDetail().toString());
+		for(Row row : table.getRows()){
+			sb.append(row.toString());
+		}
 		
+		try(BufferedWriter bw = new BufferedWriter(new FileWriter(file))){
+			bw.write(sb.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void TableToARFF(String arffFilePath, Table table){
