@@ -45,7 +45,7 @@ public class StdDeviationEnricher implements Enricher {
 			origin.getRows().get(i).setValue(index,stdDev);
 			
 		}
-		return null;
+		return origin;
 	}
 	
 	
