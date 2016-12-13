@@ -21,10 +21,12 @@ public class TableGenerator {
 				if(index == 0){
 					TableDetail detail = TableDetail.listToTableDetail(items);
 					table.setTableDetail(detail);
+				}else{
+					Row row = Row.arrayToRow(items);
+					table.addRow(row);
 				}
 				
-				Row row = Row.arrayToRow(items);
-				table.addRow(row);
+				index++;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

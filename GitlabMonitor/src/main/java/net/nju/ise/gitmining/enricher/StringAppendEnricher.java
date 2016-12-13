@@ -6,7 +6,7 @@ import net.nju.ise.gitmining.model.Table;
 public class StringAppendEnricher implements Enricher{
 
 	@Override
-	public Table enrich(Table origin) {
+	public Table enrich(Table origin, Object... objects) {
 		origin.addNewColumn("newColumn");
 		int index = origin.getTableDetail().getColumnIndex("newColumn");
 		for(Row row : origin.getRows()){
