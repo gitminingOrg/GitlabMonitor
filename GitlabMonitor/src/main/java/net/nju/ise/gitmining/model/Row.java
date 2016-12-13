@@ -26,13 +26,10 @@ public class Row {
 	public boolean setValue(int index, Object value){
 		System.out.println(index + "  " + value);
 		if(values.size() < index){
-			System.out.println(index + " false " + value  +"  " + values.size());
 			return false;
 		}else if(values.size() == index){
-			System.out.println(index + " add " + value);
 			values.add(value);
 		}else{
-			System.out.println(index + " insert " + value);
 			values.set(index, value);
 		}
 		return true;		

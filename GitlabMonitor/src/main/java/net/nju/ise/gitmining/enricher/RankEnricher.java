@@ -13,24 +13,30 @@ public class RankEnricher implements Enricher {
 		int rownum = (int) objects[0];
 		PriorityQueue<Pair> pq = new PriorityQueue<Pair>();
 		int index = 0;
+		
 		for(Row row: origin.getRows()){
 			double value = Double.parseDouble(row.getIndexValue(rownum).toString());
 			Pair pair = new Pair(index, value);
 			pq.offer(pair);
 			index++;
 		}
+		
 		System.err.println(pq.size());
 		origin.addNewColumn(columnName);
 		int colIndex = origin.getTableDetail().getColumnIndex(columnName);
 		int rank = 0;
 		double lastValue = -1;
-		for(int i=0; i<pq.size(); i++){
+		
+		int i = 0;
+		while(!pq.isEmpty()){
 			Pair pair = pq.poll();
 			if(Math.abs(pair.getValue() - lastValue) > EPS){
 				rank = i+1;
 			}
+			System.out.println(pair.getIndex() +"   " + rank);
 			origin.getRows().get(pair.getIndex()).setValue(colIndex, rank);
 			lastValue = pair.getValue();
+			i++;
 		}
 		return origin;
 	}
@@ -57,7 +63,6 @@ class Pair implements Comparable<Pair>{
 	}
 
 	public Pair(int index, double value) {
-		super();
 		this.index = index;
 		this.value = value;
 	}
